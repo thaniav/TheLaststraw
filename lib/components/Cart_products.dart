@@ -37,7 +37,7 @@ class _Cart_productsState extends State<Cart_products> {
             cart_product_color: Products_on_cart[index]["color"],
             cart_product_qty: Products_on_cart[index]["qty"],
             cart_product_size: Products_on_cart[index]["size"],
-            
+
           );
 
     }
