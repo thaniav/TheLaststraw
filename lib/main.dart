@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:palet/Pages/Shopping_cart.dart';
 import 'package:palet/components/HorizontalList.dart';
 import 'package:palet/components/products.dart';
 import 'package:palet/Pages/Cart.dart';
+import 'package:palet/Pages/Shopping_cart.dart';
 
 void main()
 {
@@ -10,6 +12,7 @@ void main()
       MaterialApp(
         debugShowCheckedModeBanner:false,
         home:HomePage() ,
+
       )
   );
 }
@@ -36,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         //animationDuration: Duration(milliseconds: 1000),
         dotSize: 4.0,
         indicatorBgPadding: 2.0,
-
+        //Navigator.push(context, MaterialPageRoute(builder: (context)=>new Cart())
       ),
     );
     return Scaffold(
@@ -48,7 +51,8 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search,color: Colors.white,),onPressed: (){},),
           IconButton(icon: Icon(Icons.shopping_cart,color: Colors.white,),onPressed: (){
-            Navigator.push(context,MaterialPageRoute(builder: (context)=>new Cart()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>new Shoppingcart()));
+
           },)
 
         ],
