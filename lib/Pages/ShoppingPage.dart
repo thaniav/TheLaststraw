@@ -5,12 +5,12 @@ import '../components/products.dart';
 import 'Cart.dart';
 import 'Shopping_cart.dart';
 
-class HomePage extends StatefulWidget {
+class ShoppingPage extends StatefulWidget {
   @override
   _ShoppingPageState createState() => _ShoppingPageState();
 }
 
-class _ShoppingPageState extends State<HomePage> {
+class _ShoppingPageState extends State<ShoppingPage> {
   @override
   Widget build(BuildContext context) {
     Widget image_carousel=new Container(
