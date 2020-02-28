@@ -110,6 +110,7 @@ class _HomeState extends State<Home>  with SingleTickerProviderStateMixin {
                   ),
 
                   onTap: (){
+                    Navigator.pushNamed(context, '/wallet');
 
                   },
                 ),
