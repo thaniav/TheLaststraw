@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
 
 
 class SignUpPage extends StatefulWidget {
+  final Function toggleView;
+  SignUpPage({ this.toggleView });
+
+
   @override
   _SignPageState createState() => _SignPageState();
 }
@@ -149,7 +153,7 @@ class _SignPageState extends State<SignUpPage> {
 
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/signup');
+                    widget.toggleView();
                     },
                     child:Text('Already have an Account? Sign in',
                       style:TextStyle(
