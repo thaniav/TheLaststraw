@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/ProfilePage.dart';
+import 'package:palet/Pages/ShoppingPage.dart';
 import 'package:palet/Pages/Shopping_cart.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
@@ -36,7 +37,7 @@ void main() => runApp(MyApp());
 {
 '/home': (context)=> Home(),
 '/profile': (context) => ProfilePage(),
-'/shopping': (context) => Shoppingcart(),
+'/shopping': (context) => ShoppingPage(),
 '/signup': (context) => SignUpPage(),
 '/signin': (context) => SignInPage(),
 '/pay':(context) => Payment(),

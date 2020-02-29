@@ -119,18 +119,17 @@ class _MyHomePageState extends State<SignInPage> {
                     elevation:7.0,
                     child:GestureDetector(
                       onTap:() async {
-//                        dynamic result = await _auth.SignInAnon();
-//                        if(result==null){
-//                          print("error");
-//                        }
-//                        else{
-//                          print('signed in');
-//                          print(result);
-//                          // Navigator.pushNamed(context,'/home');
-//                        }
+                        dynamic result = await _auth.signInAnon();
+                        if(result==null){
+                          print("error");
+                        }
+                        else{
+                          print('signed in');
+                          print(result.uid);
 
-                      print(email);
-                      print(password);
+                        }
+
+
 
                       },
                       child:Center(
