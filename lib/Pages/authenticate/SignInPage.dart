@@ -14,10 +14,17 @@ class SignInPage extends StatefulWidget {
 
 class _MyHomePageState extends State<SignInPage> {
   final AuthService _auth = AuthService();
+
+  //text field state
+  String email='';
+  String password='';
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
+
       body:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -55,32 +62,38 @@ class _MyHomePageState extends State<SignInPage> {
             padding:EdgeInsets.only(top:35.0,left:20.0,right:20.0),
             child:Column(
               children: <Widget>[
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'EMAIL',
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       color:Colors.grey,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
                   ),
+
+                    onChanged: (val){
+                      setState(()
+                      => email = val
+                      );
+                    }
+                ),
+                TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color:Colors.grey,
+                      ),
+                    ),
+                    obscureText: true,
+                    onChanged: (val){
+                      setState(()
+                      => password = val
+                      );
+                    }
                 ),
                 SizedBox(height:20.0,),
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'PASSWORD',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color:Colors.grey,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
-                  ),
-                  obscureText:true,
-                ),
+
                 SizedBox(height:5.0),
                 Container(
                   alignment:Alignment(1.0,0.0),
@@ -106,13 +119,18 @@ class _MyHomePageState extends State<SignInPage> {
                     elevation:7.0,
                     child:GestureDetector(
                       onTap:() async {
-                        dynamic result = await _auth.SignInAnon();
-                        if(result==null){
-                          print("error");
-                        }
-                        else{
-                          // Navigator.pushNamed(context,'/home');
-                        }
+//                        dynamic result = await _auth.SignInAnon();
+//                        if(result==null){
+//                          print("error");
+//                        }
+//                        else{
+//                          print('signed in');
+//                          print(result);
+//                          // Navigator.pushNamed(context,'/home');
+//                        }
+
+                      print(email);
+                      print(password);
 
                       },
                       child:Center(

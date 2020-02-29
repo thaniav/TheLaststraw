@@ -5,8 +5,12 @@ class Quant extends StatefulWidget {
 }
 
 class _QuantState extends State<Quant> {
+  int _counter=0;
   datachange()
   {
+    setState(() {
+      _counter++;
+    });
 
 
   }
