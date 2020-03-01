@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/authenticate/authenticate.dart';
+import 'package:palet/services/auth.dart';
 
 /*void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
@@ -13,11 +15,21 @@ class MyApp extends StatelessWidget {
 
 
 class SignUpPage extends StatefulWidget {
+  final Function toggleView;
+  SignUpPage({ this.toggleView });
+
+
   @override
   _SignPageState createState() => _SignPageState();
 }
 
 class _SignPageState extends State<SignUpPage> {
+  final AuthService _auth = AuthService();
+  final _formKey= GlobalKey<FormState>();
+  String email='';
+  String password='';
+  String error='';
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -31,93 +43,134 @@ class _SignPageState extends State<SignUpPage> {
                 Container(
                   padding:EdgeInsets.fromLTRB(15.0, 110.0,0.0,0.0),
                   child:Text(
-                      'Signup',
+                      'Sign up',
                       style:TextStyle(
                           fontSize:80.0,fontWeight:FontWeight.bold)
                   ),
                 ),
 
-                Container(
-                  padding:EdgeInsets.fromLTRB(270.0, 110.0,0.0,0.0),
-                  child:Text(
-                      '.',
-                      style:TextStyle(
-                          fontSize:80.0,fontWeight:FontWeight.bold,color:Colors.green)
-                  ),
-                ),
+
               ],
             ),
           ),
           Container(
             padding:EdgeInsets.only(top:35.0,left:20.0,right:20.0),
-            child:Column(
-              children: <Widget>[
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'EMAIL',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color:Colors.grey,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
+            child:Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    validator: (val) => val.isEmpty? 'Enter an email': null,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color:Colors.grey,
+                        ),
+                      ),
+
+                      onChanged: (val){
+                        setState(()
+                        => email = val
+                        );
+                      }
                   ),
-                ),
-                SizedBox(height:20.0,),
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'PASSWORD',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color:Colors.grey,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
+                  TextFormField(
+                      validator: (val) => val.length<6? 'Enter a password 6+ chars long': null,
+                      decoration: InputDecoration(
+
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color:Colors.grey,
+                        ),
+                      ),
+                      obscureText: true,
+                      onChanged: (val){
+                        setState(()
+                        => password = val
+                        );
+                      }
                   ),
-                  obscureText:true,
-                ),
-                SizedBox(height:20.0,),
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'NICKNAME',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color:Colors.grey,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
-                  ),
-                ),
-                SizedBox(height:40.0),
-                Container(
-                  height:40.0,
-                  child:Material(
-                    borderRadius:BorderRadius.circular(20.0),
-                    shadowColor:Colors.greenAccent,
-                    color: Colors.green,
-                    elevation:7.0,
-                    child:GestureDetector(
-                      onTap:() {},
-                      child:Center(
-                        child:Text(
-                          'SIGN IN',
-                          style:TextStyle(
-                              color:Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily:'Montserrat'
+                  SizedBox(height:20.0,),
+
+                  SizedBox(height:5.0),
+
+                  SizedBox(height:40.0),
+                  Container(
+                    height:40.0,
+                    child:Material(
+                      borderRadius:BorderRadius.circular(20.0),
+                      shadowColor:Colors.greenAccent,
+                      color: Colors.green,
+                      elevation:7.0,
+                      child:GestureDetector(
+                        onTap:() async {
+
+                          if(_formKey.currentState.validate()){
+                          dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                          print(email);
+                          if(result== null){
+                            setState(() => error = 'please supply a valid email' )
+
+                            ;
+
+                          }
+
+                          }
+
+//                        dynamic result = await _auth.SignInAnon();
+//                        if(result==null){
+//                          print("error");
+//                        }
+//                        else{
+//                          print('signed in');
+//                          print(result);
+//                          // Navigator.pushNamed(context,'/home');
+//                        }
+
+
+
+                        },
+                        child:Center(
+                          child:Text(
+                            'Register',
+                            style:TextStyle(
+                                color:Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily:'Montserrat'
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height:20.0),
-              ],
+
+                  SizedBox(height:20.0),
+                  Text(error,
+                  ),
+                  SizedBox(height:20.0),
+
+                  InkWell(
+                    onTap: () {
+                    widget.toggleView();
+                    },
+                    child:Text('Already have an Account? Sign in',
+                      style:TextStyle(
+                        color:Colors.green,
+                        fontFamily:'Montserrat',
+                        fontWeight:FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),),
+                  )
+                ],
+
+              ),
             ),
           ),
+
+
+
         ],
       ),
     );

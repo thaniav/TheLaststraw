@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
+import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 
 
@@ -8,16 +9,30 @@ import 'package:palet/services/auth.dart';
 
 
 class SignInPage extends StatefulWidget {
+  final Function toggleView;
+  SignInPage({ this.toggleView });
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<SignInPage> {
   final AuthService _auth = AuthService();
+  final _formKey= GlobalKey<FormState>();
+bool loading = false;
+
+  //text field state
+
+  String email='';
+  String password='';
+  String error='';
+
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return loading ? Loading() : Scaffold(
       resizeToAvoidBottomPadding: false,
+
       body:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -53,34 +68,46 @@ class _MyHomePageState extends State<SignInPage> {
           ),
           Container(
             padding:EdgeInsets.only(top:35.0,left:20.0,right:20.0),
+            child: Form(
+              key: _formKey,
             child:Column(
               children: <Widget>[
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'EMAIL',
+                TextFormField(
+                    validator: (val) => val.isEmpty? 'Enter an email': null,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       color:Colors.grey,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
+
                   ),
+
+                    onChanged: (val){
+                      setState(()
+                      => email = val
+                      );
+                    }
+                ),
+                TextFormField(
+                    validator: (val) => val.length<6? 'Enter a password 6+ chars long': null,
+                    decoration: InputDecoration(
+
+                      hintText: 'Password',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color:Colors.grey,
+                      ),
+                    ),
+                    obscureText: true,
+                    onChanged: (val){
+                      setState(()
+                      => password = val
+                      );
+                    }
                 ),
                 SizedBox(height:20.0,),
-                TextField(
-                  decoration:InputDecoration(
-                    labelText:'PASSWORD',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color:Colors.grey,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:Colors.green),
-                    ),
-                  ),
-                  obscureText:true,
-                ),
+
                 SizedBox(height:5.0),
                 Container(
                   alignment:Alignment(1.0,0.0),
@@ -95,6 +122,7 @@ class _MyHomePageState extends State<SignInPage> {
                       ),
                     ),
                   ),
+
                 ),
                 SizedBox(height:40.0),
                 Container(
@@ -105,18 +133,29 @@ class _MyHomePageState extends State<SignInPage> {
                     color: Colors.green,
                     elevation:7.0,
                     child:GestureDetector(
+                      // not exactly the same as video
                       onTap:() async {
-                        dynamic result = await _auth.SignInAnon();
-                        if(result==null){
-                          print("error");
+                        if(_formKey.currentState.validate()){
+                          setState(() => loading = true);
+                          dynamic result= await _auth.signInWithEmailAndPassword(email, password);
+
+
+                          if(result== null){
+
+                            setState(() => error = 'Could not sign in with those credentials' );
+loading=false;
+
+
+                          }
+
                         }
-                        else{
-                          // Navigator.pushNamed(context,'/home');
-                        }
+
+
 
                       },
                       child:Center(
                         child:Text(
+
                           'LOGIN',
                           style:TextStyle(
                               color:Colors.white,
@@ -131,7 +170,12 @@ class _MyHomePageState extends State<SignInPage> {
                 SizedBox(height:20.0),
               ],
             ),
+            ),
           ),
+          SizedBox(height:20.0),
+          Text(error,
+          ),
+          SizedBox(height:20.0),
           SizedBox(height:15.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -143,9 +187,11 @@ class _MyHomePageState extends State<SignInPage> {
                 ),
               ),
               SizedBox(width :5.0),
+
+
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/signup');
+                  widget.toggleView();
                 },
                 child:Text('Register',
                   style:TextStyle(
@@ -155,10 +201,14 @@ class _MyHomePageState extends State<SignInPage> {
                     decoration: TextDecoration.underline,
                   ),),
               )
+
             ],
+
           )
         ],
+
       ),
+
     );
   }
 }

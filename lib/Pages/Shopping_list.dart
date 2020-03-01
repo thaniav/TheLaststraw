@@ -4,17 +4,28 @@ import 'package:palet/components/New_products.dart';
 import 'package:palet/components/products.dart';
 import 'package:palet/Pages/Shopping_cart.dart';
 
- class ShoppingList extends StatelessWidget {
-   int Qty=0;
+ class ShoppingList extends StatefulWidget {
    final ValueSetter<ProductModel> _valueSetter;
    ShoppingList( this._valueSetter);
+
+  @override
+  _ShoppingListState createState() => _ShoppingListState();
+}
+
+class _ShoppingListState extends State<ShoppingList> {
+   int Qty=0;
+   void Increment()
+   {
+     setState(() {
+       Qty++;
+     });
+   }
+
+
    List<ProductModel> products=[
      ProductModel("Blazer",80),
      ProductModel("Red dress",50)
    ];
-
-
-
 
    @override
    Widget build(BuildContext context) {
@@ -27,7 +38,7 @@ import 'package:palet/Pages/Shopping_cart.dart';
 
          trailing: Text("\$${products[index].price}"),
          onTap: (){
-           _valueSetter(products[index]);
+           widget._valueSetter(products[index]);
 
 
          }
@@ -37,7 +48,9 @@ import 'package:palet/Pages/Shopping_cart.dart';
          leading: IconButton(icon: Icon(Icons.add,color: Colors.black,),onPressed: (
 
 
+
              ){
+           Increment();
 
 
 
@@ -50,5 +63,5 @@ import 'package:palet/Pages/Shopping_cart.dart';
 
          itemCount: products.length);
    }
- }
+}
 

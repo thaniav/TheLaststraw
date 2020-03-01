@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:palet/services/auth.dart';
 
-class Home extends StatefulWidget{
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home>  with SingleTickerProviderStateMixin {
+class Home extends StatelessWidget{
+  final AuthService _auth = AuthService();
   TabController controller;
   @override
-  void initState(){
 
-  }
+
+
+
   Widget build( BuildContext context){
     return new Scaffold(
       drawer: Drawer(
@@ -189,7 +187,8 @@ class _HomeState extends State<Home>  with SingleTickerProviderStateMixin {
 
 
 
-                  onTap: (){
+                  onTap: ()async{
+                    await _auth.signOut();
 
                   },
                 ),
