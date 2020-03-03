@@ -1,4 +1,4 @@
-# pallet
+# palet
 
 A new Flutter application.
 
