@@ -9,7 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/Homepage.dart';
-import 'package:palet/Pages/ProfilePage.dart';
+import 'package:palet/Pages/profile/ProfilePage.dart';
 import 'package:palet/Pages/ShoppingPage.dart';
 import 'package:palet/Pages/Shopping_cart.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
