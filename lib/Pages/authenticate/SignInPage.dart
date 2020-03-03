@@ -173,7 +173,13 @@ loading=false;
             ),
           ),
           SizedBox(height:20.0),
-          Text(error,
+          Center(
+            child: Text(
+              error,
+              style: TextStyle(
+                  color: Colors.red),
+
+            ),
           ),
           SizedBox(height:20.0),
           SizedBox(height:15.0),

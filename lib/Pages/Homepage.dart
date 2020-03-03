@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,8 @@ class Home extends StatelessWidget{
 
 
   Widget build( BuildContext context){
-    return StreamProvider<QuerySnapshot>.value(
+    bool loading = false;
+    return loading? Loading() : StreamProvider<QuerySnapshot>.value(
 
       child: new Scaffold(
         drawer: Drawer(
@@ -192,7 +194,10 @@ class Home extends StatelessWidget{
 
 
                     onTap: ()async{
+
+                      loading = true;
                       await _auth.signOut();
+
 
                     },
                   ),

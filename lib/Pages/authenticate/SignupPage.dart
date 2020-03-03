@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/authenticate/authenticate.dart';
+import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 
 /*void main() => runApp(MyApp());
@@ -24,6 +25,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignPageState extends State<SignUpPage> {
+  bool loading = false;
   final AuthService _auth = AuthService();
   final _formKey= GlobalKey<FormState>();
   String email='';
@@ -32,7 +34,7 @@ class _SignPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return  loading? Loading() :Scaffold(
       resizeToAvoidBottomPadding: false,
       body:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,12 +110,14 @@ class _SignPageState extends State<SignUpPage> {
                         onTap:() async {
 
                           if(_formKey.currentState.validate()){
+                            setState(() =>
+                            loading = true );
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                          print(email);
-                          if(result== null){
-                            setState(() => error = 'please supply a valid email' )
 
-                            ;
+                          if(result== null){
+                            setState(() => error = 'please supply a valid email' );
+
+                            loading=false;
 
                           }
 
