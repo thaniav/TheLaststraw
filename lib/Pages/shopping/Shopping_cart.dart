@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/Shopping_list.dart';
-import 'package:palet/Pages/Checkout.dart';
+import 'package:palet/Pages/shopping/Shopping_list.dart';
+import 'package:palet/Pages/shopping/Checkout.dart';
 import 'package:palet/components/New_products.dart';
 class Shoppingcart extends StatefulWidget {
   @override
@@ -44,12 +44,12 @@ class _ShoppingcartState extends State<Shoppingcart> {
         body: TabBarView(
           children: <Widget>[
             ShoppingList((selected_product){
+              selected_product.quantity=selected_product.quantity+1;
               setState(() {
                cart.add(selected_product);
                sum=0;
                cart.forEach((item){
                  sum=sum+(item.price);
-
 
                });
               });
@@ -83,6 +83,6 @@ class _ShoppingcartState extends State<Shoppingcart> {
         ),
 
       ),
-    );;
+    );
   }
 }

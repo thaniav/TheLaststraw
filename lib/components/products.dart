@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/product_details.dart';
+import 'package:palet/Pages/shopping/product_details.dart';
 class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();

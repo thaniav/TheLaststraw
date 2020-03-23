@@ -30,6 +30,7 @@ class ProfilePageState extends State<ProfilePage>
   String password='';
 
 
+
   DateTime _date=DateTime.now();
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
@@ -52,8 +53,10 @@ class ProfilePageState extends State<ProfilePage>
 
 
   Widget build(BuildContext context) {
+
 //    final profiles = Provider.of<List<Profile>>(context);
 final user = Provider.of<UserID>(context);
+
 
     return  StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -498,34 +501,35 @@ return Loading();
                           textColor: Colors.white,
                           color: Colors.teal[600],
                           onPressed: () async {
+
                             FirebaseUser user = await FirebaseAuth.instance.currentUser();
+        if(_formKey.currentState.validate()) {
+          //Pass in the password to updatePassword.
+          user.updatePassword(password).then((_) {
+            print("Succesfull changed password");
+          }).catchError((error) {
+            print("Password can't be changed" + error.toString());
+            //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+          });
+          user.updateEmail(emailID).then((_) {
+            print("Succesfull changed email");
+          }).catchError((error) {
+            print("Email can't be changed" + error.toString());
+            //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+          });
 
-                            //Pass in the password to updatePassword.
-                            user.updatePassword(password).then((_){
-                              print("Succesfull changed password");
-                            }).catchError((error){
-                              print("Password can't be changed" + error.toString());
-                              //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-                            });
-                            user.updateEmail(emailID).then((_){
-                              print("Succesfull changed email");
-                            }).catchError((error){
-                              print("Email can't be changed" + error.toString());
-                              //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-                            });
 
-
-                            setState(() {
-                              _status = true;
-                              FocusScope.of(context).requestFocus(new FocusNode());
-                            });
-                            await DatabaseService(uid: user.uid).updateUserData(
-                                name ?? userData.name,
-                                emailID ?? user.email,
-                                phone ?? userData.name,
-                                address ?? userData.name);
-
-                          },
+          setState(() {
+            _status = true;
+            FocusScope.of(context).requestFocus(new FocusNode());
+          });
+          await DatabaseService(uid: user.uid).updateUserData(
+            name ?? userData.name,
+            emailID ?? user.email,
+            phone ?? userData.name,
+            address ?? userData.name,
+          );
+        } },
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0)),
                         )),

@@ -12,7 +12,18 @@ class UserData{
   final String phone;
   final String address;
 
+
   UserData({ this.uid, this.name, this.emailID, this.phone, this.address });
 
+
+}
+
+
+class WalletData{
+  final String uid;
+  final String walletID;
+  final int balance;
+
+  WalletData({ this.uid, this.walletID, this.balance });
 
 }

@@ -1,43 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/Add_card.dart';
-import 'package:palet/components/mode.dart';
 
+import 'Mobileplans.dart';
 
-
-class Payment extends StatefulWidget {
-  final String text;
-  Payment({Key key, @required this.text}) : super(key: key);
-  @override
-  _PaymentState createState() => _PaymentState();
-}
-
-class _PaymentState extends State<Payment> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes:<String,WidgetBuilder>{
-          '/add_card':(BuildContext context) => new addcard(),
-        },
-        home:Radiowidget(),
-        theme:ThemeData(
-          primaryColor: Color(0xFFf1c40f),
-        )
-    );
-  }
-}
-
-
-class Radiowidget extends StatefulWidget {
-  Radiowidget():super();
+class Mobile_Recharge extends StatefulWidget {
+  Mobile_Recharge():super();
   final String title='payment methods';
   @override
-  _RadiowidgetState createState() => _RadiowidgetState();
+  _Mobile_RechargeState createState() => _Mobile_RechargeState();
 }
 
-class _RadiowidgetState extends State<Radiowidget> {
-  List<User>users;
-  User selectedUser;
+class _Mobile_RechargeState extends State<Mobile_Recharge> {
+  List<Plans>users;
+  Plans selectedUser;
   int selectedRadio;
   int selectedRadioTile=0;
   @override
@@ -46,7 +20,31 @@ class _RadiowidgetState extends State<Radiowidget> {
     super.initState();
     selectedRadio=0;
     selectedRadioTile=0;
-    users=User.getUsers();
+    users=Plans.getUsers();
+  }
+  DataTable dataBody()
+  {
+    return DataTable(
+      columns: [
+        DataColumn(
+            label:Text("Plan(Rs)"),
+            numeric:false,
+            tooltip: "this is plan"
+        ),
+        DataColumn(
+            label:Text("Validity"),
+            numeric:false,
+            tooltip: "this is validity"
+        ),
+        DataColumn(
+            label:Text("benifits"),
+            numeric:false,
+            tooltip: "this is benifits"
+        ),
+
+      ],
+      rows:[],
+    );
   }
   setSelectedRadio(int val)
   {
@@ -60,7 +58,7 @@ class _RadiowidgetState extends State<Radiowidget> {
       selectedRadioTile=val;
     });
   }
-  setSelectedUser(User user){
+  setSelectedUser(Plans user){
 
     setState(() {
       selectedUser=user;
@@ -69,16 +67,15 @@ class _RadiowidgetState extends State<Radiowidget> {
   }
   List<Widget>createRadioListUsers(){
     List<Widget> widget =[];
-    for(User user in users)
+    for(Plans user in users)
     {
       widget.add(
         RadioListTile(
           value:user,
           groupValue:selectedUser,
-          title:Text(user.cardname),
-          subtitle:Text(user.accountno.toString()),
+          title:Text(user.plan),
           onChanged:(currentUser){
-            print("Current user ${user.cardname}");
+            print("Current user ${user.plan}");
             setSelectedUser(currentUser);
             ExpansionTile(
               title:Text('hey you!'),
@@ -86,7 +83,6 @@ class _RadiowidgetState extends State<Radiowidget> {
           },
           selected:selectedUser == user,
         ),
-
       );
     }
     return widget;
@@ -95,17 +91,23 @@ class _RadiowidgetState extends State<Radiowidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment methods"),
-        backgroundColor: Colors.teal[600],
+        title: Text(widget.title),
       ),
-
       body:Column(
         mainAxisAlignment:MainAxisAlignment.start,
         children: <Widget>[
           Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              verticalDirection:VerticalDirection.down,
+              children: <Widget>[
+                Center(
+                  child:dataBody(),
+                ),]),
+          Column(
             children:createRadioListUsers(),
-
           ),
+
           SizedBox(height:200.0),
           Container(
             padding: EdgeInsets.all(15.0),
@@ -117,15 +119,6 @@ class _RadiowidgetState extends State<Radiowidget> {
         ],
 
       ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed:(){
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>addcard()));
-        },
-        child:Icon(Icons.credit_card),
-      ),
-
-
     );
   }
 }

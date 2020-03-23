@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import '../components/HorizontalList.dart';
-import '../components/products.dart';
-import 'Cart.dart';
+import '../../components/HorizontalList.dart';
+import '../../components/products.dart';
+import '../Cart.dart';
 import 'Shopping_cart.dart';
 
 class ShoppingPage extends StatefulWidget {
@@ -95,20 +95,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
               ),
             ),
             Divider(),
-            InkWell(
-              onTap: (){},
-              child: ListTile(
-                title: Text('Settings'),
-                leading: Icon(Icons.settings,color: Colors.grey[600],),
-              ),
-            ),
-            InkWell(
-              onTap: (){},
-              child: ListTile(
-                title: Text('About'),
-                leading: Icon(Icons.help,color: Colors.blue,),
-              ),
-            ),
+
 
 
 

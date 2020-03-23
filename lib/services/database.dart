@@ -1,16 +1,18 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:palet/Pages/profile/profile.dart';
-import 'package:palet/components/mode.dart';
+import 'package:palet/Pages/wallet.dart';
+
 import 'package:palet/models/user.dart';
-import 'package:palet/models/user.dart';
+
 class DatabaseService{
 
   final String uid;
   DatabaseService({ this.uid });
   final CollectionReference profileCollection = Firestore.instance.collection('profiles');
+  final CollectionReference accountCollection = Firestore.instance.collection('accounts');
+
 
 Future updateUserData(String name, String emailID, String phone, String address) async {
   return await profileCollection.document(uid).setData({
@@ -19,10 +21,26 @@ Future updateUserData(String name, String emailID, String phone, String address)
     'phone': phone,
     'address': address,
 
+
   });
 }
 
+Future updateUserBalance(String walletID, int balance) async {
+  return await accountCollection.document(uid).setData(
+    {
+      'walletID': walletID,
+      'balance': balance,
+    }
+  );
+}
+
+
+
+
+
+
 //profile list from snapshot
+
   List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot){
   return snapshot.documents.map((doc){
     return Profile(
@@ -30,6 +48,7 @@ Future updateUserData(String name, String emailID, String phone, String address)
       emailID: doc.data['emailID'] ?? '',
       phone: doc.data['phone'] ?? '',
       address: doc.data['address'] ?? '',
+
     );
   }).toList();
   }
@@ -43,9 +62,20 @@ Future updateUserData(String name, String emailID, String phone, String address)
     emailID: snapshot.data["emailID"],
     phone: snapshot.data["phone"],
     address: snapshot.data["address"],
+
   );
   }
 
+WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
+  return WalletData(
+    uid: uid,
+    walletID: snapshot.data["walletID"],
+    balance: snapshot.data["balance"],
+
+  );
+}
+
+ // ADD THIS PORTION
 
 //get profiles stream
 
@@ -60,5 +90,9 @@ Stream<UserData> get userData{
       .map(_userDataFromSnapshot);
 }
 
+  Stream<WalletData> get walletData{
+    return accountCollection.document(uid).snapshots()
+        .map(_walletDataFromSnapshot);
+  }
 
 }

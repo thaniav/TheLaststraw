@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:palet/components/Cart_products.dart';
 import 'package:palet/components/New_products.dart';
 import 'package:palet/components/products.dart';
-import 'package:palet/Pages/Shopping_cart.dart';
+import 'package:palet/Pages/shopping/Shopping_cart.dart';
 
  class ShoppingList extends StatefulWidget {
    final ValueSetter<ProductModel> _valueSetter;
@@ -14,6 +14,7 @@ import 'package:palet/Pages/Shopping_cart.dart';
 
 class _ShoppingListState extends State<ShoppingList> {
    int Qty=0;
+
    void Increment()
    {
      setState(() {
@@ -23,8 +24,8 @@ class _ShoppingListState extends State<ShoppingList> {
 
 
    List<ProductModel> products=[
-     ProductModel("Blazer",80),
-     ProductModel("Red dress",50)
+     ProductModel("Blazer",80,0),
+     ProductModel("Red dress",50,0)
    ];
 
    @override
@@ -37,6 +38,7 @@ class _ShoppingListState extends State<ShoppingList> {
          title: Text(products[index].name),
 
          trailing: Text("\$${products[index].price}"),
+         subtitle: Text("${products[index].quantity}"),
          onTap: (){
            widget._valueSetter(products[index]);
 
@@ -44,7 +46,7 @@ class _ShoppingListState extends State<ShoppingList> {
          }
          ,
 
-         subtitle: Text("$Qty"),
+
          leading: IconButton(icon: Icon(Icons.add,color: Colors.black,),onPressed: (
 
 
