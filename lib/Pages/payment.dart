@@ -36,7 +36,7 @@ class Radiowidget extends StatefulWidget {
 }
 
 class _RadiowidgetState extends State<Radiowidget> {
-  List<User>users;
+  List<User> users;
   User selectedUser;
   int selectedRadio;
   int selectedRadioTile=0;
@@ -46,7 +46,7 @@ class _RadiowidgetState extends State<Radiowidget> {
     super.initState();
     selectedRadio=0;
     selectedRadioTile=0;
-    users=User.getUsers();
+    User.getUsers();
   }
   setSelectedRadio(int val)
   {
@@ -75,10 +75,9 @@ class _RadiowidgetState extends State<Radiowidget> {
         RadioListTile(
           value:user,
           groupValue:selectedUser,
-          title:Text(user.cardname),
-          subtitle:Text(user.accountno.toString()),
+          title:Text(user.cardNumber),
           onChanged:(currentUser){
-            print("Current user ${user.cardname}");
+            print("Current user ${user.cardNumber}");
             setSelectedUser(currentUser);
             ExpansionTile(
               title:Text('hey you!'),
@@ -109,7 +108,9 @@ class _RadiowidgetState extends State<Radiowidget> {
           SizedBox(height:200.0),
           Container(
             padding: EdgeInsets.all(15.0),
-            child: new RaisedButton(onPressed: (){},
+            child: new RaisedButton(onPressed: (){
+
+            },
               color:Colors.green,
 
               child:new Text('pay '),),
@@ -129,3 +130,4 @@ class _RadiowidgetState extends State<Radiowidget> {
     );
   }
 }
+

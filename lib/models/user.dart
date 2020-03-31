@@ -1,8 +1,7 @@
+
 class UserID{
   final String uid;
-
   UserID(this.uid);
-
 }
 
 class UserData{
@@ -25,5 +24,14 @@ class WalletData{
   final int balance;
 
   WalletData({ this.uid, this.walletID, this.balance });
+
+}
+
+class CardData{
+  final String exp;
+  final String name;
+  final String number;
+
+  CardData({this.exp, this.name, this.number});
 
 }

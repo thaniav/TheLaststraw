@@ -1,8 +1,11 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/Pages/wallet.dart';
+import 'package:palet/components/mode.dart';
+import 'package:palet/models/uid.dart';
 
 import 'package:palet/models/user.dart';
 
@@ -36,9 +39,12 @@ Future updateUserBalance(String walletID, int balance) async {
 
 
 
+  Future updateUserCards(String suid) async {
+    accountCollection.document(uid).collection('cards').document(suid).setData({
+      'user_id':suid,
+    });
 
-
-
+  }
 //profile list from snapshot
 
   List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot){
@@ -53,6 +59,20 @@ Future updateUserBalance(String walletID, int balance) async {
   }).toList();
   }
 
+
+
+  List<CardData> _cardsListFromSnapshot(QuerySnapshot snapshot){
+   return snapshot.documents.map((doc){
+     return CardData(
+     exp: doc.data["exp"] ?? '',
+       name: doc.data["name"] ?? '',
+     number: doc.data["number"] ?? ''
+
+   );
+  }).toList();
+}
+
+
   //userData from snapshot
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -65,6 +85,7 @@ Future updateUserBalance(String walletID, int balance) async {
 
   );
   }
+
 
 WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
   return WalletData(
@@ -93,6 +114,12 @@ Stream<UserData> get userData{
   Stream<WalletData> get walletData{
     return accountCollection.document(uid).snapshots()
         .map(_walletDataFromSnapshot);
+  }
+
+  Stream<List<CardData>> get cardData{
+    return accountCollection.document(current_user_uid).collection('cards').snapshots()
+    .map(_cardsListFromSnapshot);
+
   }
 
 }

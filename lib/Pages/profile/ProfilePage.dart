@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
@@ -31,17 +33,10 @@ class ProfilePageState extends State<ProfilePage>
 
 
 
-  DateTime _date=DateTime.now();
+
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
-  Future<Null> selectDate(BuildContext context) async {
-    final DateTime picked=await showDatePicker(context: context, initialDate:_date , firstDate: DateTime(1970), lastDate: DateTime(2100));
-    if (picked!=null && picked!=_date){
-      _date=picked;
-      print(_date.toString());
 
-    }
-  }
 
   @override
   void initState() {
@@ -49,6 +44,12 @@ class ProfilePageState extends State<ProfilePage>
     super.initState();
   }
 
+
+  int day = 01;
+  int month = 01;
+  int year = 2002;
+  DateTime newDt = DateTime.now();
+  Timestamp myTimeStamp = Timestamp.fromDate(DateTime.now());
   @override
 
 
@@ -220,6 +221,7 @@ final user = Provider.of<UserID>(context);
                                                 setState(()
                                                 => name = val);
 
+
                                               },
                                               enabled: !_status,
                                               autofocus: !_status,
@@ -258,7 +260,7 @@ final user = Provider.of<UserID>(context);
                                         children: <Widget>[
                                           new Flexible(
                                             child: new TextFormField(
-                                              initialValue: userData.emailID ?? null,
+                                              initialValue: userData.emailID ?? emailID,
                                               decoration: const InputDecoration(
                                                   hintText: "Enter Email ID"),
                                               onChanged: (val){
@@ -276,39 +278,16 @@ final user = Provider.of<UserID>(context);
 
 
 
-                                  Padding(
-
-                                    padding: EdgeInsets.only(left: 25.0,right: 25.0,top:20.0),
-                                    child: new Row(mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
 
 
 
-                                        new SizedBox(
-                                          width: 350.0,
-
-                                          child:
-                                          IconButton(
-                                              icon: Icon(Icons.calendar_today),
-                                              color: Colors.teal[100],
-
-
-                                              onPressed: (){
-                                                selectDate(context);
-
-                                              }),
-
-                                        ),
-
-                                      ],),
-
-                                  ),
 
                                   Padding(
                                       padding: EdgeInsets.only(
                                           left: 25.0, right: 25.0, top: 25.0),
                                       child: new Row(
                                         mainAxisSize: MainAxisSize.max,
+
                                         children: <Widget>[
                                           new Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -525,7 +504,7 @@ return Loading();
           });
           await DatabaseService(uid: user.uid).updateUserData(
             name ?? userData.name,
-            emailID ?? user.email,
+            emailID ?? userData.emailID,
             phone ?? userData.name,
             address ?? userData.name,
           );

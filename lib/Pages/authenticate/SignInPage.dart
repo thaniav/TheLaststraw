@@ -33,6 +33,7 @@ bool loading = false;
     return loading ? Loading() : Scaffold(
       resizeToAvoidBottomPadding: false,
 
+
       body:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -130,6 +131,7 @@ bool loading = false;
                 Container(
                   height:40.0,
                   child:Material(
+
                     borderRadius:BorderRadius.circular(20.0),
                     shadowColor:Colors.greenAccent,
                     color: Colors.green,

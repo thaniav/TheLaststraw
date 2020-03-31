@@ -1,15 +1,44 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:palet/models/user.dart';
+import 'package:palet/models/uid.dart';
+import 'package:provider/provider.dart';
+
+/*class User extends StatelessWidget {
+  String cardNumber;
+
+  Firestore _firestore = Firestore.instance;
+
+  User({this.cardNumber,});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}*/
+
+
+
 class User {
-  String cardname;
-  int accountno;
-  int balance;
+  String cardNumber;
 
-  User({this.cardname, this.accountno, this.balance });
+  User({this.cardNumber,});
 
-  static List<User> getUsers() {
-    return <User>[
-      User(cardname: 'ICICI card card', accountno: 123456789, balance: 1000),
-      User(cardname: 'AXIS debit card', accountno: 1112344556, balance: 1000),
-      User(cardname: 'daoap debit card', accountno: 1112344556, balance: 1000),
-    ];
+  static Future<List<User>> getUsers() async{
+
+    QuerySnapshot data =  await Firestore.instance.collection('accounts').document(current_user_uid).collection('cards').getDocuments();
+
+    final cards = data.documents;
+
+    List<User> cardNumbers = [];
+
+    for(var card in cards){
+      cardNumbers.add(User(cardNumber: card.data['cardNumber']));
+      print('card number: ');
+      print(card.data['cardNumber']);
+    }
+
+    return cardNumbers;
   }
 }

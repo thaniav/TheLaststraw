@@ -13,18 +13,23 @@ class WalletPage extends StatefulWidget {
   _WalletPageState createState() => _WalletPageState();
 }
 
+
 class _WalletPageState extends State<WalletPage> {
+  String walletID='';
+  int balance = 0;
+  int update = 0;
+
   @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<UserID>(context);
 
-    String walletID='';
+
     return StreamBuilder<WalletData>(
       stream: DatabaseService(uid: user.uid).walletData,
       builder: (context, snapshot) {
         WalletData walletData = snapshot.data;
-        int balance=walletData.balance;
+         balance=walletData.balance;
         return Scaffold(
           appBar: AppBar(
             title:Text('                               Wallet    '),
@@ -119,8 +124,8 @@ class _WalletPageState extends State<WalletPage> {
                           ),
                           onChanged: (val){
                             setState(()
-                            => balance = int.parse(val));
-
+                            => update = int.parse(val));
+                            print(val);
                           },
                         ),
                       ],
@@ -137,9 +142,16 @@ class _WalletPageState extends State<WalletPage> {
                         elevation: 7.0,
                         child:GestureDetector(
                           onTap:() async {
-                            Navigator.pushNamed(context,'/pay');
+                            setState(() {
+                              balance = balance + update;
+                            });
                             FirebaseUser user = await FirebaseAuth.instance.currentUser();
-
+                            await DatabaseService(uid: user.uid).updateUserBalance(walletID, balance);
+                            setState(() {
+                              update = 0;
+                            });
+                            print(balance);
+                            Navigator.pushNamed(context,'/payment');
                           },
                           child:Center(
                             child:Text(
@@ -157,6 +169,7 @@ class _WalletPageState extends State<WalletPage> {
                 ],
 
               ),
+
             ),
 
           ),
