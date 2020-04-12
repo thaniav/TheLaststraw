@@ -9,6 +9,7 @@ class AuthService{
     return user != null ? UserID(user.uid): null;
   }
 
+
   Stream <UserID> get user{
     return _auth.onAuthStateChanged
         .map((FirebaseUser user)=> _userFromFirebaseUser(user));
