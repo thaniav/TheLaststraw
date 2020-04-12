@@ -49,7 +49,8 @@ class _SignPageState extends State<SignUpPage> {
 
                       style:TextStyle(
                         color: Colors.green,
-                          fontSize:80.0,fontWeight:FontWeight.bold)
+                          fontSize:80.0,fontWeight:FontWeight.bold,
+                      fontFamily: 'Pacifico')
                   ),
                 ),
 

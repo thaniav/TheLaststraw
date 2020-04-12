@@ -46,7 +46,9 @@ bool loading = false;
                       'Pallet',
                       style:TextStyle(
                         color: Colors.green,
-                          fontSize:80.0,fontWeight:FontWeight.bold)
+                          fontSize:80.0,fontWeight:FontWeight.bold,
+                      fontFamily: 'Pacifico'),
+
                   ),
                 ),
 
