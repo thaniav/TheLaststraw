@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
+import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,9 @@ void main() => runApp(MaterialApp(
 
 class addcard extends StatefulWidget {
   static final String id='addcard';
+  final int updateValue;
+
+  addcard({this.updateValue});
 
   @override
   _addcardState createState() => _addcardState();
@@ -83,15 +87,23 @@ class _addcardState extends State<addcard> {
                             onPressed: () async {
                             FirebaseUser user = await FirebaseAuth.instance.currentUser();
                             /*await DatabaseService(uid: user.uid).updateUserBalance(walletID, walletData.balance);*/
-                            _firestore
-                                .collection('accounts')
-                                .document(user.uid)
-                                .collection('cards')
-                                .add({
-                              'cardNumber': cardNumber,
-                              'cardExpiry': expiryDate,
-                              'cardHolderName': cardHolderName,
-                            });
+                            if(_value1==true) {
+                              _firestore
+                                  .collection('accounts')
+                                  .document(user.uid)
+                                  .collection('cards')
+                                  .add({
+                                'cardNumber': cardNumber,
+                                'cardExpiry': expiryDate,
+                                'cardHolderName': cardHolderName,
+                              });
+                            }
+                            else{
+                              setState(() async {
+                                balance=walletData.balance+widget.updateValue;
+                              });
+                              await DatabaseService(uid: current_user_uid).updateUserBalance(balance);
+                            }
                           },
                             color:Colors.green,
 

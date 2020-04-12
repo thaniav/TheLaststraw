@@ -191,20 +191,11 @@ class _WalletPageState extends State<WalletPage> {
 
                       ),)),
                   ),
-                  onTap: () async {
-                    setState(() {
-                      balance = balance + update;
-                    });
-                    User.getUsers();
-                    FirebaseUser user = await FirebaseAuth.instance
-                        .currentUser();
-                    await DatabaseService(uid: user.uid).updateUserBalance(
-                        walletID, balance);
-                    setState(() {
-                      update = 0;
-                    });
-                    print(balance);
-                    Navigator.pushNamed(context, ChooseCards.id);
+                  onTap: () {
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return ChooseCards(updateValue: update,);
+                    }));
                   }
                   ,
 

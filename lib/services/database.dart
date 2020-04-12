@@ -28,10 +28,10 @@ Future updateUserData(String name, String emailID, String phone, String address)
   });
 }
 
-Future updateUserBalance(String walletID, int balance) async {
+Future updateUserBalance(int balance) async {
   return await accountCollection.document(uid).setData(
     {
-      'walletID': walletID,
+
       'balance': balance,
     }
   );
