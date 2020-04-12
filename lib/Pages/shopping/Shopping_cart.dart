@@ -47,7 +47,7 @@ class _ShoppingcartState extends State<Shoppingcart> {
               selected_product.quantity=selected_product.quantity+1;
               setState(() {
                cart.add(selected_product);
-               sum=0;
+
                cart.forEach((item){
                  sum=sum+(item.price);
 

@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/choosecards.dart';
+import 'package:palet/components/loading.dart';
+import 'package:palet/components/mode.dart';
+import 'package:palet/constants.dart';
+import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
@@ -19,6 +24,9 @@ class _WalletPageState extends State<WalletPage> {
   int balance = 0;
   int update = 0;
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -28,152 +36,192 @@ class _WalletPageState extends State<WalletPage> {
     return StreamBuilder<WalletData>(
       stream: DatabaseService(uid: user.uid).walletData,
       builder: (context, snapshot) {
-        WalletData walletData = snapshot.data;
-         balance=walletData.balance;
-        return Scaffold(
-          appBar: AppBar(
-            title:Text('                               Wallet    '),
-            elevation: 0,
-            backgroundColor: Color.fromARGB(255, 20, 0, 100),
-            brightness:Brightness.dark,
-            textTheme:TextTheme(
-              title:TextStyle(
-                  color: Colors.white,
-                  fontSize:20.0
-              ),
+    if(snapshot.hasData) {
+      WalletData walletData = snapshot.data;
+      balance = walletData.balance;
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Wallet'),
+          elevation: 0,
+          backgroundColor: kPalletColor,
+          brightness: Brightness.dark,
+          textTheme: TextTheme(
+            title: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0
             ),
           ),
-          body:Container(
-            width:MediaQuery.of(context).size.width,
-            child:SingleChildScrollView(
-              child:Column(
-                children: <Widget>[
-                  Container(
-                    padding:EdgeInsets.only(bottom:10,),
-                    decoration:BoxDecoration(
-                      color:Color.fromARGB(255, 20, 0, 100),
-                      borderRadius:BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+        ),
+        body: Container(
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          child: SingleChildScrollView(
+            child: Column(
 
+              children: <Widget>[
+                SizedBox(height: 20.0,),
+                Container(
+                  padding: EdgeInsets.only(bottom: 10,),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+
+                    ),
+                  ),
+                  child: Container(
+
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10,),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Current Balance",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    )),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10,),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text('$balance',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+
+                        ],
                       ),
-                    ),
-                    child:Container(
+                      margin: EdgeInsets.all(20),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                              colors: [
+                                Colors.redAccent,
+                                Colors.yellowAccent
 
-                        child:Column(
-                          children: <Widget>[
-                            Container(
-                              margin:EdgeInsets.symmetric(horizontal:20,vertical:10,),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text("Current Balance",
-                                      style:TextStyle(
-                                        color: Colors.white,
-                                        fontSize:18,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin:EdgeInsets.symmetric(horizontal:20,vertical:10,),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text('$balance' ,
-                                      style:TextStyle(
-                                        color: Colors.white,
-                                        fontSize:30,
-                                      )),
+                              ]
+                          )
+                      )
+                  ),
 
-                                ],
-                              ),
-                            ),
-                          ],
+                ),
+                Divider(
+                  color: Colors.grey,
+
+                  endIndent: 40.0,
+                  indent: 40.0,
+
+                ),
+
+                SizedBox(height: 30.0,),
+
+
+                Container(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: TextField(
+                    decoration: new InputDecoration(
+                      labelText: "Add Money",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+
                         ),
-                        margin:EdgeInsets.all(20),
-                        width: MediaQuery.of(context).size.width,
-                        height:200,
-                        decoration:BoxDecoration(
-                            borderRadius:BorderRadius.circular(16),
-                            gradient:LinearGradient(
-                                colors:[
-                                  Color(0xFFe67e22),
-                                  Color(0xFFf1c40f),
+                      ),
+                      labelStyle: TextStyle(color: Colors.grey[800]),
 
-                                ]
-                            )
-                        )
-                    ),
-                  ),
-
-                  Container(
-                    padding:EdgeInsets.fromLTRB(10.0, 100.0,220.0,10.0),
-                    child:Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration:InputDecoration(
-                            labelText:'ADD MONEY',
-                            labelStyle: TextStyle(
-                              fontSize: 27.0,fontWeight: FontWeight.bold,
-                              color:Colors.black,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color:Colors.green),
-                            ),
-                          ),
-                          onChanged: (val){
-                            setState(()
-                            => update = int.parse(val));
-                            print(val);
-                          },
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: Colors.green,
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
 
-                  SizedBox(height:30.0,),
-                  Container(
-                    height: 40.0,
-                    child:Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor:Colors.greenAccent,
-                        color:Colors.green,
-                        elevation: 7.0,
-                        child:GestureDetector(
-                          onTap:() async {
-                            setState(() {
-                              balance = balance + update;
-                            });
-                            FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                            await DatabaseService(uid: user.uid).updateUserBalance(walletID, balance);
-                            setState(() {
-                              update = 0;
-                            });
-                            print(balance);
-                            Navigator.pushNamed(context,'/payment');
-                          },
-                          child:Center(
-                            child:Text(
-                              'Proceed to Add',
-                              style:TextStyle(
-                                  color:Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'
-                              ),
-                            ),
-                          ),
-                        )
-                    ),
-                  ),
-                ],
 
-              ),
+                      //fillColor: Colors.green
+                    ),
+                    onChanged: (val) {
+                      setState(() => update = int.parse(val));
+                      print(val);
+                    },
+
+                  ),
+                ),
+
+                SizedBox(height: 30.0,),
+                GestureDetector(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        gradient: LinearGradient(
+                          colors: [Colors.teal, Colors.teal],
+                        )),
+                    margin: EdgeInsets.only(top: 50.0),
+                    width: double.infinity,
+                    height: 50.0,
+                    child: Center(child: Text('Proceed to add',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+
+                      ),)),
+                  ),
+                  onTap: () async {
+                    setState(() {
+                      balance = balance + update;
+                    });
+                    User.getUsers();
+                    FirebaseUser user = await FirebaseAuth.instance
+                        .currentUser();
+                    await DatabaseService(uid: user.uid).updateUserBalance(
+                        walletID, balance);
+                    setState(() {
+                      update = 0;
+                    });
+                    print(balance);
+                    Navigator.pushNamed(context, ChooseCards.id);
+                  }
+                  ,
+
+                ),
+
+              ],
 
             ),
 
           ),
-        );
+
+        ),
+      );
+    }
+    else{
+      return Loading();
+    }
       }
     );
   }

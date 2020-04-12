@@ -1,95 +1,176 @@
 import 'package:flutter/material.dart';
 
-
-class mobile extends StatefulWidget {
+class MobileRecharge extends StatefulWidget {
   @override
-  _mobileState createState() => _mobileState();
+  _MobileRechargeState createState() => _MobileRechargeState();
 }
 
-class _mobileState extends State<mobile> {
-  String _phoneNumber;
-  String _url;
-  final GlobalKey<FormState> _formKey= GlobalKey<FormState>();
-  Widget _buildPhoneNumber(){
-    return TextFormField(
-        decoration: InputDecoration(labelText:"Phone number"),
-        keyboardType: TextInputType.number,
-        validator: (String value){
-          int p=int.tryParse(value);
-          if(p==null ||p<=999999999&&p>700000000)
-          {
-            return 'invalid Phone number';
-          }
-          return 'valid Phone number';
-        },
-        onSaved:(String value){
-          _url =value;
-        }
-    );
+class _MobileRechargeState extends State<MobileRecharge> {
+  int getBillAmount(String provider) {
+    if (provider == 'Vodafone') {
+      return 400;
+    }
+    if (provider == 'Airtel') {
+      return 500;
+    }
+    if (provider == 'Jio') {
+      return 300;
+    } else
+      return 0;
   }
+
+  int billAmount=0;
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text("Mobile recharge"),
-      ),
-      body: Container(
-        margin:EdgeInsets.all(24),
-        child:Form(
-          key:_formKey,
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:<Widget>[
-              Container(
-                padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,0.0),
-                child: Text(
-                  "Enter The Phone Number",
-                  style: TextStyle(
-                      fontSize: 40.0, fontWeight: FontWeight.bold),
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Mobile Recharge',
+          style: TextStyle(
+            fontFamily: 'PatuaOne'
+          ),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      Colors.tealAccent,
+                      Colors.teal,
+                    ],
                 ),
+            ),
+          ),
+        ),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: DropdownButtonFormField(
+                    decoration: new InputDecoration(
+                      labelText: "Choose Provider",
+                      fillColor: Colors.white,
+                      focusColor: Colors.teal,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      style: BorderStyle.solid,
+                      width: 3.0,
+                    ),
+                  ),
+              disabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      style: BorderStyle.solid,
+                      width: 3.0,
+                    ),
+                  ),
 
-              ),
-              SizedBox(height: 100,),
-              _buildPhoneNumber(),
-              SizedBox(height: 40,),
-              Container(
-                height: 40.0,
-                child: Material(
-                  borderRadius: BorderRadius.circular(20.0),
-                  shadowColor: Colors.blueAccent,
-                  color: Colors.blue,
-                  elevation: 7.0,
-                  child: GestureDetector(
-                    onTap: () {
-                      if(!_formKey.currentState.validate()){
-                        return;
-                      };
-                      _formKey.currentState.save();
-                      Navigator.of(context).pushNamed('/options');
-                      print(_phoneNumber);
+
+              labelStyle: TextStyle(color: Colors.grey[800]),
+
+
+                      //fillColor: Colors.green
+                    ),
+
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('Vodafone'),
+                        value: 'Vodafone',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Airtel'),
+                        value: 'Airtel',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Jio'),
+                        value: 'Jio',
+                      ),
+                    ],
+                    onChanged: (val) {
+                      setState(() {
+                        billAmount = getBillAmount(val);
+                      });
                     },
-                    child: Center(
-                      child: Text(
-                        'PROCEED',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: TextField(
+                    decoration: new InputDecoration(
+                      labelText: "Enter Phone number",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
 
                         ),
+                      ),
+                      labelStyle: TextStyle(color: Colors.grey[800]),
+
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: Colors.green,
+                        ),
+                      ),
+
+                      //fillColor: Colors.green
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Card(
+
+                    elevation: 8.0,
+                    child: Container(
+                      height: 200.0,
+                      width: 300.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            'Bill Amount',
+                            style: TextStyle(fontSize: 30.0),
+                          ),
+                          Text(
+                           'Rs. $billAmount',
+                            style: TextStyle(fontSize: 30.0),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF3CCD94), Colors.tealAccent],
+                      )),
+                  margin: EdgeInsets.only(top: 50.0),
+                  width: double.infinity,
+                  height: 50.0,
+                  child: Center(child: Text('Proceed to pay',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+
+                  ),)),
+                )
+              ],
+            ),
           ),
-
-        ),
-      ),
-
-    );
+        ));
   }
 }

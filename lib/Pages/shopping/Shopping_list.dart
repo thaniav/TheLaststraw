@@ -15,10 +15,10 @@ import 'package:palet/Pages/shopping/Shopping_cart.dart';
 class _ShoppingListState extends State<ShoppingList> {
    int Qty=0;
 
-   void Increment()
+   void Increment(int i)
    {
      setState(() {
-       Qty++;
+       products[i].quantity++;
      });
    }
 
@@ -52,7 +52,7 @@ class _ShoppingListState extends State<ShoppingList> {
 
 
              ){
-           Increment();
+           Increment(index);
 
 
 

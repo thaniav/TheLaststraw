@@ -10,7 +10,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/Add_card.dart';
 import 'package:palet/Pages/Homepage.dart';
+import 'package:palet/Pages/MobileRecharge.dart';
+import 'package:palet/Pages/MovieTickets.dart';
+import 'package:palet/Pages/choosecards.dart';
+
 import 'package:palet/Pages/profile/ProfilePage.dart';
 import 'package:palet/Pages/shopping/ShoppingPage.dart';
 
@@ -40,9 +45,10 @@ void main() => runApp(MyApp());
        value: AuthService().user,
        child: MaterialApp(
          debugShowCheckedModeBanner: false,
-       home: Wrapper(),
+      home: Wrapper(),
        routes:
 {
+
 '/home': (context)=> Home(),
 '/profile': (context) => ProfilePage(),
 '/shopping': (context) => ShoppingPage(),
@@ -50,6 +56,12 @@ void main() => runApp(MyApp());
 '/signin': (context) => SignInPage(),
 '/payment':(context) => paymenthaha(),
 '/wallet':(context) => WalletPage(),
+  '/recharge':(context) => MobileRecharge(),
+  '/movie':(context) => MovieTickets(),
+  ChooseCards.id: (context) => ChooseCards(),
+addcard.id: (context) => addcard(),
+
+
 
 
 }

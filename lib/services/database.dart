@@ -37,8 +37,6 @@ Future updateUserBalance(String walletID, int balance) async {
   );
 }
 
-
-
   Future updateUserCards(String suid) async {
     accountCollection.document(uid).collection('cards').document(suid).setData({
       'user_id':suid,
@@ -61,12 +59,16 @@ Future updateUserBalance(String walletID, int balance) async {
 
 
 
+
+
+
+
   List<CardData> _cardsListFromSnapshot(QuerySnapshot snapshot){
    return snapshot.documents.map((doc){
      return CardData(
-     exp: doc.data["exp"] ?? '',
-       name: doc.data["name"] ?? '',
-     number: doc.data["number"] ?? ''
+     exp: doc.data["cardExpiry"] ?? '',
+       name: doc.data["cardHolderName"] ?? '',
+     number: doc.data["cardNumber"] ?? ''
 
    );
   }).toList();
@@ -97,19 +99,18 @@ WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
 }
 
  // ADD THIS PORTION
-
 //get profiles stream
 
-Stream<List<Profile>> get profiles{
-  return profileCollection.snapshots()
-.map(_profileListFromSnapshot);
+  Stream<List<Profile>> get profiles{
+    return profileCollection.snapshots()
+      .map(_profileListFromSnapshot);
 }
 
 //get user doc stream
-Stream<UserData> get userData{
-  return profileCollection.document(uid).snapshots()
+  Stream<UserData> get userData{
+    return profileCollection.document(uid).snapshots()
       .map(_userDataFromSnapshot);
-}
+  }
 
   Stream<WalletData> get walletData{
     return accountCollection.document(uid).snapshots()
@@ -117,7 +118,7 @@ Stream<UserData> get userData{
   }
 
   Stream<List<CardData>> get cardData{
-    return accountCollection.document(current_user_uid).collection('cards').snapshots()
+    return accountCollection.document(uid).collection('cards').snapshots()
     .map(_cardsListFromSnapshot);
 
   }

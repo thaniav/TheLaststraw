@@ -12,6 +12,7 @@ void main() => runApp(MaterialApp(
 ));
 
 class addcard extends StatefulWidget {
+  static final String id='addcard';
 
   @override
   _addcardState createState() => _addcardState();

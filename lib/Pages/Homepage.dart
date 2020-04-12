@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
@@ -17,195 +18,78 @@ class Home extends StatelessWidget{
     return loading? Loading() : StreamProvider<QuerySnapshot>.value(
 
       child: new Scaffold(
-        drawer: Drawer(
 
-
-          child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(accountName: Text('Mihir'),
-                accountEmail:Text('mihir@gmail.com'),
-
-                currentAccountPicture: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black,
-                    child: Icon(Icons.person),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.teal
-                ),
-              ),
-              //body
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('HomePage'),
-                  leading: Icon(Icons.home),
-                ),
-              ),
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('My Account'),
-                  leading: Icon(Icons.person,color: Colors.black,),
-                ),
-              ),
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('My orders'),
-                  leading: Icon(Icons.shopping_basket,color: Colors.red,),
-                ),
-              ),
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('Shopping Cart'),
-                  leading: Icon(Icons.shopping_cart,color: Colors.amber,),
-                ),
-              ),
-              Divider(),
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('Settings'),
-                  leading: Icon(Icons.settings,color: Colors.grey[600],),
-                ),
-              ),
-              InkWell(
-                onTap: (){},
-                child: ListTile(
-                  title: Text('About'),
-                  leading: Icon(Icons.help,color: Colors.blue,),
-                ),
-              ),
-
-
-
-            ],
-          ),
-        ),
         appBar: new AppBar(
-          backgroundColor: Colors.teal ,
-          title: Text('Home'),),
+          backgroundColor: Colors.teal[900] ,
+          centerTitle: true,
+          title: Text('Home',
+          style: TextStyle(
+
+            fontWeight:  FontWeight.bold,
+            color: Colors.teal[900]
+          ),),
+          flexibleSpace:  Container(
+        decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Colors.tealAccent,
+            Colors.teal[800],
+          ],
+        ),
+      ),
+    ),
+        ),
         body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: GridView.count(
-            crossAxisCount: 2,
-            children: <Widget>[
-              new SizedBox(height:5.0, width: 100.0),
 
-              new Container(
+          padding: const EdgeInsets.all(60.0),
+          child: Container(
 
-                child: new Card(elevation: 10.0,
-                  child:
-                  new InkWell(
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            child: GridView.count(
+              crossAxisCount: 2,
+              children: <Widget>[
+//                new SizedBox(height:5.0, width: 100.0),
 
-                      children: <Widget>[
-                        new
-                        Icon(Icons.mobile_screen_share,
-                          size: 50.0,
-                        ),
-                        new SizedBox(height: 10.0),
-                        new Text("Manage Wallet"),
-                      ],
-                    ),
+                new Container(
 
-                    onTap: (){
-                      Navigator.pushNamed(context, '/wallet');
-
+                  child: CardRoute(cardTitle: 'Wallet',
+                    icon: Icons.mobile_screen_share,
+                  nextPage: 'wallet',),
+                ),
+                new Container(
+                  child: CardRoute(cardTitle: 'Shop',
+                  nextPage: 'profile',icon: Icons.shopping_basket,)
+                ),
+                new Container(
+                  child: CardRoute(cardTitle: 'Profile',
+                    nextPage: 'shopping',icon: Icons.person,)
+                ),
+                new Container(
+                    child: CardRoute(cardTitle: 'Mobile Recharge',
+                      nextPage: 'recharge',icon: Icons.person,)
+                ),
+                new Container(
+                    child: CardRoute(cardTitle: 'Movie Tickets',
+                      nextPage: 'movie',icon: Icons.person,)
+                ),
+                new Container(
+                  child: CardRoute(
+                    cardTitle: 'Logout',
+                    icon: Icons.signal_cellular_off,
+                    onPressed: ()async {
+                      _auth.signOut();
                     },
                   ),
-                ),
-              ),
-              new Container(
-                child: new Card(elevation: 10.0,
-                  child:
-                  new InkWell(
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new
-                        Icon(Icons.person,
-                          size: 50.0,
-
-                        ),
-                        new SizedBox(height: 10.0),
-                        new Text("Profile Management"),
-                      ],
-                    ),
+                )
 
 
 
 
 
-                    onTap: (){
-                      Navigator.pushNamed(context, '/profile');
 
-                    },
-                  ),
-                ),
-              ),
-              new Container(
-                child: new Card(elevation: 10.0,
-                  child:
-                  new InkWell(
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new
-                        Icon(Icons.shopping_basket,
-                          size: 50.0,
-
-                        ),
-                        new SizedBox(height: 10.0),
-                        new Text("Shop"),
-                      ],
-                    ),
-
-                    onTap: (){
-                      Navigator.pushNamed(context, '/shopping');
-
-                    },
-                  ),
-                ),
-              ),
-              new Container(
-                child: new Card(elevation: 10.0,
-                  child:
-                  new InkWell(
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new
-                        Icon(Icons.last_page,
-                          size: 50.0,
-
-                        ),
-                        new SizedBox(height: 10.0),
-                        new Text("Logout"),
-                      ],
-                    ),
-
-
-
-
-
-                    onTap: ()async{
-
-                      loading = true;
-                      await _auth.signOut();
-
-
-                    },
-                  ),
-                ),
-              ),
-
-
-            ],
+              ],
+            ),
           ),
         ),
 
@@ -215,3 +99,71 @@ class Home extends StatelessWidget{
 
   }
 }
+
+
+
+//For Logout
+//onTap: ()async{
+//
+//loading = true;
+//await _auth.signOut();
+//
+//
+//},
+
+
+
+class CardRoute extends StatelessWidget {
+
+  final String cardTitle;
+  final String nextPage;
+  final IconData icon;
+  final Function onPressed;
+
+
+   CardRoute({this.cardTitle, this.nextPage, this.icon, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: new Card(elevation: 10.0,
+        color: Color(0xFADEFABB),
+
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        child:
+        Container(
+
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0),
+              gradient: LinearGradient(
+                colors: [Color(0xFF3CCD94),Colors.tealAccent],
+              )
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: <Widget>[
+
+              Icon(icon,
+                color: Colors.teal[900],
+                size: 50.0,
+              ),
+              new SizedBox(height: 10.0),
+              new Text(cardTitle,
+              style: TextStyle(
+                color: Colors.teal[900]
+              ),),
+            ],
+          ),
+
+
+        ),
+      ),
+      onTap: (){
+        Navigator.pushNamed(context,'/$nextPage');
+      },
+      onDoubleTap: onPressed,
+    );
+  }
+}
+

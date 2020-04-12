@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:palet/Cardtile.dart';
 import 'package:palet/models/user.dart';
@@ -14,17 +15,13 @@ class _CardListState extends State<CardList> {
 
     final cards=Provider.of<List<CardData>>(context);
 
-  cards.forEach((c) {
-print(c.number);
-    });
+ cards.forEach((card){
+   print(card.number);
+ }
 
-    return ListView.builder(
+ );
 
-      itemCount: cards.length,
-      itemBuilder: (context, index){
-        return CardTile(card: cards[index]);
-      }
+  return Container();
 
-    );
   }
 }

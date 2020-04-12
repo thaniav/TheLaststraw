@@ -46,7 +46,9 @@ class _SignPageState extends State<SignUpPage> {
                   padding:EdgeInsets.fromLTRB(15.0, 110.0,0.0,0.0),
                   child:Text(
                       'Sign up',
+
                       style:TextStyle(
+                        color: Colors.green,
                           fontSize:80.0,fontWeight:FontWeight.bold)
                   ),
                 ),
@@ -112,9 +114,9 @@ class _SignPageState extends State<SignUpPage> {
                           if(_formKey.currentState.validate()){
                             setState(() =>
                             loading = true );
-                          dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                          dynamic newUser = await _auth.registerWithEmailAndPassword(email, password);
 
-                          if(result== null){
+                          if(newUser== null){
                             setState(() => error = 'please supply a valid email' );
 
                             loading=false;
