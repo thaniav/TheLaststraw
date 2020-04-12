@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
+import 'package:palet/Pages/choosecards.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 
@@ -114,8 +116,6 @@ bool loading = false;
                         if(_formKey.currentState.validate()){
                           setState(() => loading = true);
                           dynamic result= await _auth.signInWithEmailAndPassword(email, password);
-
-
                           if(result== null){
 
                             setState(() => error = 'Could not sign in with those credentials' );

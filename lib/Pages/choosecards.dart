@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:palet/Pages/Add_card.dart';
+import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
@@ -12,9 +13,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ChooseCards extends StatefulWidget {
   static final String id = 'choosecards';
+  final String password;
   final int updateValue;
 
-  const ChooseCards({this.updateValue});
+  const ChooseCards({this.updateValue, this.password});
   @override
   _ChooseCardsState createState() => _ChooseCardsState();
 }
@@ -101,7 +103,7 @@ class CardWidget extends StatefulWidget {
 
 class _CardWidgetState extends State<CardWidget> {
   int balance;
-  String email;
+  String password;
 
 
   @override
@@ -124,19 +126,20 @@ class _CardWidgetState extends State<CardWidget> {
                   if(widget.update!=0) {
                     Alert(
                         context: context,
-                        title: "Verify Email",
+                        title: "Verify Password",
                         content: Column(
                           children: <Widget>[
                             TextField(
+                              obscureText: true,
                               decoration: InputDecoration(
                                 icon: Icon(Icons.lock),
-                                labelText: 'Enter Email',
+                                labelText: 'Enter password',
 
                               ),
 
                               onChanged: (val){
 
-                                email=val;
+                                password=val;
                               },
 
                             ),
@@ -153,7 +156,7 @@ class _CardWidgetState extends State<CardWidget> {
 
 
 
-                              if(user.email==email)
+                              if(p==password)
                               {
                                 Alert(
                                   context: context,
@@ -172,7 +175,9 @@ class _CardWidgetState extends State<CardWidget> {
                                           balance = walletData.balance + widget.update;
                                         });
                                         await DatabaseService(uid: current_user_uid).updateUserBalance(balance);
-
+                                        print(p);
+                                        print(password);
+                                        print(balance);
                                         },
                                       width: 120,
                                     )
@@ -193,11 +198,21 @@ class _CardWidgetState extends State<CardWidget> {
                                         "Okay",
                                         style: TextStyle(color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () async { Navigator.pop(context);
+                                      print(p);
+                                      print(password);
+                                      print(balance);
+                                      await DatabaseService(uid: current_user_uid).updateUserBalance(walletData.balance);
+
+
+
+                                      },
+
                                       width: 120,
                                     )
                                   ],
                                 ).show();
+
 
                               }
 

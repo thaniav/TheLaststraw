@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 
 
+
 class ProfilePage extends StatefulWidget {
   final AuthService _auth = AuthService();
 
@@ -25,13 +26,15 @@ class ProfilePageState extends State<ProfilePage>
 
 
   final _formKey= GlobalKey<FormState>();
+  String birthDateInString;
   String name='';
   String emailID='';
   String phone='';
   String address='';
   String password='';
 
-
+DateTime birthDate=DateTime.now();
+bool isDateSelected;
 
 
   bool _status = true;
@@ -48,7 +51,8 @@ class ProfilePageState extends State<ProfilePage>
   int day = 01;
   int month = 01;
   int year = 2002;
-  DateTime newDt = DateTime.now();
+  DateTime minDateTime = DateTime.now();
+  DateTime maxDateTime=DateTime.now();
   Timestamp myTimeStamp = Timestamp.fromDate(DateTime.now());
   @override
 
@@ -274,6 +278,59 @@ final user = Provider.of<UserID>(context);
                                       )),
 
 
+
+
+
+
+
+                                  Row(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                          child: new Icon(Icons.calendar_today),
+                                          onTap: ()async{
+                                            birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}"; // 08/14/2019
+
+                                            final datePick= await showDatePicker(
+                                                context: context,
+                                                initialDate: new DateTime.now(),
+                                                firstDate: new DateTime(1900),
+                                                lastDate: new DateTime(2100)
+                                            );
+                                            if(datePick!=null && datePick!=birthDate){
+                                              setState(() {
+                                                birthDate=datePick;
+                                                isDateSelected=true;
+
+                                                // put it here
+                                                birthDateInString = "${birthDate.month}/${birthDate.day}/${birthDate.year}"; // 08/14/2019
+
+                                              });
+                                            }
+                                          }
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 25.0, right: 25.0, top: 25.0),
+                                          child: new Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: <Widget>[
+                                              new Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  new Text(
+                                                    birthDateInString,
+                                                    style: TextStyle(
+                                                        fontSize: 16.0,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )),
+                                    ],
+
+                                  ),
 
 
 

@@ -2,17 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/services/database.dart';
-class AuthService{
+
+class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserID _userFromFirebaseUser(FirebaseUser user){
-    return user != null ? UserID(user.uid): null;
+
+  UserID _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? UserID(user.uid) : null;
   }
 
-
-  Stream <UserID> get user{
+  Stream<UserID> get user {
     return _auth.onAuthStateChanged
-        .map((FirebaseUser user)=> _userFromFirebaseUser(user));
+        .map((FirebaseUser user) => _userFromFirebaseUser(user));
   }
   //learn what future is
 //  Future signInAnon() async{
@@ -31,55 +32,42 @@ class AuthService{
 //    }
 //  }
 
-
-  Future signInWithEmailAndPassword(String email, String password) async{
-
-    try{
-      AuthResult result= await _auth.signInWithEmailAndPassword(email: email, password: password);
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      p = password;
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       current_user_uid = user.uid;
-
       return _userFromFirebaseUser(user);
-
-    }
-    catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
-
     }
   }
 
- Future registerWithEmailAndPassword(String email, String password) async{
-
-    try{
-      AuthResult result= await _auth.createUserWithEmailAndPassword(email: email, password: password);
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       current_user_uid = user.uid;
-      await DatabaseService(uid: user.uid).updateUserData(null,null,null,null);
+      await DatabaseService(uid: user.uid)
+          .updateUserData(null, null, null, null);
       await DatabaseService(uid: user.uid).updateUserBalance(1000);
       return _userFromFirebaseUser(user);
-    }
-    catch(e){
-      print(e.toString());
-      return null; 
-
-    }
- }
-
- Future signOut() async{
-    try {
-      return await _auth.signOut();
-
-    }
-    catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
+  }
 
- }
-
-
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
-
-
-

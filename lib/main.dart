@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:palet/Pages/Add_card.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/MobileRecharge.dart';
-import 'package:palet/Pages/MovieTickets.dart';
+import 'package:palet/Pages/BusTickets.dart';
 import 'package:palet/Pages/choosecards.dart';
 
 import 'package:palet/Pages/profile/ProfilePage.dart';
@@ -57,9 +57,10 @@ void main() => runApp(MyApp());
 '/payment':(context) => paymenthaha(),
 '/wallet':(context) => WalletPage(),
   '/recharge':(context) => MobileRecharge(),
-  '/movie':(context) => MovieTickets(),
+  '/movie':(context) => BusTickets(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
+  BusTickets.id: (context) => BusTickets(),
 
 
 

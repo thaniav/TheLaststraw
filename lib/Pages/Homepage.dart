@@ -81,7 +81,11 @@ class Home extends StatelessWidget{
                       _auth.signOut();
                     },
                   ),
-                )
+                ),
+                new Container(
+                    child: CardRoute(cardTitle: 'Bus Tickets',
+                      nextPage: 'bus',icon: Icons.person,)
+                ),
 
 
 

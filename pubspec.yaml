@@ -34,6 +34,8 @@ dependencies:
   flutter_rounded_date_picker: 1.0.3
   awesome_card: ^1.1.0
   rflutter_alert: ^1.0.3
+  flutter_ticket_widget: ^0.0.1
+
 
 
 
@@ -69,6 +71,8 @@ flutter:
     - Asset/blazer1.jpeg
     - Asset/dress1.jpeg
     - Asset/logo.jpeg
+    - Asset/barcode.jpeg
+
 
 
 
