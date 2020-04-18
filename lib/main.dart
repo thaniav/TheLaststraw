@@ -10,10 +10,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:palet/BusTickets.dart';
 import 'package:palet/Pages/Add_card.dart';
+import 'package:palet/Pages/BusTicketForm.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/MobileRecharge.dart';
-import 'package:palet/Pages/BusTickets.dart';
+import 'package:palet/Pages/BusTicketsBLABLA.dart';
+import 'package:palet/Pages/PaymentOptions.dart';
 import 'package:palet/Pages/choosecards.dart';
 
 import 'package:palet/Pages/profile/ProfilePage.dart';
@@ -57,10 +60,12 @@ void main() => runApp(MyApp());
 '/payment':(context) => paymenthaha(),
 '/wallet':(context) => WalletPage(),
   '/recharge':(context) => MobileRecharge(),
-  '/movie':(context) => BusTickets(),
+  '/movie':(context) => BusTicketsBLABLA(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
-  BusTickets.id: (context) => BusTickets(),
+  BusTicketsPage.id: (context) => BusTicketsPage(),
+  PaymentOptions.id: (context) => PaymentOptions(),
+  BusTicketForm.id: (context) => BusTicketForm(),
 
 
 

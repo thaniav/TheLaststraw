@@ -40,11 +40,12 @@ class _WalletPageState extends State<WalletPage> {
       WalletData walletData = snapshot.data;
       balance = walletData.balance;
       return Scaffold(
+        backgroundColor: kMainColor,
         appBar: AppBar(
           centerTitle: true,
           title: Text('Wallet'),
-          elevation: 0,
-          backgroundColor: kPalletColor,
+          elevation: 6.0,
+          backgroundColor: kMainColor,
           brightness: Brightness.dark,
           textTheme: TextTheme(
             title: TextStyle(
@@ -64,9 +65,10 @@ class _WalletPageState extends State<WalletPage> {
               children: <Widget>[
                 SizedBox(height: 20.0,),
                 Container(
+
                   padding: EdgeInsets.only(bottom: 10,),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: kMainColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -74,6 +76,7 @@ class _WalletPageState extends State<WalletPage> {
                     ),
                   ),
                   child: Container(
+
 
                       child: Column(
                         children: <Widget>[
@@ -173,33 +176,46 @@ class _WalletPageState extends State<WalletPage> {
                   ),
                 ),
 
-                SizedBox(height: 30.0,),
-                GestureDetector(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        gradient: LinearGradient(
-                          colors: [Colors.teal, Colors.teal],
-                        )),
-                    margin: EdgeInsets.only(top: 50.0),
-                    width: double.infinity,
-                    height: 50.0,
-                    child: Center(child: Text('Proceed to add',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                SizedBox(height: 70.0,),
 
-                      ),)),
-                  ),
-                  onTap: () {
+                    Container(
+                      height:40.0,
+                      width: 300.0,
+                      child:Material(
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return ChooseCards(updateValue: update,);
-                    }));
-                  }
-                  ,
+                        borderRadius:BorderRadius.circular(20.0),
+                        shadowColor:Colors.greenAccent,
+                        color: kSecondaryColor,
+                        elevation:7.0,
+                        child:GestureDetector(
+                          // not exactly the same as video
+                          onTap:() {
 
-                ),
+                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                              return ChooseCards(updateValue: update,);
+                            }));
+
+                          },
+                          child:Center(
+                            child:Text(
+
+                              'Proceed to Add',
+                              style:TextStyle(
+                                  color:Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily:'Montserrat'
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+
+SizedBox(height: 10.0,)
+
+
+
 
               ],
 

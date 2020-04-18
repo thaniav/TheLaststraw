@@ -1,10 +1,13 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:palet/constants.dart';
 class Home extends StatelessWidget{
   final AuthService _auth = AuthService();
   TabController controller;
@@ -14,88 +17,104 @@ class Home extends StatelessWidget{
 
 
   Widget build( BuildContext context){
+    Widget image_carousel=new Container(
+      height: 200.0,
+      child: Carousel(
+        boxFit: BoxFit.cover,
+        images: [
+          AssetImage('Asset/c1.jpg'),
+          AssetImage('Asset/m1.jpeg'),
+          AssetImage('Asset/m2.jpg'),
+          AssetImage('Asset/w1.jpeg'),
+        ],
+        autoplay: false,
+        // animationCurve: Curves.fastOutSlowIn,
+        //animationDuration: Duration(milliseconds: 1000),
+        dotSize: 4.0,
+        indicatorBgPadding: 2.0,
+        //Navigator.push(context, MaterialPageRoute(builder: (context)=>new Cart())
+      ),
+    );
     bool loading = false;
     return loading? Loading() : StreamProvider<QuerySnapshot>.value(
 
       child: new Scaffold(
+        backgroundColor: kMainColor,
 
         appBar: new AppBar(
-          backgroundColor: Colors.teal[900] ,
+          backgroundColor: kMainColor ,
           centerTitle: true,
           title: Text('Home',
           style: TextStyle(
 
             fontWeight:  FontWeight.bold,
-            color: Colors.teal[900]
+            color: Colors.white
           ),),
-          flexibleSpace:  Container(
-        decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            Colors.tealAccent,
-            Colors.teal[800],
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.add_to_home_screen,color: Colors.white,),onPressed:  () async {
+             await  _auth.signOut();
+            },),
           ],
-        ),
-      ),
-    ),
-        ),
-        body: Padding(
 
-          padding: const EdgeInsets.all(60.0),
-          child: Container(
+        ),
+        body: Container(
+          child: Padding(
 
-            child: GridView.count(
-              crossAxisCount: 2,
-              children: <Widget>[
+            padding: const EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
+            child: Container(
+
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: <Widget>[
 //                new SizedBox(height:5.0, width: 100.0),
 
-                new Container(
+                  new Container(
 
-                  child: CardRoute(cardTitle: 'Wallet',
-                    icon: Icons.mobile_screen_share,
-                  nextPage: 'wallet',),
-                ),
-                new Container(
-                  child: CardRoute(cardTitle: 'Shop',
-                  nextPage: 'profile',icon: Icons.shopping_basket,)
-                ),
-                new Container(
-                  child: CardRoute(cardTitle: 'Profile',
-                    nextPage: 'shopping',icon: Icons.person,)
-                ),
-                new Container(
-                    child: CardRoute(cardTitle: 'Mobile Recharge',
-                      nextPage: 'recharge',icon: Icons.person,)
-                ),
-                new Container(
-                    child: CardRoute(cardTitle: 'Movie Tickets',
-                      nextPage: 'movie',icon: Icons.person,)
-                ),
-                new Container(
-                  child: CardRoute(
-                    cardTitle: 'Logout',
-                    icon: Icons.signal_cellular_off,
-                    onPressed: ()async {
-                      _auth.signOut();
-                    },
+                    child: CardRoute(cardTitle: 'Wallet',
+                      icon: FontAwesomeIcons.wallet,
+                    nextPage: 'wallet',),
                   ),
-                ),
-                new Container(
-                    child: CardRoute(cardTitle: 'Bus Tickets',
-                      nextPage: 'bus',icon: Icons.person,)
-                ),
+                  new Container(
+                    child: CardRoute(cardTitle: 'Shop',
+                    nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
+                  ),
+                  new Container(
+                    child: CardRoute(cardTitle: 'Profile',
+                      nextPage: 'profile',icon: Icons.person,)
+                  ),
+                  new Container(
+                      child: CardRoute(cardTitle: 'Mobile Recharge',
+                        nextPage: 'recharge',icon: FontAwesomeIcons.phone,)
+                  ),
+                  new Container(
+                      child: CardRoute(cardTitle: 'Bus Tickets',
+                        nextPage: 'bus',icon: FontAwesomeIcons.bus,)
+                  ),
+                  new Container(
+                    child: CardRoute(
+                      cardTitle: 'Logout',
+                      icon: FontAwesomeIcons.angry,
+                      onPressed: ()async {
+                        _auth.signOut();
+                      },
+                    ),
+                  ),
 
 
 
 
 
 
-              ],
+
+                ],
+              ),
+
             ),
+
+
           ),
         ),
+
 
       ),
     );
@@ -140,7 +159,7 @@ class CardRoute extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.0),
               gradient: LinearGradient(
-                colors: [Color(0xFF3CCD94),Colors.tealAccent],
+                colors: [Colors.white, Colors.white],
               )
           ),
           child: Column(
@@ -149,13 +168,13 @@ class CardRoute extends StatelessWidget {
             children: <Widget>[
 
               Icon(icon,
-                color: Colors.teal[900],
+                color: Colors.grey[700],
                 size: 50.0,
               ),
               new SizedBox(height: 10.0),
               new Text(cardTitle,
               style: TextStyle(
-                color: Colors.teal[900]
+                color: Colors.grey
               ),),
             ],
           ),

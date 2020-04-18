@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:palet/Pages/Add_card.dart';
+import 'package:palet/Pages/MobileRecharge.dart';
+import 'package:palet/Pages/PaymentOptions.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
+import 'package:palet/components/CreditCard.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
@@ -11,17 +14,21 @@ import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+
 class ChooseCards extends StatefulWidget {
   static final String id = 'choosecards';
   final String password;
   final int updateValue;
 
-  const ChooseCards({this.updateValue, this.password});
+
+
+  ChooseCards({this.updateValue, this.password});
   @override
   _ChooseCardsState createState() => _ChooseCardsState();
 }
 
 class _ChooseCardsState extends State<ChooseCards> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +39,7 @@ class _ChooseCardsState extends State<ChooseCards> {
             List<CardData> cardData = snapshot.data;
             List<CardWidget> cardNumbers = [];
             for (var card in cardData) {
-              final cardNumber = card.number;
-              final cardExpiry = card.exp;
-              final cardName = card.name;
+
 
               final cardWidget = CardWidget(
                 Name: card.name,
@@ -43,6 +48,7 @@ class _ChooseCardsState extends State<ChooseCards> {
                 update: widget.updateValue,
               );
               cardNumbers.add(cardWidget);
+
             }
 
             return Scaffold(
@@ -55,6 +61,7 @@ class _ChooseCardsState extends State<ChooseCards> {
                   Expanded(
                     child: ListView(
                       children: cardNumbers,
+
                     ),
                   ),
                   GestureDetector(
@@ -90,155 +97,4 @@ class _ChooseCardsState extends State<ChooseCards> {
   }
 }
 
-class CardWidget extends StatefulWidget {
-  final String Name;
-  final String expiry;
-  final String number;
-  final int update;
-  CardWidget({this.Name, this.expiry, this.number, this.update});
 
-  @override
-  _CardWidgetState createState() => _CardWidgetState();
-}
-
-class _CardWidgetState extends State<CardWidget> {
-  int balance;
-  String password;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<WalletData>(
-        stream: DatabaseService(uid: current_user_uid).walletData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            WalletData walletData = snapshot.data;
-            return Container(
-              child: InkWell(
-                child: CreditCardWidget(
-                  cardNumber: widget.number,
-                  expiryDate: widget.expiry,
-                  cardHolderName: widget.Name,
-                  cvvCode: '0',
-                  showBackView: false,
-                ),
-                onTap: () async {
-                  if(widget.update!=0) {
-                    Alert(
-                        context: context,
-                        title: "Verify Password",
-                        content: Column(
-                          children: <Widget>[
-                            TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                icon: Icon(Icons.lock),
-                                labelText: 'Enter password',
-
-                              ),
-
-                              onChanged: (val){
-
-                                password=val;
-                              },
-
-                            ),
-                          ],
-                        ),
-                        buttons: [
-                          DialogButton(
-                            onPressed: () async {
-                              Navigator.pop(context);
-
-                              await DatabaseService(uid: current_user_uid)
-                                  .updateUserBalance(balance);
-                              FirebaseUser user = await FirebaseAuth.instance.currentUser();
-
-
-
-                              if(p==password)
-                              {
-                                Alert(
-                                  context: context,
-                                  type: AlertType.success,
-                                  title: "Added Successfully",
-                                  buttons: [
-                                    DialogButton(
-                                      child: Text(
-                                        "COOL",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                        setState(() {
-                                          balance = walletData.balance + widget.update;
-                                        });
-                                        await DatabaseService(uid: current_user_uid).updateUserBalance(balance);
-                                        print(p);
-                                        print(password);
-                                        print(balance);
-                                        },
-                                      width: 120,
-                                    )
-                                  ],
-                                ).show();
-
-                              }
-
-                              else{
-                                Alert(
-                                  context: context,
-                                  type: AlertType.error,
-                                  title: "Transaction Failed",
-                                  desc: "Wrong Credentials",
-                                  buttons: [
-                                    DialogButton(
-                                      child: Text(
-                                        "Okay",
-                                        style: TextStyle(color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () async { Navigator.pop(context);
-                                      print(p);
-                                      print(password);
-                                      print(balance);
-                                      await DatabaseService(uid: current_user_uid).updateUserBalance(walletData.balance);
-
-
-
-                                      },
-
-                                      width: 120,
-                                    )
-                                  ],
-                                ).show();
-
-
-                              }
-
-                            },
-                            child: Text(
-                              "Confirm",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                          DialogButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ]).show();
-                  }
-                },
-              ),
-            );
-          } else {
-            return Loading();
-          }
-        });
-  }
-}

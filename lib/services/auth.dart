@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/services/database.dart';
@@ -15,22 +16,7 @@ class AuthService {
     return _auth.onAuthStateChanged
         .map((FirebaseUser user) => _userFromFirebaseUser(user));
   }
-  //learn what future is
-//  Future signInAnon() async{
-//    try{
-//      AuthResult result = await _auth.signInAnonymously();
-//      FirebaseUser user=result.user;
-//      return _userFromFirebaseUser(user);
-//
-//    }
-//    catch(e){
-//      print(e.toString());
-//      return null;
-//
-//
-//
-//    }
-//  }
+
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -46,14 +32,14 @@ class AuthService {
     }
   }
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String name, String email, String password, String phone) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
       current_user_uid = user.uid;
       await DatabaseService(uid: user.uid)
-          .updateUserData(null, null, null, null);
+          .updateUserData(name, email, phone, null);
       await DatabaseService(uid: user.uid).updateUserBalance(1000);
       return _userFromFirebaseUser(user);
     } catch (e) {
@@ -61,6 +47,38 @@ class AuthService {
       return null;
     }
   }
+
+
+
+
+//  Future<void> verifyPhone(String phone, String verificationID, String email, String password) async {
+//
+//
+//    final PhoneVerificationCompleted verified = (AuthCredential authResult){
+//AuthService().signInWithEmailAndPassword(email, password);
+//    };
+//    final PhoneVerificationFailed verificationFailed = (AuthException authException){
+//print(authException.toString());
+//    };
+//    final PhoneCodeSent smsSent = (String verId, [int forceSend]){
+//verificationID= verId;
+//    };
+//    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId){
+//      verificationID= verId;
+//    };
+//
+//      await _auth.verifyPhoneNumber(
+//          phoneNumber: phone,
+//          timeout: const Duration(seconds: 5),
+//          verificationCompleted: verified,
+//          verificationFailed: verificationFailed,
+//          codeSent: smsSent,
+//          codeAutoRetrievalTimeout: autoTimeout);
+//
+//
+//
+//  }
+
 
   Future signOut() async {
     try {
@@ -70,4 +88,13 @@ class AuthService {
       return null;
     }
   }
+
+
+
+
+
 }
+
+
+
+

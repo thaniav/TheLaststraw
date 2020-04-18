@@ -3,6 +3,7 @@ import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
 import 'package:palet/Pages/choosecards.dart';
 import 'package:palet/components/loading.dart';
+import 'package:palet/constants.dart';
 import 'package:palet/services/auth.dart';
 
 
@@ -47,7 +48,7 @@ bool loading = false;
                   child:Text(
                       'Pallet',
                       style:TextStyle(
-                        color: Colors.green,
+                        color: kMainColor,
                           fontSize:80.0,fontWeight:FontWeight.bold,
                       fontFamily: 'Pacifico'),
 
@@ -108,7 +109,7 @@ bool loading = false;
 
                     borderRadius:BorderRadius.circular(20.0),
                     shadowColor:Colors.greenAccent,
-                    color: Colors.green,
+                    color: kSecondaryColor,
                     elevation:7.0,
                     child:GestureDetector(
                       // not exactly the same as video

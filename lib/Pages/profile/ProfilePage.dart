@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
@@ -35,6 +39,16 @@ class ProfilePageState extends State<ProfilePage>
 
 DateTime birthDate=DateTime.now();
 bool isDateSelected;
+
+//  File sampleimage;
+//
+//  Future getImage() async {
+//    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+//
+//    setState(() {
+//      sampleimage = image;
+//    });
+//  }
 
 
   bool _status = true;
@@ -129,6 +143,19 @@ final user = Provider.of<UserID>(context);
                                                 fit: BoxFit.cover,
                                               ),
                                             )),
+
+
+//                                        Container(
+//                                          child: FlatButton(
+//                                            onPressed: getImage,
+//                                          ),
+//
+//                                        ),
+//                                        Container(
+//                                          child: sampleimage == null ? Text('select image') : enableUpload(),
+//
+//                                        ),
+
                                       ],
                                     ),
                                     Padding(
@@ -654,6 +681,26 @@ return Loading();
       },
     );
   }
+
+//  Widget enableUpload(){
+//    return Container(
+//      child: Column(
+//        children: <Widget>[
+//          Image.file(sampleimage, height: 100.0, width: 100.0,),
+//          RaisedButton(
+//            color: Colors.blue,
+//            onPressed: (){
+//              final StorageReference firebaseRef = FirebaseStorage.instance.ref().child('myimage.jpg');
+//              final StorageUploadTask task =
+//                  firebaseRef.putFile(sampleimage);
+//            },
+//
+//          )
+//        ],
+//      ),
+//    );
+//
+//  }
 
 
 }

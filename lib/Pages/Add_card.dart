@@ -8,6 +8,7 @@ import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 void main() => runApp(MaterialApp(
   home:addcard(),
 ));
@@ -97,7 +98,30 @@ class _addcardState extends State<addcard> {
                                 'cardExpiry': expiryDate,
                                 'cardHolderName': cardHolderName,
                               });
-                            }
+                              Alert(
+                                context: context,
+                                type: AlertType.success,
+                                title: "New Card Added",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "Okay",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+
+                                    },
+
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
+
+                              }
+
+
                             else{
                               setState(() async {
                                 balance=walletData.balance+widget.updateValue;
@@ -117,43 +141,7 @@ class _addcardState extends State<addcard> {
                 ],
               ),
 
-//          ExpansionTile(
-//            trailing: Icon(Icons.credit_card),
-//            title:Text('Credit card',
-//              style:TextStyle(
-//                color:Colors.black,
-//                fontWeight: FontWeight.w500,
-//              ),),
-//            children: <Widget>[
-//              Container(
-//                padding:EdgeInsets.only(top:0.0,left:20.0,right:20.0),
-//                child:Column(
-//                  children: <Widget>[
-//                    CreditCardForm(
-//                        onCreditCardModelChange: null,
 //
-//                    ),
-//
-//                    Container(
-//                      child:CheckboxListTile(
-//                        value:_value2,
-//                        onChanged:_value2Changed,
-//                        title:new Text('Remember card'),
-//                        controlAffinity:ListTileControlAffinity.leading,
-//                      ),
-//                    ),
-//                    Container(
-//                      child: new RaisedButton(onPressed: (){},
-//                        color:Colors.green,
-//                        child:new Text('pay '),),
-//                    )
-//
-//                  ],
-//                ),
-//              ),
-//            ],
-//
-//          ),
             ],
           ),
         );

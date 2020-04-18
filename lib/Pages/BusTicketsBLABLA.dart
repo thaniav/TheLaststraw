@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 
 
-class BusTickets extends StatefulWidget {
-  static final String id='/bus';
+class BusTicketsBLABLA extends StatefulWidget {
+  static final String id='/busblabla';
 
   @override
-  _BusTicketsState createState() => _BusTicketsState();
+  _BusTicketsBLABLAState createState() => _BusTicketsBLABLAState();
 }
 
-class _BusTicketsState extends State<BusTickets> {
+class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

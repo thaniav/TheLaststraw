@@ -25,16 +25,36 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  firebase_auth: ^0.15.5+2
-  cloud_firestore: ^0.13.4
-  provider: ^4.0.4
-  flutter_spinkit: ^4.1.2
+
+
+
+
+
   flutter_credit_card: 0.1.3
-  flutter_rounded_date_picker: 1.0.3
+
   awesome_card: ^1.1.0
   rflutter_alert: ^1.0.3
   flutter_ticket_widget: ^0.0.1
+
+  firebase_auth: ^0.15.4
+  cloud_firestore: ^0.13.0+1
+  provider: ^4.0.2
+  firebase_storage: ^3.1.1
+  font_awesome_flutter: ^8.2.0
+  dropdown_formfield: ^0.1.2
+
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+  flutter_spinkit: ^4.1.1
+  flutter_rounded_date_picker: 1.0.3
+
+
+
+
+
 
 
 
@@ -72,6 +92,10 @@ flutter:
     - Asset/dress1.jpeg
     - Asset/logo.jpeg
     - Asset/barcode.jpeg
+    - Asset/bus1.png
+    - Asset/bus2.png
+    - Asset/bus3.jpg
+    - Asset/bus4.jpg
 
 
 

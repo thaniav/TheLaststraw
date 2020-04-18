@@ -20,18 +20,24 @@ class UserData{
 
 class WalletData{
   final String uid;
-  final String walletID;
   final int balance;
 
-  WalletData({ this.uid, this.walletID, this.balance });
+  WalletData({ this.uid, this.balance });
 
 }
 
 class CardData{
+  final String uid;
   final String exp;
   final String name;
   final String number;
 
-  CardData({this.exp, this.name, this.number});
+  CardData({ this.uid, this.exp, this.name, this.number });
 
 }
+
+
+
+
+
+

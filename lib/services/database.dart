@@ -15,9 +15,11 @@ class DatabaseService{
   DatabaseService({ this.uid });
   final CollectionReference profileCollection = Firestore.instance.collection('profiles');
   final CollectionReference accountCollection = Firestore.instance.collection('accounts');
+  final CollectionReference busTicketCollection = Firestore.instance.collection('bustickets');
 
 
-Future updateUserData(String name, String emailID, String phone, String address) async {
+
+  Future updateUserData(String name, String emailID, String phone, String address) async {
   return await profileCollection.document(uid).setData({
     'name': name,
     'emailID': emailID,
@@ -43,6 +45,14 @@ Future updateUserBalance(int balance) async {
     });
 
   }
+  Future deleteUserCards(String suid) async {
+    accountCollection.document(uid).collection('cards').document(suid).delete();
+
+  }
+
+
+
+
 //profile list from snapshot
 
   List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot){
@@ -92,7 +102,6 @@ Future updateUserBalance(int balance) async {
 WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
   return WalletData(
     uid: uid,
-    walletID: snapshot.data["walletID"],
     balance: snapshot.data["balance"],
 
   );
