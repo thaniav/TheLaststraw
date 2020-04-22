@@ -10,10 +10,12 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
+import 'package:palet/constants.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:palet/Pages/profile/kyc.dart';
 
 class ProfilePage extends StatefulWidget {
   final AuthService _auth = AuthService();
@@ -504,9 +506,24 @@ class ProfilePageState extends State<ProfilePage> {
                                             ),
                                           ],
                                         )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+                                      child: Center(
+                                        child: RaisedButton(
+                                          color: Colors.lightGreen,
+                                          child: Text('KYC',style:TextStyle(fontWeight:FontWeight.bold),
+                                          
+                                          ),
+                                          onPressed: (){
+                                            Navigator.pushNamed(context,'/kyc');
+                                          },
+                                        ),
+                                      ),
+                                    ),
                                     !_status
                                         ? _getActionButtons()
                                         : new Container(),
+                                   
                                   ],
                                 ),
                               ),

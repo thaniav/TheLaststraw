@@ -36,7 +36,7 @@ import 'package:palet/models/user.dart';
 import 'package:palet/payment2.dart';
 import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
-
+import 'package:palet/Pages/profile/kyc.dart';
 
 
 void main() => runApp(MyApp());
@@ -61,6 +61,7 @@ void main() => runApp(MyApp());
 '/wallet':(context) => WalletPage(),
   '/recharge':(context) => MobileRecharge(),
   '/movie':(context) => BusTicketsBLABLA(),
+  '/kyc':(context) =>KYC(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
   BusTicketsPage.id: (context) => BusTicketsPage(),
