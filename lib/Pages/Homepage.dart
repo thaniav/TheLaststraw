@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/components/loading.dart';
+import 'package:palet/models/uid.dart';
+import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,7 @@ class Home extends StatelessWidget{
 
 
   Widget build( BuildContext context){
+
     Widget image_carousel=new Container(
       height: 200.0,
       child: Carousel(
@@ -35,13 +38,93 @@ class Home extends StatelessWidget{
         //Navigator.push(context, MaterialPageRoute(builder: (context)=>new Cart())
       ),
     );
+
     bool loading = false;
     return loading? Loading() : StreamProvider<QuerySnapshot>.value(
 
       child: new Scaffold(
         backgroundColor: kMainColor,
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+
+            StreamBuilder<UserData>(
+              stream: DatabaseService(uid: current_user_uid).userData,
+              builder: (context, snapshot) {
+                UserData userData=snapshot.data;
+               if(snapshot.hasData) {
+                  return UserAccountsDrawerHeader(
+                    accountName: Text(userData.name),
+                    accountEmail: Text(userData.emailID),
+
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.black,
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.teal
+                    ),
+                  );
+                }
+                else{return Container();}
+              }
+            ),
+              //body
+              InkWell(
+                onTap: (){},
+                child: ListTile(
+                  title: Text('HomePage'),
+                  leading: Icon(Icons.home),
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/profile');
+                },
+                child: ListTile(
+                  title: Text('My profile'),
+                  leading: Icon(Icons.person,color: Colors.black,),
+                ),
+              ),
+              InkWell(
+                onTap: (){},
+                child: ListTile(
+                  title: Text('My orders'),
+                  leading: Icon(Icons.shopping_basket,color: Colors.red,),
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                },
+                child: ListTile(
+                  title: Text('Shopping Cart'),
+                  leading: Icon(Icons.shopping_cart,color: Colors.amber,),
+                ),
+              ),
+              Divider(),
+
+              InkWell(
+                onTap: ()async{
+                  await _auth.signOut();
+                },
+                child: ListTile(
+                  title: Text('Logout'),
+                  leading: Icon(Icons.add_to_home_screen,color: Colors.black,),
+                ),
+              ),
+
+
+
+
+            ],
+          ),
+        ),
 
         appBar: new AppBar(
+
           backgroundColor: kMainColor ,
           centerTitle: true,
           title: Text('Home',
@@ -50,11 +133,6 @@ class Home extends StatelessWidget{
             fontWeight:  FontWeight.bold,
             color: Colors.white
           ),),
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.add_to_home_screen,color: Colors.white,),onPressed:  () async {
-             await  _auth.signOut();
-            },),
-          ],
 
         ),
         body: Container(
@@ -78,6 +156,7 @@ class Home extends StatelessWidget{
                     child: CardRoute(cardTitle: 'Shop',
                     nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
                   ),
+
                   new Container(
                     child: CardRoute(cardTitle: 'Profile',
                       nextPage: 'profile',icon: Icons.person,)
@@ -86,16 +165,17 @@ class Home extends StatelessWidget{
                       child: CardRoute(cardTitle: 'Mobile Recharge',
                         nextPage: 'recharge',icon: FontAwesomeIcons.phone,)
                   ),
+
+
                   new Container(
-                      child: CardRoute(cardTitle: 'Bus Tickets',
+                      child: CardRoute(cardTitle: 'Bus',
                         nextPage: 'bus',icon: FontAwesomeIcons.bus,)
                   ),
                   new Container(
                     child: CardRoute(
-                      cardTitle: 'Logout',
-                      icon: FontAwesomeIcons.angry,
-                      onPressed: ()async {
-                        _auth.signOut();
+                      cardTitle: 'Movie',
+                      icon: FontAwesomeIcons.film,
+                      onPressed: () {
                       },
                     ),
                   ),

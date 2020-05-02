@@ -380,6 +380,8 @@ class ProfilePageState extends State<ProfilePage> {
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextFormField(
+                                                keyboardType: TextInputType.phone,
+
                                                 validator: (val) => val.length <
                                                         10
                                                     ? 'Enter a valid mobile number'

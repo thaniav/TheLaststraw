@@ -37,6 +37,8 @@ import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:palet/Pages/profile/kyc.dart';
 
+import 'constants.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -50,7 +52,6 @@ void main() => runApp(MyApp());
       home: Wrapper(),
        routes:
 {
-
 '/home': (context)=> Home(),
 '/profile': (context) => ProfilePage(),
 '/shopping': (context) => ShoppingPage(),

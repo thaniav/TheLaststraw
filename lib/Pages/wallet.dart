@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:palet/Pages/choosecards.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
@@ -145,6 +146,8 @@ class _WalletPageState extends State<WalletPage> {
                 Container(
                   padding: EdgeInsets.only(left: 20.0, right: 20.0),
                   child: TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                     decoration: new InputDecoration(
                       labelText: "Add Money",
                       fillColor: Colors.white,
