@@ -25,7 +25,7 @@ class addcard extends StatefulWidget {
 
 class _addcardState extends State<addcard> {
   String walletID = '';
-  int balance=0;
+  double balance=0;
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -87,7 +87,6 @@ class _addcardState extends State<addcard> {
 
                             onPressed: () async {
                             FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                            /*await DatabaseService(uid: user.uid).updateUserBalance(walletID, walletData.balance);*/
                             if(_value1==true) {
                               _firestore
                                   .collection('accounts')
@@ -97,6 +96,7 @@ class _addcardState extends State<addcard> {
                                 'cardNumber': cardNumber,
                                 'cardExpiry': expiryDate,
                                 'cardHolderName': cardHolderName,
+                                'cvv': cvvCode,
                               });
                               Alert(
                                 context: context,

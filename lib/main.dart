@@ -33,7 +33,6 @@ import 'package:palet/Pages/splashscreen.dart';
 import 'package:palet/Pages/wallet.dart';
 import 'package:palet/Pages/wrapper.dart';
 import 'package:palet/models/user.dart';
-import 'package:palet/payment2.dart';
 import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:palet/Pages/profile/kyc.dart';
@@ -57,7 +56,6 @@ void main() => runApp(MyApp());
 '/shopping': (context) => ShoppingPage(),
 '/signup': (context) => SignUpPage(),
 '/signin': (context) => SignInPage(),
-'/payment':(context) => paymenthaha(),
 '/wallet':(context) => WalletPage(),
   '/recharge':(context) => MobileRecharge(),
   '/movie':(context) => BusTicketsBLABLA(),

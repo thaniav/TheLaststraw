@@ -11,6 +11,7 @@ import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
 import 'package:palet/constants.dart';
+import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
@@ -109,13 +110,15 @@ class ProfilePageState extends State<ProfilePage> {
         builder: (context, snapshot) {
           UserData userData = snapshot.data;
 
-          dob = userData.dob;
-          newDt = dob.toDate();
-          m = newDt.month;
-          d = newDt.day;
-          y = newDt.year;
+
 
           if (snapshot.hasData) {
+            dob = userData.dob;
+            newDt = dob.toDate();
+            m = newDt.month;
+            d = newDt.day;
+            y = newDt.year;
+
             return Scaffold(
                 appBar: AppBar(
                   backgroundColor: Colors.teal[600],
@@ -165,9 +168,11 @@ class ProfilePageState extends State<ProfilePage> {
                                                   height: 140.0,
                                                   decoration: new BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    image: new DecorationImage(
-                                                      image: new ExactAssetImage(
-                                                          'assets/images/as.png'),
+                                                    image: DecorationImage(
+                                                      image: userData.image != null
+                                                          ? (new NetworkImage(
+                                                          userData.image))
+                                                          : new AssetImage('Asset/bus1.png'),
                                                       fit: BoxFit.cover,
                                                     ),
                                                   )),
@@ -184,21 +189,7 @@ class ProfilePageState extends State<ProfilePage> {
 //                                        ),
                                             ],
                                           ),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 90.0, right: 0.0),
-                                              child: new Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Center(
-                                                    child: new Icon(
-                                                        Icons.account_circle,
-                                                        color: Colors.teal,
-                                                        size: 100.0),
-                                                  ),
-                                                ],
-                                              )),
+
                                         ]),
                                   )
                                 ],
@@ -591,6 +582,7 @@ class ProfilePageState extends State<ProfilePage> {
                               });
                             }
 
+
                             setState(() {
                               _status = true;
                               FocusScope.of(context)
@@ -604,7 +596,11 @@ class ProfilePageState extends State<ProfilePage> {
                               phone ?? userData.phone,
                               address ?? userData.address,
                               newdob ?? userData.dob,
+
                             );
+                            await DatabaseService(uid: current_user_uid).updateProfile(uploadedFileURL);
+
+
                           }
                         },
                         shape: new RoundedRectangleBorder(
@@ -666,22 +662,37 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _getEditIcon() {
-    return new GestureDetector(
-      child: new CircleAvatar(
-        backgroundColor: Colors.teal[600],
-        radius: 14.0,
-        child: new Icon(
-          Icons.edit,
-          color: Colors.white,
-          size: 16.0,
-        ),
-      ),
-      onTap: () {
-        setState(() {
-          _status = false;
-        });
-      },
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: current_user_uid).userData,
+        builder: (context, snapshot) {
+          UserData userData = snapshot.data;
+          if (snapshot.hasData){
+            return new GestureDetector(
+              child: new CircleAvatar(
+                backgroundColor: Colors.teal[600],
+                radius: 14.0,
+                child: new Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  if (userData.image != null) {
+                    _status = false;
+                  }
+                });
+              },
+            );
+          }
+          else{
+            return Loading();
+          }
+        }
     );
+
+
   }
 
 //  Widget enableUpload(){

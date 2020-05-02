@@ -41,7 +41,7 @@ class AuthService {
       current_user_uid = user.uid;
       await DatabaseService(uid: user.uid)
           .updateUserData(name, email, phone, null,dob);
-      await DatabaseService(uid: user.uid).updateUserBalance(1000);
+      await DatabaseService(uid: user.uid).updateUserBalance(1000.0);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

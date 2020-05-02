@@ -16,23 +16,24 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class PaymentOptions extends StatefulWidget {
   static String id = '/paymentoptions';
-  final int amount;
+  final double amount;
 
-  PaymentOptions( { this.amount } );
+  PaymentOptions({this.amount});
   @override
   _PaymentOptionsState createState() => _PaymentOptionsState();
 }
 
 class _PaymentOptionsState extends State<PaymentOptions> {
   String walletID = '';
-  int balance = 0;
-  int amt;
+  double balance = 0;
+  double amt;
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
   bool isCvvFocused = false;
   bool _value1 = false;
+  bool _status = true;
 
   String selected = 'Select Promo Code';
 
@@ -43,30 +44,36 @@ class _PaymentOptionsState extends State<PaymentOptions> {
   void _value2Changed(bool value) => setState(() => _value2 = value);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    amt = widget.amount;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<WalletData>(
         stream: DatabaseService(uid: current_user_uid).walletData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             WalletData walletData = snapshot.data;
-            amt=widget.amount;
+
             return StreamBuilder<List<CardData>>(
                 stream: DatabaseService(uid: current_user_uid).cardData,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<CardData> cardData = snapshot.data;
                     List<CardWidget> cardNumbers = [];
-                    List<RadioListTile> radiolist = [];
-                    String _character;
 
                     for (var card in cardData) {
                       final cardWidget = CardWidget(
                         Name: card.name,
                         number: card.number,
                         expiry: card.exp,
+                        cvv: card.cvv,
+                        add: false,
                       );
                       cardNumbers.add(cardWidget);
-                      _character = card.number;
                     }
 
                     return Scaffold(
@@ -172,6 +179,13 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                             setState(() {
                                               selected = val;
                                             });
+                                            if (selected == '20FAB') {
+                                              if (amt > 100) {
+                                                setState(() {
+                                                  amt = amt - 0.2 * amt;
+                                                });
+                                              }
+                                            }
                                           },
                                         ),
                                       ),
@@ -198,7 +212,49 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                     Text('Current Wallet balance: ' +
                                         walletData.balance.toString()),
                                     RaisedButton(
-                                        child: Text('Use'), onPressed: () {})
+                                        child: Text('Use'),
+                                        onPressed: () async {
+                                          balance = walletData.balance - amt;
+                                          if (balance >= 0) {
+                                            await DatabaseService(
+                                                    uid: current_user_uid)
+                                                .updateUserBalance(balance);
+                                            Alert(
+                                              context: context,
+                                              type: AlertType.success,
+                                              title: "Payment Successful",
+                                              buttons: [
+                                                DialogButton(
+                                                  child: Text(
+                                                    "Okay",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  width: 120,
+                                                )
+                                              ],
+                                            ).show();
+                                          } else {
+                                            balance = 0;
+                                            print(amt);
+                                            setState(() {
+                                              print(amt);
+                                              amt = amt - walletData.balance;
+                                              print(amt);
+                                            });
+                                            await DatabaseService(
+                                                    uid: current_user_uid)
+                                                .updateUserBalance(balance);
+                                            if (amt < widget.amount) {
+                                              _status = false;
+                                            }
+                                          }
+                                        })
                                   ],
                                 )
                               ],

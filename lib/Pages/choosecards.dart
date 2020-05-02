@@ -18,7 +18,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class ChooseCards extends StatefulWidget {
   static final String id = 'choosecards';
   final String password;
-  final int updateValue;
+  final double updateValue;
 
 
 
@@ -45,7 +45,9 @@ class _ChooseCardsState extends State<ChooseCards> {
                 Name: card.name,
                 number: card.number,
                 expiry: card.exp,
+                cvv: card.cvv,
                 update: widget.updateValue,
+                add: true,
               );
               cardNumbers.add(cardWidget);
 

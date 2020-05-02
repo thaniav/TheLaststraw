@@ -31,7 +31,7 @@ class DatabaseService{
   });
 }
 
-Future updateUserBalance(int balance) async {
+Future updateUserBalance(double balance) async {
   return await accountCollection.document(uid).setData(
     {
 
@@ -49,6 +49,13 @@ Future updateUserBalance(int balance) async {
   Future deleteUserCards(String suid) async {
     accountCollection.document(uid).collection('cards').document(suid).delete();
 
+  }
+
+  Future updateProfile(String i) async {
+    return await profileCollection.document(uid).updateData(
+        {
+          'image':i
+        });
   }
 
 
@@ -81,7 +88,8 @@ Future updateUserBalance(int balance) async {
      return CardData(
      exp: doc.data["cardExpiry"] ?? '',
        name: doc.data["cardHolderName"] ?? '',
-     number: doc.data["cardNumber"] ?? ''
+     number: doc.data["cardNumber"] ?? '',
+       cvv: doc.data["cvv"] ?? '',
 
    );
   }).toList();
@@ -98,6 +106,7 @@ Future updateUserBalance(int balance) async {
     phone: snapshot.data["phone"],
     address: snapshot.data["address"],
     dob: snapshot.data["dob"],
+    image: snapshot.data["image"],
 
   );
   }

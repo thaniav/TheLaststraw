@@ -21,8 +21,8 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   String walletID='';
-  int balance = 0;
-  int update = 0;
+  double balance = 0;
+  double update = 0;
 
 
 
@@ -169,7 +169,7 @@ class _WalletPageState extends State<WalletPage> {
                       //fillColor: Colors.green
                     ),
                     onChanged: (val) {
-                      setState(() => update = int.parse(val));
+                      setState(() => update =double.parse(val));
                       print(val);
                     },
 

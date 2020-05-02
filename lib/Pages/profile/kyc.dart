@@ -1,6 +1,8 @@
 
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:palet/models/uid.dart';
+import 'package:palet/services/database.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -69,9 +71,17 @@ class _KYCState extends State<KYC> {
   }
   Future uploadpic(BuildContext context) async{
     String filename=basename(imagefile.path);
-    StorageReference firebaseStorageRef=FirebaseStorage.instance.ref().child(filename);
+    StorageReference firebaseStorageRef=FirebaseStorage.instance.ref().child('profiles/$current_user_uid');
     StorageUploadTask uploadTask=firebaseStorageRef.putFile(imagefile);
-    StorageTaskSnapshot taskSnapshot =await uploadTask.onComplete;
+   await uploadTask.onComplete;
+    firebaseStorageRef.getDownloadURL().then((fileURL) {
+      uploadedFileURL = fileURL;
+      print("File url : $uploadedFileURL");
+      DatabaseService(uid: current_user_uid).updateProfile(uploadedFileURL);
+
+
+    });
+
     setState(() {
       print("image uploaded!");
       Scaffold.of(context).showSnackBar(SnackBar(content:Text('picture Uploaded')));
@@ -79,6 +89,7 @@ class _KYCState extends State<KYC> {
     
     
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

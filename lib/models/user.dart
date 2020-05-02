@@ -13,9 +13,11 @@ class UserData{
   final String phone;
   final String address;
   final Timestamp dob;
+  final String image;
 
 
-  UserData({ this.uid, this.name, this.emailID, this.phone, this.address, this.dob });
+
+  UserData({ this.uid, this.name, this.emailID, this.phone, this.address, this.dob, this.image });
 
 
 }
@@ -23,7 +25,7 @@ class UserData{
 
 class WalletData{
   final String uid;
-  final int balance;
+  final double balance;
 
   WalletData({ this.uid, this.balance });
 
@@ -34,8 +36,9 @@ class CardData{
   final String exp;
   final String name;
   final String number;
+  final String cvv;
 
-  CardData({ this.uid, this.exp, this.name, this.number });
+  CardData({ this.uid, this.exp, this.name, this.number, this.cvv });
 
 }
 

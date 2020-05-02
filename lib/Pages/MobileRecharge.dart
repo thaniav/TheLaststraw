@@ -25,7 +25,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
   }
 
   String initial = 'Choose provider';
-  int billAmount = 0;
+  double billAmount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
 
             return Scaffold(
                 appBar: AppBar(
+
                   centerTitle: true,
                   title: Text(
                     'Mobile Recharge',
@@ -95,7 +96,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
                               ],
                               onChanged: (val) {
                                 setState(() {
-                                  billAmount = getBillAmount(val);
+                                  billAmount = getBillAmount(val).toDouble();
                                   initial = val;
                                 });
                               },

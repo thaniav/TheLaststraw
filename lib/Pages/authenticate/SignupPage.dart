@@ -29,12 +29,12 @@ class _SignPageState extends State<SignUpPage> {
   Timestamp dob;
   final TextEditingController phoneNumberController= MaskedTextController(mask: '0000000000');
   final TextEditingController emailController= MaskedTextController(mask: 'A');
-  int day = 01;
-  int month = 01;
-  int year = 2002;
+  int day = 00;
+  int month = 00;
+  int year = 0000;
   DateTime newDt = DateTime.now();
   Timestamp myTimeStamp = Timestamp.fromDate(DateTime.now());
-
+bool isDateSelected=false;
   @override
   Widget build(BuildContext context) {
     return  loading? Loading() :Scaffold(
@@ -123,6 +123,7 @@ class _SignPageState extends State<SignUpPage> {
                      Container(
                        width: 230.0,
                        child: TextFormField(
+                         validator: (val) => !isDateSelected? 'Select Date of birth': null,
                          decoration: InputDecoration(
                              hintText: 'DOB: $day/$month/$year'
                          ),
@@ -131,6 +132,7 @@ enabled: false,
                      ),
                      FlatButton(
                        onPressed: () async {
+                         isDateSelected=true;
                          newDt = await showRoundedDatePicker(
                            context: context,
                            initialDate: DateTime(DateTime.now().year - 18),
@@ -194,7 +196,7 @@ enabled: false,
                             setState(() =>
                             loading = true);
                             dynamic newUser = await _auth
-                                .registerWithEmailAndPassword(name, email, password, phone, dob);
+                                .registerWithEmailAndPassword(name, email.trim(), password, phone, dob);
 
                             if (newUser == null) {
                               setState(() =>
