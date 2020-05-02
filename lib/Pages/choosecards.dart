@@ -86,7 +86,9 @@ class _ChooseCardsState extends State<ChooseCards> {
                       )),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, addcard.id);
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return addcard(updateValue: widget.updateValue,);
+                      }));
                     },
                   ),
                 ],

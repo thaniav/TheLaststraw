@@ -272,7 +272,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                             ExpansionTile(
                               trailing: Icon(Icons.credit_card),
                               title: Text(
-                                'Add Card',
+                                'Pay',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
@@ -338,14 +338,34 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                 ],
                                               ).show();
                                             } else {
-                                              setState(() async {});
+                                              Alert(
+                                                context: context,
+                                                type: AlertType.success,
+                                                title: "Payment successful",
+                                                buttons: [
+                                                  DialogButton(
+                                                    child: Text(
+                                                      "Okay",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                    },
+                                                    width: 120,
+                                                  )
+                                                ],
+                                              ).show();
+
                                               await DatabaseService(
                                                       uid: current_user_uid)
                                                   .updateUserBalance(balance);
                                             }
                                           },
                                           color: Colors.green,
-                                          child: new Text('Add Card'),
+                                          child: new Text('Pay'),
                                         ),
                                       )
                                     ],

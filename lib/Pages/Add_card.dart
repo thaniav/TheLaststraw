@@ -15,7 +15,7 @@ void main() => runApp(MaterialApp(
 
 class addcard extends StatefulWidget {
   static final String id='addcard';
-  final int updateValue;
+  final double updateValue;
 
   addcard({this.updateValue});
 
@@ -36,8 +36,7 @@ class _addcardState extends State<addcard> {
   Firestore _firestore = Firestore.instance;
 
   void _value1Changed(bool value) => setState(() =>  _value1 = value);
-  bool _value2=false;
-  void _value2Changed(bool value) => setState(() =>  _value2 = value);
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserID>(context);
@@ -118,20 +117,45 @@ class _addcardState extends State<addcard> {
                                   )
                                 ],
                               ).show();
+                              setState(()  {
+                                balance=walletData.balance+widget.updateValue;
+                              });
+                              await DatabaseService(uid: current_user_uid).updateUserBalance(balance);
 
                               }
 
 
                             else{
-                              setState(() async {
+                              setState(()  {
                                 balance=walletData.balance+widget.updateValue;
                               });
+                              print(balance);
                               await DatabaseService(uid: current_user_uid).updateUserBalance(balance);
+                              Alert(
+                                context: context,
+                                type: AlertType.success,
+                                title: "Added successfully",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "Okay",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+
+                                    },
+
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
                             }
                           },
                             color:Colors.green,
 
-                            child:new Text('Add Card'),),
+                            child:new Text('Pay'),),
                         )
 
                       ],
