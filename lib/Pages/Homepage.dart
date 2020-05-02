@@ -183,7 +183,9 @@ class Home extends StatelessWidget{
             ),
             Expanded(
                 flex: 1,
-                child:  RawMaterialButton(onPressed: (){},
+                child:  RawMaterialButton(onPressed: (){
+                  Navigator.pushNamed(context, '/spin');
+                },
                   child: Text('Lucky Spin',style: TextStyle(fontStyle: FontStyle.italic),),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   fillColor: Colors.yellowAccent,

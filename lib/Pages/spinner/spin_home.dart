@@ -2,14 +2,14 @@ import 'model.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'board_view.dart';
-class HomePage extends StatefulWidget {
+class Spinhome extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomePageState();
+    return _SpinhomeState();
   }
 }
 
-class _HomePageState extends State<HomePage>
+class _SpinhomeState extends State<Spinhome>
     with SingleTickerProviderStateMixin {
   double _angle = 0;
   double _current = 0;

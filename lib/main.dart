@@ -36,6 +36,7 @@ import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:palet/Pages/profile/kyc.dart';
+import 'package:palet/Pages/spinner/spin_home.dart';
 
 import 'constants.dart';
 
@@ -61,6 +62,7 @@ void main() => runApp(MyApp());
   '/recharge':(context) => MobileRecharge(),
   '/movie':(context) => BusTicketsBLABLA(),
   '/kyc':(context) =>KYC(),
+  '/spin':(context) =>Spinhome(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
   BusTicketsPage.id: (context) => BusTicketsPage(),
