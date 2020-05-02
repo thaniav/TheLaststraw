@@ -99,6 +99,13 @@ flutter:
     - Asset/bus2.png
     - Asset/bus3.jpg
     - Asset/bus4.jpg
+    - Asset/better_luck.png
+    - Asset/ten.png
+    - Asset/fifty.png
+    - Asset/twenty.png
+    - Asset/200.png
+    - Asset/minus_10.png
+    - Asset/minus_100.png
 
 
 

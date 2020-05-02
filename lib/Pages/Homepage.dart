@@ -135,64 +135,65 @@ class Home extends StatelessWidget{
           ),),
 
         ),
-        body: Container(
-          child: Padding(
-
-            padding: const EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
-            child: Container(
-
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              flex:11,
               child: GridView.count(
                 crossAxisCount: 2,
                 children: <Widget>[
-//                new SizedBox(height:5.0, width: 100.0),
-
+                  new SizedBox(height:5.0, width: 100.0),
+          
                   new Container(
-
+            
                     child: CardRoute(cardTitle: 'Wallet',
                       icon: FontAwesomeIcons.wallet,
-                    nextPage: 'wallet',),
+                      nextPage: 'wallet',),
                   ),
                   new Container(
-                    child: CardRoute(cardTitle: 'Shop',
-                    nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
+                      child: CardRoute(cardTitle: 'Shop',
+                        nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
                   ),
-
                   new Container(
-                    child: CardRoute(cardTitle: 'Profile',
-                      nextPage: 'profile',icon: Icons.person,)
+                      child: CardRoute(cardTitle: 'Profile',
+                        nextPage: 'profile',icon: Icons.person,)
                   ),
                   new Container(
                       child: CardRoute(cardTitle: 'Mobile Recharge',
                         nextPage: 'recharge',icon: FontAwesomeIcons.phone,)
                   ),
-
-
                   new Container(
-                      child: CardRoute(cardTitle: 'Bus',
+                      child: CardRoute(cardTitle: 'Bus Tickets',
                         nextPage: 'bus',icon: FontAwesomeIcons.bus,)
                   ),
                   new Container(
                     child: CardRoute(
-                      cardTitle: 'Movie',
-                      icon: FontAwesomeIcons.film,
-                      onPressed: () {
+                      cardTitle: 'Logout',
+                      icon: FontAwesomeIcons.angry,
+                      onPressed: ()async {
+                        _auth.signOut();
                       },
                     ),
                   ),
-
-
-
-
-
-
-
+        
+        
                 ],
               ),
-
+    
             ),
-
-
-          ),
+            Expanded(
+                flex: 1,
+                child:  RawMaterialButton(onPressed: (){},
+                  child: Text('Lucky Spin',style: TextStyle(fontStyle: FontStyle.italic),),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  fillColor: Colors.yellowAccent,
+                )
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+  
+          ],
         ),
 
 
