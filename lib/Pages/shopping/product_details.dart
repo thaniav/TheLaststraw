@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:palet/constants.dart';
+
 class ProductDetails extends StatefulWidget {
   final product_detail_name;
   final product_detail_new_price;
   final product_detail_old_price;
   final product_detail_picture;
+  final product_detail_detail;
 
   ProductDetails({
    this.product_detail_name,
     this.product_detail_new_price,
     this.product_detail_old_price,
-    this.product_detail_picture
+    this.product_detail_picture,
+    this.product_detail_detail,
 
 });
 
@@ -19,12 +23,15 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  String alertBoxText1="Color";
+  String alertBoxText3="Qty";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.teal,
+        backgroundColor: kMainColor,
         centerTitle: true,
         title: Text('ShoppApp'),
         actions: <Widget>[
@@ -52,13 +59,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                   title: Row(
                     children: <Widget>[
                       Expanded(
-                        child: Text("\$${widget.product_detail_old_price}",style: TextStyle(
+                        child: Text("Rs${widget.product_detail_old_price}",style: TextStyle(
                           color: Colors.grey,decoration: TextDecoration.lineThrough
                         ),),
 
                       ),
                       Expanded(
-                        child: Text("\$${widget.product_detail_new_price}",style: TextStyle(
+                        child: Text("Rs${widget.product_detail_new_price}",style: TextStyle(
                           color: Colors.red,fontWeight: FontWeight.bold
                         ),),
 
@@ -79,9 +86,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onPressed: (){
                     showDialog(context: context,builder:(context){
                       return new AlertDialog(
-                        title: Text("Size"),
+                        title: Text("Colour"),
                         content: Text("choose the color"),
                         actions: <Widget>[
+                      DropdownButton<String>(
+                      value: alertBoxText1,
+                        icon: Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(color: Colors.teal),
+
+                        onChanged: (String newValue) {
+                          setState(() {
+                            alertBoxText1 = newValue;
+                          });
+                        },
+                        items: <String>['Color', 'Red', 'Black', 'White']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                           MaterialButton(onPressed: (){
                             Navigator.of(context).pop(context);
                           },
@@ -99,7 +126,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: Text("Size",style: TextStyle(
+                        child: Text(alertBoxText1,style: TextStyle(
                             color: Colors.black
                         ),),
                       ),
@@ -113,43 +140,75 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               //=========COLOR BUTTON======
-              Expanded(
-                child: MaterialButton(
-                  onPressed: (){
-                    showDialog(context: context,builder: (context){
-                      return AlertDialog(
-                        title: Text("Color"),
-                        content: Text("choose color"),
-                        actions: <Widget>[
-                          MaterialButton(onPressed: (){
-                            Navigator.of(context).pop(context);
-                          },
-                          child: Text("Close",style: TextStyle(
-                              color: Colors.teal
-                          ),),)
-                        ],
-                      );
-                    });
-                  },
-                  color: Colors.white,
-                  textColor: Colors.grey,
-                  elevation: 0.2,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text("Color",style: TextStyle(
-                          color: Colors.black
-                        ),
-                        ),
-                      ),
-
-                      Expanded(
-                        child:Icon(Icons.arrow_drop_down),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+//              Expanded(
+//                child: MaterialButton(
+//                  onPressed: (){
+//                    showDialog(context: context,builder: (context){
+//                      return AlertDialog(
+//                        title: Text(alertBoxText2),
+//                        content: Text("choose color"),
+//                        actions: <Widget>[
+//                          FlatButton(onPressed: (){
+//                            setState(() {
+//                              alertBoxText2="Red";
+//                              print(alertBoxText2);
+//                            });
+//
+//                          },
+//                            child: Text("Red",style: TextStyle(
+//                                color: Colors.redAccent
+//                            ),
+//                            ),
+//                          ),
+//                          MaterialButton(onPressed: (){
+//                            setState(() {
+//                              alertBoxText2="Black";
+//                            });
+//
+//                          },
+//                            child: Text("Black",style: TextStyle(
+//                                color: Colors.black54
+//                            ),),),
+//                          MaterialButton(onPressed: (){
+//                            setState(() {
+//                              alertBoxText2="White";
+//                            });
+//
+//                          },
+//                            child: Text("White",style: TextStyle(
+//                                color: Colors.blueGrey
+//                            ),),),
+//
+//                          MaterialButton(onPressed: (){
+//                            Navigator.of(context).pop(context);
+//                            print(alertBoxText2);
+//                          },
+//                          child: Text("Close",style: TextStyle(
+//                              color: Colors.teal
+//                          ),),)
+//                        ],
+//                      );
+//                    });
+//                  },
+//                  color: Colors.white,
+//                  textColor: Colors.grey,
+//                  elevation: 0.2,
+//                  child: Row(
+//                    children: <Widget>[
+//                      Expanded(
+//                        child: Text("Color",style: TextStyle(
+//                          color: Colors.black
+//                        ),
+//                        ),
+//                      ),
+//
+//                      Expanded(
+//                        child:Icon(Icons.arrow_drop_down),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//              ),
               //=========QUANTITY BUTTON=========
               Expanded(
                 child: MaterialButton(
@@ -159,6 +218,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                         title: Text("Qty"),
                         content: Text("choose"),
                         actions: <Widget>[
+                          DropdownButton<String>(
+                            value: alertBoxText3,
+                            icon: Icon(Icons.arrow_downward),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: TextStyle(color: Colors.teal),
+
+                            onChanged: (String newValue) {
+                              setState(() {
+                                alertBoxText3 = newValue;
+                              });
+                            },
+                            items: <String>['Qty', '1', '2', '3']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+
+
                           MaterialButton(
                             onPressed: (){
                               Navigator.of(context).pop(context);
@@ -178,7 +259,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: Text("Qty",style: TextStyle(
+                        child: Text(alertBoxText3,style: TextStyle(
                             color: Colors.black
                         ),),
                       ),
@@ -214,8 +295,8 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
           Divider(),
           ListTile(
-            title: Text("Product details"),
-            subtitle: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+            title: Text("Product description"),
+            subtitle: Text(widget.product_detail_detail),
           ),
         ],
       ),

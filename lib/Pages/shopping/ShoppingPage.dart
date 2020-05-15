@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:palet/Pages/shopping/Shopping_list_new.dart';
 import 'package:palet/constants.dart';
 import '../../components/HorizontalList.dart';
 import '../../components/products.dart';
 import '../Cart.dart';
-import 'Shopping_cart.dart';
+import 'package:palet/Pages/shopping/Shopping_cart_new.dart';
+import 'package:palet/Pages/shopping/Shopping_search.dart';
 
 class ShoppingPage extends StatefulWidget {
+
+
   @override
   _ShoppingPageState createState() => _ShoppingPageState();
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
+
   @override
   Widget build(BuildContext context) {
     Widget image_carousel=new Container(
@@ -19,10 +24,10 @@ class _ShoppingPageState extends State<ShoppingPage> {
       child: Carousel(
         boxFit: BoxFit.cover,
         images: [
-          AssetImage('Asset/c1.jpg'),
-          AssetImage('Asset/m1.jpeg'),
-          AssetImage('Asset/m2.jpg'),
-          AssetImage('Asset/w1.jpeg'),
+          AssetImage('Asset/shoppingImages/Carousel.jpeg'),
+          AssetImage('Asset/shoppingImages/Carousel1.jpeg'),
+          AssetImage('Asset/shoppingImages/Carousel2.jpeg'),
+          AssetImage('Asset/shoppingImages/Carousel3.jpeg'),
         ],
         autoplay: false,
         // animationCurve: Curves.fastOutSlowIn,
@@ -33,22 +38,28 @@ class _ShoppingPageState extends State<ShoppingPage> {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: kMainColor,
-        centerTitle: true,
+       appBar:AppBar(
+         elevation: 0.0,
+         backgroundColor: kMainColor,
+         centerTitle: true,
 
-        title: Text('ShoppApp'),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.search,color: Colors.white,),onPressed: (){},),
-          IconButton(icon: Icon(Icons.shopping_cart,color: Colors.white,),onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>new Shoppingcart()));
+         title: Text('ShoppApp'),
+         actions: <Widget>[
+           IconButton(icon: Icon(Icons.search,color: Colors.white,),onPressed: (){
+             showSearch(context: context, delegate: DataSearch());
+           },),
+           IconButton(icon: Icon(Icons.list,color: Colors.white,),onPressed: (){
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>new Shopping_list()));
 
-          },)
+           },),
+           IconButton(icon: Icon(Icons.shopping_cart,color: Colors.white,),onPressed: (){
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>new Newcart()));
 
-        ],
+           },)
 
-      ),
+         ],
+
+       ),
 
 
 

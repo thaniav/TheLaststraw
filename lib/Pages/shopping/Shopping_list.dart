@@ -24,8 +24,8 @@ class _ShoppingListState extends State<ShoppingList> {
 
 
    List<ProductModel> products=[
-     ProductModel("Blazer",80,0),
-     ProductModel("Red dress",50,0)
+     ProductModel("Blazer",80,0,120,'',''),
+     ProductModel("Red dress",50,0,120,'','')
    ];
 
    @override
