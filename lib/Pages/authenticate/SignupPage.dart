@@ -69,6 +69,7 @@ bool isDateSelected=false;
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
                       validator: (val) => val.isEmpty? 'Enter your name': null,
                       decoration: InputDecoration(
                         labelText: 'Name',

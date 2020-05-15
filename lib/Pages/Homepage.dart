@@ -2,6 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:palet/Pages/spinner/spin_home.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
@@ -64,7 +65,7 @@ class Home extends StatelessWidget{
                       ),
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.teal
+                        color: kSecondaryColor
                     ),
                   );
                 }
@@ -104,6 +105,15 @@ class Home extends StatelessWidget{
                   leading: Icon(Icons.shopping_cart,color: Colors.amber,),
                 ),
               ),
+              InkWell(
+                onTap: (){
+                  
+                },
+                child: ListTile(
+                  title: Text('Change Theme'),
+                  leading: Icon(Icons.palette),
+                ),
+              ),
               Divider(),
 
               InkWell(
@@ -119,20 +129,27 @@ class Home extends StatelessWidget{
 
 
 
+
             ],
           ),
         ),
 
         appBar: new AppBar(
 
+          elevation: 0.0,
+
           backgroundColor: kMainColor ,
           centerTitle: true,
-          title: Text('Home',
-          style: TextStyle(
+          title: Row(
+            children: <Widget>[
+              Text('Home',
+              style: TextStyle(
 
-            fontWeight:  FontWeight.bold,
-            color: Colors.white
-          ),),
+                fontWeight:  FontWeight.bold,
+                color: Colors.white
+              ),),
+            ],
+          ),
 
         ),
         body: Column(
@@ -142,10 +159,9 @@ class Home extends StatelessWidget{
               child: GridView.count(
                 crossAxisCount: 2,
                 children: <Widget>[
-                  new SizedBox(height:5.0, width: 100.0),
           
                   new Container(
-            
+
                     child: CardRoute(cardTitle: 'Wallet',
                       icon: FontAwesomeIcons.wallet,
                       nextPage: 'wallet',),
@@ -167,14 +183,10 @@ class Home extends StatelessWidget{
                         nextPage: 'bus',icon: FontAwesomeIcons.bus,)
                   ),
                   new Container(
-                    child: CardRoute(
-                      cardTitle: 'Logout',
-                      icon: FontAwesomeIcons.angry,
-                      onPressed: ()async {
-                        _auth.signOut();
-                      },
-                    ),
+                      child: CardRoute(cardTitle: 'Movie Tickets',
+                        nextPage: 'recharge',icon: FontAwesomeIcons.film,)
                   ),
+
         
         
                 ],
@@ -185,6 +197,7 @@ class Home extends StatelessWidget{
                 flex: 1,
                 child:  RawMaterialButton(onPressed: (){
                   Navigator.pushNamed(context, '/spin');
+                  Navigator.pushNamed(context, SpinnerPage.id);
                 },
                   child: Text('Lucky Spin',style: TextStyle(fontStyle: FontStyle.italic),),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

@@ -1,15 +1,66 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:palet/Pages/PaymentOptions.dart';
 
 
 class BusTicketsBLABLA extends StatefulWidget {
   static final String id='/busblabla';
+  final String fromCity;
+  final String toCity;
+  final String provider;
+  final String noOfTickets;
+  final String age;
+  final String passenger;
+  final double amount;
+  final Timestamp dateOfTravel;
+
+
+
+
+   BusTicketsBLABLA({this.fromCity, this.toCity, this.provider, this.noOfTickets, this.age, this.passenger, this.amount, this.dateOfTravel});
+
+
 
   @override
   _BusTicketsBLABLAState createState() => _BusTicketsBLABLAState();
 }
 
 class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
+  String fromCity;
+  String toCity;
+  String provider;
+  String noOfTickets;
+  String age;
+  String passenger;
+
+  double amount;
+  Timestamp dateOfTravel;
+  int month;
+  int day;
+  int year;
+
+  @override
+  void initState() {
+
+
+    passenger=widget.passenger;
+    age=widget.age;
+    noOfTickets=widget.noOfTickets;
+    fromCity=widget.fromCity;
+    toCity=widget.toCity;
+    dateOfTravel=widget.dateOfTravel;
+    provider=widget.provider;
+    amount=widget.amount;
+
+    month=dateOfTravel.toDate().month;
+    day=dateOfTravel.toDate().day;
+    year=dateOfTravel.toDate().year;
+
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,37 +79,40 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      width: 120.0,
-                      height: 25.0,
+                      width: 130.0,
+                      height: 40.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         border: Border.all(width: 1.0, color: Colors.green),
                       ),
                       child: Center(
-                        child: Text(
-                          'Business Class',
-                          style: TextStyle(color: Colors.green),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            provider,
+                            style: TextStyle(color: Colors.green),
+                          ),
                         ),
                       ),
                     ),
                     Row(
                       children: <Widget>[
                         Text(
-                          'SLM',
+                          fromCity,
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Icon(
-                            Icons.flight_takeoff,
+                            FontAwesomeIcons.bus,
                             color: Colors.pink,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            'BTL',
+                            toCity,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -83,16 +137,16 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
                   child: Column(
                     children: <Widget>[
                       ticketDetailsWidget(
-                          'Passengers', 'Ilona', 'Date', '24-12-2018'),
+                          'Passenger', passenger, 'Date', '$day-$month-$year'),
                       Padding(
                         padding: const EdgeInsets.only(top: 12.0, right: 40.0),
                         child: ticketDetailsWidget(
-                            'Bus', '76836A45', 'Age', '20'),
+                            'Bus', '76836A45', 'Age', age),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12.0, right: 40.0),
                         child: ticketDetailsWidget(
-                            'Tickets', '3', 'Seat', '21B'),
+                            'Tickets', noOfTickets, 'Seat', '21B'),
                       ),
                     ],
                   ),
@@ -118,10 +172,31 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
                       color: Colors.black,
                     ),
                   ),
+                ),
+                SizedBox(height: 20.0,),
+                Center(
+                  child: RaisedButton(
+
+                    elevation: 4.0,
+                    color: Colors.black,
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return PaymentOptions(
+                              amount: amount,
+                            );
+                          }));
+
+                    },
+                    child: Text('Confirm', style: TextStyle(
+                      color: Colors.white
+                    ),),
+                  ),
                 )
               ],
             ),
           ),
+
         ),
       ),
     );

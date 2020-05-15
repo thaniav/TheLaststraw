@@ -267,6 +267,7 @@ class ProfilePageState extends State<ProfilePage> {
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextFormField(
+                                                textCapitalization: TextCapitalization.sentences,
                                                 initialValue:
                                                     userData.name ?? null,
                                                 decoration:
@@ -380,6 +381,7 @@ class ProfilePageState extends State<ProfilePage> {
                                           children: <Widget>[
                                             new Flexible(
                                               child: new TextFormField(
+                                                maxLength: 10,
                                                 keyboardType: TextInputType.phone,
 
                                                 validator: (val) => val.length <
@@ -697,24 +699,5 @@ class ProfilePageState extends State<ProfilePage> {
 
   }
 
-//  Widget enableUpload(){
-//    return Container(
-//      child: Column(
-//        children: <Widget>[
-//          Image.file(sampleimage, height: 100.0, width: 100.0,),
-//          RaisedButton(
-//            color: Colors.blue,
-//            onPressed: (){
-//              final StorageReference firebaseRef = FirebaseStorage.instance.ref().child('myimage.jpg');
-//              final StorageUploadTask task =
-//                  firebaseRef.putFile(sampleimage);
-//            },
-//
-//          )
-//        ],
-//      ),
-//    );
-//
-//  }
 
 }

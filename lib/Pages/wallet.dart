@@ -45,7 +45,7 @@ class _WalletPageState extends State<WalletPage> {
         appBar: AppBar(
           centerTitle: true,
           title: Text('Wallet'),
-          elevation: 6.0,
+          elevation: 0.0,
           backgroundColor: kMainColor,
           brightness: Brightness.dark,
           textTheme: TextTheme(
@@ -56,10 +56,12 @@ class _WalletPageState extends State<WalletPage> {
           ),
         ),
         body: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          height: MediaQuery.of(context).size.height - 10.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+            BorderRadius.only(topLeft: Radius.circular(110.0), topRight: Radius.circular(110.0), bottomLeft: Radius.circular(110.0), bottomRight: Radius.circular(110.0) ),
+          ),
           child: SingleChildScrollView(
             child: Column(
 
@@ -67,15 +69,7 @@ class _WalletPageState extends State<WalletPage> {
                 SizedBox(height: 20.0,),
                 Container(
 
-                  padding: EdgeInsets.only(bottom: 10,),
-                  decoration: BoxDecoration(
-                    color: kMainColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
 
-                    ),
-                  ),
                   child: Container(
 
 
@@ -114,20 +108,18 @@ class _WalletPageState extends State<WalletPage> {
                         ],
                       ),
                       margin: EdgeInsets.all(20),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      height: 200,
+                      width: 250.0,
+                      height: 150,
+
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           gradient: LinearGradient(
                               colors: [
-                                Colors.redAccent,
-                                Colors.yellowAccent
+                                kSecondaryColor, kPinkColor
 
                               ]
-                          )
+                          ),
+                        backgroundBlendMode: BlendMode.darken
                       )
                   ),
 

@@ -37,6 +37,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
 
             return Scaffold(
                 appBar: AppBar(
+                  elevation: 0.0,
 
                   centerTitle: true,
                   title: Text(
@@ -106,6 +107,8 @@ class _MobileRechargeState extends State<MobileRecharge> {
                         Expanded(
                           flex: 1,
                           child: TextFormField(
+                            maxLength: 10,
+                            keyboardType: TextInputType.number,
                             initialValue: userData.phone,
                             decoration: new InputDecoration(
                               labelText: "Enter Phone number",

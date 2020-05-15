@@ -32,6 +32,7 @@ class _addcardState extends State<addcard> {
   String cvvCode = '';
   bool isCvvFocused = false;
   bool _value1=false;
+  bool isValidate=false;
 
   Firestore _firestore = Firestore.instance;
 
@@ -178,6 +179,12 @@ class _addcardState extends State<addcard> {
       expiryDate = creditCardModel.expiryDate;
       cardHolderName = creditCardModel.cardHolderName;
       cvvCode = creditCardModel.cvvCode;
+
+      if(cardNumber.isNotEmpty && expiryDate.isNotEmpty && cardHolderName.isNotEmpty && cvvCode.isNotEmpty ) {
+        print("Validated");
+        isValidate=true;
+      }
+
     });
 
   }

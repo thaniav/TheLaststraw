@@ -10,12 +10,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:palet/BusTickets.dart';
+import 'package:palet/Pages/BusBooking/BusTickets.dart';
 import 'package:palet/Pages/Add_card.dart';
-import 'package:palet/Pages/BusTicketForm.dart';
+import 'package:palet/Pages/BusBooking/BusTicketForm.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/MobileRecharge.dart';
-import 'package:palet/Pages/BusTicketsBLABLA.dart';
+import 'package:palet/Pages/BusBooking/BusTicketsBLABLA.dart';
 import 'package:palet/Pages/PaymentOptions.dart';
 import 'package:palet/Pages/choosecards.dart';
 
@@ -29,6 +29,7 @@ import 'package:palet/Pages/payment.dart';
 import 'package:palet/Pages/shopping/Shopping_cart.dart';
 import 'package:palet/Pages/shopping/Shopping_list.dart';
 import 'package:palet/Pages/shopping/creditcard.dart';
+import 'package:palet/Pages/spinner/spin_home.dart';
 import 'package:palet/Pages/splashscreen.dart';
 import 'package:palet/Pages/wallet.dart';
 import 'package:palet/Pages/wrapper.dart';
@@ -36,7 +37,6 @@ import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:palet/Pages/profile/kyc.dart';
-import 'package:palet/Pages/spinner/spin_home.dart';
 
 import 'constants.dart';
 
@@ -60,20 +60,16 @@ void main() => runApp(MyApp());
 '/signin': (context) => SignInPage(),
 '/wallet':(context) => WalletPage(),
   '/recharge':(context) => MobileRecharge(),
-  '/movie':(context) => BusTicketsBLABLA(),
+  BusTicketsBLABLA.id :(context) => BusTicketsBLABLA(),
   '/kyc':(context) =>KYC(),
-  '/spin':(context) =>Spinhome(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
   BusTicketsPage.id: (context) => BusTicketsPage(),
   PaymentOptions.id: (context) => PaymentOptions(),
   BusTicketForm.id: (context) => BusTicketForm(),
+SpinnerPage.id: (context) => SpinnerPage(),
 
-  // Lets just put a comment here
-// lalala
-//beep bop
-       //beeeeeeep
-//haha
+
 
 }
 

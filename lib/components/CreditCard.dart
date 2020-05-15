@@ -49,6 +49,7 @@ class _CardWidgetState extends State<CardWidget> {
                   showBackView: false,
                 ),
                 onTap: () async {
+
                   if (widget.add) {
                     if (widget.update != 0) {
                       Alert(
