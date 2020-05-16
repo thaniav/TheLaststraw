@@ -37,10 +37,8 @@ import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:palet/Pages/profile/kyc.dart';
-
+import 'package:palet/Pages/profile/changepw.dart';
 import 'constants.dart';
-
-
 void main() => runApp(MyApp());
 
  class MyApp extends StatelessWidget {
@@ -62,6 +60,7 @@ void main() => runApp(MyApp());
   '/recharge':(context) => MobileRecharge(),
   BusTicketsBLABLA.id :(context) => BusTicketsBLABLA(),
   '/kyc':(context) =>KYC(),
+  '/changepw':(context) =>Changepw(),
   ChooseCards.id: (context) => ChooseCards(),
 addcard.id: (context) => addcard(),
   BusTicketsPage.id: (context) => BusTicketsPage(),

@@ -182,7 +182,26 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                             if (selected == '20FAB') {
                                               if (amt > 100) {
                                                 setState(() {
-                                                  amt = amt - 0.2 * amt;
+                                                  amt = amt - 0.1 * amt;
+                                                });
+                                              }
+                                            }
+                                            else if (selected == 'POB125') {
+                                              if (amt > 100) {
+                                                setState(() {
+                                                  amt = amt - 0.25 * amt;
+                                                });
+                                              }
+                                            }
+                                            else if (selected == 'PALLET75') {
+                                              if (amt > 75) {
+                                                setState(() {
+                                                  amt = amt - 75;
+                                                });
+                                              }
+                                              else{
+                                                setState(() {
+                                                  amt = 0;
                                                 });
                                               }
                                             }
