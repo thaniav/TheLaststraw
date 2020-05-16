@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/shopping/Shopping_list_new_Mobile.dart';
 import 'package:palet/components/New_products.dart';
 import 'package:palet/constants.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new.dart';
 
+
 Shopping_list obj = new Shopping_list();
 int s=0;
 List<ProductModel> cart = obj.cart_send();
+//Shopping_list_Mobile obj1=new Shopping_list_Mobile();
+//List<ProductModel> cart1=obj1.cart_send();
+//List<ProductModel> cart=cart1+cart2;
 
 
 class Newcart extends StatefulWidget {
@@ -14,6 +19,13 @@ class Newcart extends StatefulWidget {
     cart.clear();
 
   }
+  cart_add(ProductModel fromProductDetail)
+  {
+    cart.add(fromProductDetail);
+    s=s+fromProductDetail.price*fromProductDetail.quantity;
+
+  }
+
 
 
 

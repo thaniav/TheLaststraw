@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:palet/components/New_products.dart';
 import 'package:palet/constants.dart';
-
+import 'package:palet/Pages/shopping/Shopping_cart_new.dart';
+import 'package:palet/Pages/shopping/Shopping_search.dart';
+Newcart obj=new Newcart();
 class ProductDetails extends StatefulWidget {
+  
   final product_detail_name;
   final product_detail_new_price;
   final product_detail_old_price;
@@ -35,7 +39,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         centerTitle: true,
         title: Text('ShoppApp'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search,color: Colors.white,),onPressed: (){},),
+          IconButton(icon: Icon(Icons.search,color: Colors.white,),onPressed: (){
+            showSearch(context: context, delegate: DataSearch());
+          },),
           //IconButton(icon: Icon(Icons.shopping_cart,color: Colors.white,),onPressed: (){},)
 
         ],
@@ -99,6 +105,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         onChanged: (String newValue) {
                           setState(() {
                             alertBoxText1 = newValue;
+                            Navigator.of(context).pop(context);
                           });
                         },
                         items: <String>['Color', 'Red', 'Black', 'White']
@@ -109,12 +116,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           );
                         }).toList(),
                       ),
-                          MaterialButton(onPressed: (){
-                            Navigator.of(context).pop(context);
-                          },
-                          child: Text("Close",style: TextStyle(
-                              color: Colors.teal
-                          ),),)
+
                         ],
 
                       );
@@ -143,17 +145,17 @@ class _ProductDetailsState extends State<ProductDetails> {
 //              Expanded(
 //                child: MaterialButton(
 //                  onPressed: (){
-//                    showDialog(context: context,builder: (context){
-//                      return AlertDialog(
-//                        title: Text(alertBoxText2),
-//                        content: Text("choose color"),
-//                        actions: <Widget>[
-//                          FlatButton(onPressed: (){
-//                            setState(() {
-//                              alertBoxText2="Red";
-//                              print(alertBoxText2);
-//                            });
 //
+// showDialog(context: context,builder: (context){
+////                      return AlertDialog(
+////                        title: Text(alertBoxText2),
+////                        content: Text("choose color"),
+////                        actions: <Widget>[
+////                          FlatButton(onPressed: (){
+////                            setState(() {
+////                              alertBoxText2="Red";
+////                              print(alertBoxText2);
+////                            });
 //                          },
 //                            child: Text("Red",style: TextStyle(
 //                                color: Colors.redAccent
@@ -228,6 +230,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             onChanged: (String newValue) {
                               setState(() {
                                 alertBoxText3 = newValue;
+                                Navigator.of(context).pop(context);
                               });
                             },
                             items: <String>['Qty', '1', '2', '3']
@@ -238,17 +241,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               );
                             }).toList(),
                           ),
-
-
-                          MaterialButton(
-                            onPressed: (){
-                              Navigator.of(context).pop(context);
-                            },
-                            child: Text("Close",style: TextStyle(
-                              color: Colors.teal
-                            ),
-                            ),
-                          )
                         ],
                       );
                     });
@@ -278,16 +270,47 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: <Widget>[
               Expanded(
                 child: MaterialButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    setState(() {
+                      if(alertBoxText1=='Color'||alertBoxText3=='Qty')
+                        {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>new  AlertDialog(
+                            title: Text('Invalid Choice'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('Please Select a valid '+alertBoxText3+' or '+alertBoxText1),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Close'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ), ));
+
+
+                        }
+                      obj.cart_add(ProductModel(widget.product_detail_name,widget.product_detail_new_price,int.parse(alertBoxText3),widget.product_detail_old_price,widget.product_detail_picture,widget.product_detail_detail));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>new Newcart()));
+                    });
+
+
+                  },
                   color: Colors.red,
                   textColor: Colors.white,
                   elevation: 0.2,
-                  child: Text("Buy now")
+                  child: Text("Add to Cart"),
+
                 ),
               ),
-              IconButton(icon: Icon(Icons.add_shopping_cart,color: Colors.red,),onPressed: (){},),
+             // IconButton(icon: Icon(Icons.add_shopping_cart,color: Colors.red,),onPressed: (){},),
 
-              IconButton(icon: Icon(Icons.favorite_border,color: Colors.red,),onPressed: (){},),
+             // IconButton(icon: Icon(Icons.favorite_border,color: Colors.red,),onPressed: (){},),
 
 
 
