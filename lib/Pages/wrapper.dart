@@ -9,42 +9,57 @@ import 'package:palet/models/user.dart';
 import 'package:provider/provider.dart';
 
 
-class Wrapper extends StatelessWidget {
+class Wrapper extends StatefulWidget {
 
+  @override
+  _WrapperState createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
   bool verified;
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserID>(context);
     final _auth = FirebaseAuth.instance;
    checkEmailVerified() async {
-      FirebaseUser u = await _auth.currentUser();
-      if(u.isEmailVerified){
-        verified= true;
-      }
-      else{
-        verified= false;
-      }
+     try {
+       FirebaseUser u = await _auth.currentUser();
+
+       if (u.isEmailVerified) {
+         setState(() {
+           verified = true;
+         });
+       }
+       else {
+         setState(() {
+           verified = false;
+         });
+       }
+     }
+     catch(e){
+       print(e.toString());
+     }
     }
+
     checkEmailVerified();
 
     if(user==null){
       print(checkEmailVerified());
-    return Authenticate();
+      return Authenticate();
 
     }
 
     else if(verified==false){
-      print(checkEmailVerified());
       print('Entered this one');
-
       return Verification();
     }
 
     else{
-      print('Home');
-      print(verified);
-      return Home();
+        return Home();
     }
+
+
 
   }
 }

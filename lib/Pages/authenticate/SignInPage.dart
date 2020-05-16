@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
 import 'package:palet/Pages/Wallet/choosecards.dart';
+import 'package:palet/Pages/authenticate/forgotPw.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/constants.dart';
 import 'package:palet/services/auth.dart';
@@ -21,6 +23,7 @@ class SignInPage extends StatefulWidget {
 
 class _MyHomePageState extends State<SignInPage> {
   final AuthService _auth = AuthService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _formKey= GlobalKey<FormState>();
 bool loading = false;
 
@@ -163,6 +166,10 @@ loading=false;
           SizedBox(height:10.0),
           Center(
             child: InkWell(
+              onTap: () async{
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return ForgotPW(email: email.trim(),);
+                }));              },
               child: Text(
                 forgotPassword,
 

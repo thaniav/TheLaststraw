@@ -30,7 +30,6 @@ class AuthService {
       if (user.isEmailVerified) {
         return _userFromFirebaseUser(user);
       }
-      else return null;
     } catch (e) {
       print(e.toString());
       return null;
