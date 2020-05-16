@@ -26,7 +26,11 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       current_user_uid = user.uid;
-      return _userFromFirebaseUser(user);
+      print(user.isEmailVerified);
+      if (user.isEmailVerified) {
+        return _userFromFirebaseUser(user);
+      }
+      else return null;
     } catch (e) {
       print(e.toString());
       return null;
@@ -39,9 +43,11 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       current_user_uid = user.uid;
+
       await DatabaseService(uid: user.uid)
           .updateUserData(name, email, phone, null,dob);
       await DatabaseService(uid: user.uid).updateUserBalance(0.0);
+      await user.sendEmailVerification();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/Pages/spinner/spin_home.dart';
+import 'package:palet/components/Verification.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
@@ -76,25 +77,6 @@ title: Text('Choose Theme'),
 
 
   Widget build( BuildContext context){
-
-    Widget image_carousel=new Container(
-      height: 200.0,
-      child: Carousel(
-        boxFit: BoxFit.cover,
-        images: [
-          AssetImage('Asset/c1.jpg'),
-          AssetImage('Asset/m1.jpeg'),
-          AssetImage('Asset/m2.jpg'),
-          AssetImage('Asset/w1.jpeg'),
-        ],
-        autoplay: false,
-        // animationCurve: Curves.fastOutSlowIn,
-        //animationDuration: Duration(milliseconds: 1000),
-        dotSize: 4.0,
-        indicatorBgPadding: 2.0,
-        //Navigator.push(context, MaterialPageRoute(builder: (context)=>new Cart())
-      ),
-    );
 
     bool loading = false;
     return loading? Loading() : StreamProvider<QuerySnapshot>.value(

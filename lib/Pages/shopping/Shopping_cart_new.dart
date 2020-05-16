@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palet/Pages/Wallet/PaymentOptions.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new_Mobile.dart';
 import 'package:palet/components/New_products.dart';
 import 'package:palet/constants.dart';
@@ -131,7 +132,11 @@ class _NewcartState extends State<Newcart> {
             ),
             Expanded(
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return PaymentOptions(amount: s.toDouble(),);
+                  }));
+                },
                 child: Text(
                   "Check Out",
                   style: TextStyle(color: Colors.white),

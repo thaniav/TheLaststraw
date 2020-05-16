@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:palet/models/uid.dart';
+import 'package:palet/services/database.dart';
 class Changepw extends StatefulWidget {
   @override
   _ChangepwState createState() => _ChangepwState();
@@ -67,8 +70,10 @@ class _ChangepwState extends State<Changepw> {
               child: Text('Confirm',style:TextStyle(fontWeight:FontWeight.bold),
 
               ),
-              onPressed: (){
-              },
+              onPressed: ()async {
+
+
+    },
             ),
           ],
         ),
