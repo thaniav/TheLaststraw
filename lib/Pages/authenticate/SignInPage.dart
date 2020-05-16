@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
-import 'package:palet/Pages/choosecards.dart';
+import 'package:palet/Pages/Wallet/choosecards.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/constants.dart';
 import 'package:palet/services/auth.dart';
@@ -29,6 +29,7 @@ bool loading = false;
   String email='';
   String password='';
   String error='';
+  String forgotPassword='';
 
 
   @override
@@ -120,6 +121,7 @@ bool loading = false;
                           if(result== null){
 
                             setState(() => error = 'Could not sign in with those credentials' );
+                            setState(() => forgotPassword = 'Forgot Password? Click here to reset' );
 loading=false;
 
 
@@ -149,7 +151,7 @@ loading=false;
             ),
             ),
           ),
-          SizedBox(height:20.0),
+          SizedBox(height:10.0),
           Center(
             child: Text(
               error,
@@ -158,8 +160,20 @@ loading=false;
 
             ),
           ),
-          SizedBox(height:20.0),
-          SizedBox(height:15.0),
+          SizedBox(height:10.0),
+          Center(
+            child: InkWell(
+              child: Text(
+                forgotPassword,
+
+                style: TextStyle(
+                    color: Colors.black,
+                  decoration: TextDecoration.underline,),
+
+              ),
+            ),
+          ),
+          SizedBox(height:30.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

@@ -104,15 +104,16 @@ SizedBox(height: 10.0),
                   FlatButton(
                     onPressed: () async {
                       isDateSelected=true;
+                      print(DateTime.now());
                       newDt = await showRoundedDatePicker(
                         context: context,
-                        initialDate: DateTime(DateTime.now().year - 18),
+                        initialDate: DateTime(DateTime.now().year,DateTime.now().month, DateTime.now().day),
                         firstDate: DateTime(DateTime
                             .now()
-                            .year - 50),
+                            .year,DateTime.now().month, DateTime.now().day ),
                         lastDate: DateTime(DateTime
                             .now()
-                            .year - 10),
+                            .year,DateTime.now().month+2, DateTime.now().day),
                         borderRadius: 16,
 
 

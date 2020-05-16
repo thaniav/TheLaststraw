@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/profile/profile.dart';
-import 'package:palet/Pages/wallet.dart';
+import 'package:palet/Pages/Wallet/wallet.dart';
 import 'package:palet/components/mode.dart';
 import 'package:palet/models/uid.dart';
 

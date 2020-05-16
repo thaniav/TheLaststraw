@@ -11,13 +11,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/BusBooking/BusTickets.dart';
-import 'package:palet/Pages/Add_card.dart';
+import 'package:palet/Pages/Wallet/Add_card.dart';
 import 'package:palet/Pages/BusBooking/BusTicketForm.dart';
 import 'package:palet/Pages/Homepage.dart';
 import 'package:palet/Pages/MobileRecharge.dart';
 import 'package:palet/Pages/BusBooking/BusTicketsBLABLA.dart';
-import 'package:palet/Pages/PaymentOptions.dart';
-import 'package:palet/Pages/choosecards.dart';
+import 'package:palet/Pages/Wallet/PaymentOptions.dart';
+import 'package:palet/Pages/Wallet/choosecards.dart';
 
 import 'package:palet/Pages/profile/ProfilePage.dart';
 import 'package:palet/Pages/shopping/ShoppingPage.dart';
@@ -25,13 +25,12 @@ import 'package:palet/Pages/shopping/ShoppingPage.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
 
-import 'package:palet/Pages/payment.dart';
 import 'package:palet/Pages/shopping/Shopping_cart.dart';
 import 'package:palet/Pages/shopping/Shopping_list.dart';
 import 'package:palet/Pages/shopping/creditcard.dart';
 import 'package:palet/Pages/spinner/spin_home.dart';
 import 'package:palet/Pages/splashscreen.dart';
-import 'package:palet/Pages/wallet.dart';
+import 'package:palet/Pages/Wallet/wallet.dart';
 import 'package:palet/Pages/wrapper.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
@@ -41,12 +40,19 @@ import 'package:palet/Pages/profile/changepw.dart';
 import 'constants.dart';
 void main() => runApp(MyApp());
 
- class MyApp extends StatelessWidget {
+ class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
    @override
    Widget build(BuildContext context) {
      return StreamProvider<UserID>.value(
        value: AuthService().user,
        child: MaterialApp(
+
+
          debugShowCheckedModeBanner: false,
       home: Wrapper(),
        routes:
@@ -75,6 +81,6 @@ SpinnerPage.id: (context) => SpinnerPage(),
        ),
      );
    }
- }
+}
 
 

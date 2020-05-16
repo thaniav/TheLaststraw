@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:palet/Pages/PaymentOptions.dart';
+import 'package:palet/Pages/Wallet/PaymentOptions.dart';
 
 
 class BusTicketsBLABLA extends StatefulWidget {

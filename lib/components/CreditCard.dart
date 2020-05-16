@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:palet/Pages/Add_card.dart';
+import 'package:palet/Pages/Wallet/Add_card.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';

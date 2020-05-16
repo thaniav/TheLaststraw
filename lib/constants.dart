@@ -9,3 +9,5 @@ const Color kMainColor=Color(0xFF3CCD94);
 
 const Color kSecondaryColor=Color(0xFF5200AD);
 const Color kPinkColor=Color(0xFFDE6D76);
+
+ThemeData kChosenTheme=ThemeData.dark();

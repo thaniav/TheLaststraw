@@ -24,6 +24,7 @@ class _SignPageState extends State<SignUpPage> {
   String email='';
   String password='';
   String error='';
+  String forgotPassword='';
   String phone='';
   String name='';
   Timestamp dob;
@@ -201,7 +202,7 @@ enabled: false,
 
                             if (newUser == null) {
                               setState(() =>
-                              error = 'please supply a valid email');
+                              error = 'please supply a valid email',);
 
                               loading = false;
                             }
@@ -223,12 +224,15 @@ enabled: false,
                     ),
                   ),
                   SizedBox(height:20.0),
+
                   Text(error,
                     style: TextStyle(
                       color: Colors.red,
                     ),
                   ),
+
                   SizedBox(height:5.0),
+
                   InkWell(
                     onTap: () {
                     widget.toggleView();

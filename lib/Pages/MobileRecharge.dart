@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/PaymentOptions.dart';
+import 'package:palet/Pages/Wallet/PaymentOptions.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';

@@ -51,6 +51,7 @@ class _BusTicketsPageState extends State<BusTicketsPage> {
 
 
     return Scaffold(
+
         backgroundColor: kMainColor,
         appBar: AppBar(
           backgroundColor: kMainColor,

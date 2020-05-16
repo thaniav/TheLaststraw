@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:palet/Pages/choosecards.dart';
+import 'package:palet/Pages/Wallet/choosecards.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/components/mode.dart';
 import 'package:palet/constants.dart';
