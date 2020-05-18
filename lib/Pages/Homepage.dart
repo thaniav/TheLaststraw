@@ -1,9 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/Pages/spinner/spin_home.dart';
-import 'package:palet/components/Verification.dart';
+import 'package:palet/Pages/authenticate/Verification.dart';
+import 'package:palet/components/Button.dart';
 import 'package:palet/components/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
@@ -16,60 +19,80 @@ import 'package:palet/constants.dart';
 
 class Home extends StatefulWidget{
 
-
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  createAlertDialog(BuildContext context  ){
-    return showDialog(context: context,builder: (context){
-      return Container(
-        height: 200.0,
-        child: AlertDialog(
-title: Text('Choose Theme'),
-          content: Column(
-            children: <Widget>[
-              RaisedButton(
-                color: Colors.white,
-                child: Text('Light theme',
-                style: TextStyle(
-                  color: Colors.black
-                ),),
-                onPressed: (){
+  Color tileColor=Colors.white;
 
-                },
-              ),
-              RaisedButton(
-                color: Colors.black,
-                child: Text('Dark theme',
-                  style: TextStyle(
-                      color: Colors.white
-                  ),),
-                onPressed: (){
-                  setState(() {
-
-                  });
-
-                },
-              )
-            ],
-          ),
-          actions: <Widget>[
-            MaterialButton(
-              elevation: 5.0,
-              child: Text('Choose'),
-              onPressed: (){},
-            )
-          ],
-        ),
-      );
-    });
-  }
 
   final AuthService _auth = AuthService();
 
   TabController controller;
+
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => new AlertDialog(
+          title: Center(
+            child: Text('Use Pallet for all your banking needs',
+            style: TextStyle(
+              color: kMainColor,
+              fontFamily: 'PatuaOne'
+            ),),
+          ),
+          content: Container(
+            height: 308.0,
+            width: 300.0,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.bus),
+                        Text('Book Buses'),
+
+                      ],
+                    ),
+                    VerticalDivider(),
+                    Column(
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.shopify),
+                        Text('Shop for \nclothes'),
+
+                      ],
+                    ),
+                    VerticalDivider(),
+
+                    Column(
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.mobile),
+                        Text('Pay Bills'),
+
+                      ],
+                    ),
+                  ],
+                ),
+                Image(
+                  image: AssetImage('Asset/happy.jpeg'),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+
+          ],
+        ),
+      );
+    });
+    super.initState();
+  }
 
   @override
 
@@ -84,6 +107,7 @@ title: Text('Choose Theme'),
       child: new Scaffold(
         backgroundColor: kMainColor,
         drawer: Drawer(
+
           child: ListView(
             children: <Widget>[
 
@@ -103,7 +127,7 @@ title: Text('Choose Theme'),
                       ),
                     ),
                     decoration: BoxDecoration(
-                        color: kSecondaryColor
+                        color: kMainColor
                     ),
                   );
                 }
@@ -112,55 +136,73 @@ title: Text('Choose Theme'),
             ),
               //body
               InkWell(
+                splashColor: kSplashColor,
                 onTap: (){},
                 child: ListTile(
                   title: Text('HomePage'),
-                  leading: Icon(Icons.home),
+                  leading: Icon(Icons.home,color: Colors.black,),
                 ),
               ),
+              Divider(),
               InkWell(
+                splashColor: kSplashColor,
                 onTap: (){
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/profile');
                 },
                 child: ListTile(
+
                   title: Text('My profile'),
                   leading: Icon(Icons.person,color: Colors.black,),
                 ),
               ),
+              Divider(),
               InkWell(
+                splashColor: kSplashColor,
                 onTap: (){},
                 child: ListTile(
                   title: Text('My orders'),
-                  leading: Icon(Icons.shopping_basket,color: Colors.red,),
+                  leading: Icon(Icons.shopping_basket,color: Colors.black,),
                 ),
               ),
+              Divider(),
               InkWell(
+                splashColor: kSplashColor,
                 onTap: (){
                 },
                 child: ListTile(
                   title: Text('Shopping Cart'),
-                  leading: Icon(Icons.shopping_cart,color: Colors.amber,),
+                  leading: Icon(Icons.shopping_cart,color: Colors.black,),
                 ),
               ),
-              InkWell(
-                onTap: (){
-                  createAlertDialog(context);
-                },
-                child: ListTile(
-                  title: Text('Change Theme'),
-                  leading: Icon(Icons.palette),
-                ),
-              ),
+
               Divider(),
 
-              InkWell(
-                onTap: ()async{
-                  await _auth.signOut();
-                },
-                child: ListTile(
-                  title: Text('Logout'),
-                  leading: Icon(Icons.add_to_home_screen,color: Colors.black,),
+SizedBox(height: 50.0,),
+
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ProgressButton(
+                  color: kMainColor,
+                  defaultWidget: Text('Logout'),
+                  progressWidget: SpinKitChasingDots(color: kMainColor,),
+                  type: ProgressButtonType.Outline,
+                  animate: true,
+                  width: 196,
+                  height: 40,
+                  onPressed: () async {
+                    int score = await Future.delayed(
+                        const Duration(milliseconds: 1000), () => 42);
+                    await _auth.signOut();
+                    // After [onPressed], it will trigger animation running backwards, from end to beginning
+                    return () {
+                      // Optional returns is returning a VoidCallback that will be called
+                      // after the animation is stopped at the beginning.
+                      // A best practice would be to do time-consuming task in [onPressed],
+                      // and do page navigation in the returned VoidCallback.
+                      // So that user won't missed out the reverse animation.
+                    };
+                  },
                 ),
               ),
 
@@ -176,11 +218,11 @@ title: Text('Choose Theme'),
 
           elevation: 0.0,
 
-          backgroundColor: kMainColor ,
-          centerTitle: true,
+          backgroundColor: Colors.transparent ,
+
           title: Row(
             children: <Widget>[
-              Text('Home',
+              Text('Pallet',
               style: TextStyle(
 
                 fontWeight:  FontWeight.bold,
@@ -193,37 +235,78 @@ title: Text('Choose Theme'),
         body: Column(
           children: <Widget>[
             Expanded(
-              flex:11,
-              child: GridView.count(
-                crossAxisCount: 2,
+              flex: 10,
+
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                 children: <Widget>[
 
-                  new Container(
+                  Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      new Container(
 
-                    child: CardRoute(cardTitle: 'Wallet',
-                      icon: FontAwesomeIcons.wallet,
-                      nextPage: 'wallet',),
+                        child: CardRoute(cardTitle: 'Wallet',
+                          icon: FontAwesomeIcons.wallet,
+
+                          nextPage: 'wallet',),
+                      ),
+Container(
+  height: 100.0,
+  color: Colors.white30,
+  width: 0.5,
+),
+
+                      new Container(
+                          child: CardRoute(cardTitle: 'Shop',
+                            nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
+                      ),
+                    ],
                   ),
-                  new Container(
-                      child: CardRoute(cardTitle: 'Shop',
-                        nextPage: 'shopping',icon: FontAwesomeIcons.shopify,)
+                  Divider(color: Colors.white30),
+
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      new Container(
+                          child: CardRoute(cardTitle: 'Profile',
+                            nextPage: 'profile',icon: Icons.person,)
+                      ),
+                      Container(
+                        height: 100.0,
+                        color: Colors.white30,
+                        width: 0.5,
+                      ),
+                      new Container(
+                          child: CardRoute(cardTitle: 'Mobile Recharge',
+                            nextPage: 'recharge',icon: FontAwesomeIcons.phone,)
+                      ),
+                    ],
                   ),
-                  new Container(
-                      child: CardRoute(cardTitle: 'Profile',
-                        nextPage: 'profile',icon: Icons.person,)
+                  Divider(color: Colors.white30,),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      new Container(
+                          child: CardRoute(cardTitle: 'Bus Tickets',
+                            nextPage: 'bus',icon: FontAwesomeIcons.bus,)
+                      ),
+                      Container(
+                        height: 100.0,
+                        color: Colors.white30,
+                        width: 0.5,
+                      ),
+                      new Container(
+                          child: CardRoute(cardTitle: 'Movie Tickets',
+                            nextPage: 'recharge',icon: FontAwesomeIcons.film,)
+                      ),
+                    ],
                   ),
-                  new Container(
-                      child: CardRoute(cardTitle: 'Mobile Recharge',
-                        nextPage: 'recharge',icon: FontAwesomeIcons.phone,)
-                  ),
-                  new Container(
-                      child: CardRoute(cardTitle: 'Bus Tickets',
-                        nextPage: 'bus',icon: FontAwesomeIcons.bus,)
-                  ),
-                  new Container(
-                      child: CardRoute(cardTitle: 'Movie Tickets',
-                        nextPage: 'recharge',icon: FontAwesomeIcons.film,)
-                  ),
+                  Divider(color: Colors.white30,),
+
 
 
 
@@ -231,17 +314,20 @@ title: Text('Choose Theme'),
               ),
 
             ),
-            Expanded(
-                flex: 1,
-                child:  RawMaterialButton(onPressed: (){
-                  Navigator.pushNamed(context, '/spin');
-                  Navigator.pushNamed(context, SpinnerPage.id);
-                },
-                  child: Text('Lucky Spin',style: TextStyle(fontStyle: FontStyle.italic),),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  fillColor: Colors.yellowAccent,
-                )
-            ),
+//            Expanded(
+//
+////                child:  RawMaterialButton(
+////
+////                  splashColor: Colors.pinkAccent,onPressed: (){
+////
+////                  Navigator.pushNamed(context, '/spin');
+////                  Navigator.pushNamed(context, SpinnerPage.id);
+////                },
+////                  child: Text('Lucky Spin',style: TextStyle(fontStyle: FontStyle.italic),),
+////                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+////                  fillColor: Colors.yellowAccent,
+////                )
+//            ),
             SizedBox(
               height: 10.0,
             ),
@@ -283,37 +369,44 @@ class CardRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: new Card(elevation: 10.0,
-        color: Color(0xFADEFABB),
+      splashColor: kSplashColor,
+      child: Container(
 
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        child:
-        Container(
+        height: 150.0,
+        width: 150.0,
+        child: new Card(
 
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              gradient: LinearGradient(
-                colors: [Colors.white, Colors.white],
-              )
+          elevation: 0.0,
+
+
+          color: Colors.transparent,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          child:
+          Container(
+
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0),
+
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+
+              children: <Widget>[
+
+                Icon(icon,
+                  color: Colors.white,
+                  size: 50.0,
+                ),
+                new SizedBox(height: 10.0),
+                new Text(cardTitle,
+                style: TextStyle(
+                  color: Colors.white
+                ),),
+              ],
+            ),
+
+
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: <Widget>[
-
-              Icon(icon,
-                color: Colors.grey[700],
-                size: 50.0,
-              ),
-              new SizedBox(height: 10.0),
-              new Text(cardTitle,
-              style: TextStyle(
-                color: Colors.grey
-              ),),
-            ],
-          ),
-
-
         ),
       ),
       onTap: (){
