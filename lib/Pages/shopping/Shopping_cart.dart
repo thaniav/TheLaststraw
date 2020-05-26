@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:palet/Pages/Wallet/PaymentOptions.dart';
 import 'package:palet/Pages/shopping/Shopping_list.dart';
 import 'package:palet/Pages/shopping/Checkout.dart';
-import 'package:palet/components/New_products.dart';
+import 'package:palet/Pages/shopping/New_products.dart';
 class Shoppingcart extends StatefulWidget {
   @override
   _ShoppingcartState createState() => _ShoppingcartState();

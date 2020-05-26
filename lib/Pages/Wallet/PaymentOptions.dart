@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:palet/Pages/Homepage.dart';
+import 'package:palet/home/Homepage.dart';
 import 'package:palet/components/CreditCard.dart';
-import 'package:palet/components/loading.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/shared/loading.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/database.dart';
@@ -17,8 +17,17 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class PaymentOptions extends StatefulWidget {
   static String id = '/paymentoptions';
   final double amount;
+  final String type;
+  final String provider;
+  final String passenger;
+  final Timestamp dateOfTravel;
+  final String age;
+  final String noOfTickets;
+  final String fromCity;
+  final String toCity;
 
-  PaymentOptions({this.amount});
+  PaymentOptions({this.amount, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity});
+
   @override
   _PaymentOptionsState createState() => _PaymentOptionsState();
 }
@@ -34,6 +43,14 @@ class _PaymentOptionsState extends State<PaymentOptions> {
   bool isCvvFocused = false;
   bool _value1 = false;
   bool _status = true;
+  String type;
+  String provider;
+   String passenger;
+  Timestamp dateOfTravel;
+  String age;
+  String noOfTickets;
+  String fromCity;
+  String toCity;
 
   String selected = 'Select Promo Code';
 
@@ -41,6 +58,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
 
   void _value1Changed(bool value) => setState(() => _value1 = value);
   bool _value2 = false;
+
   void _value2Changed(bool value) => setState(() => _value2 = value);
 
   @override
@@ -48,6 +66,17 @@ class _PaymentOptionsState extends State<PaymentOptions> {
     // TODO: implement initState
     super.initState();
     amt = widget.amount;
+    type = widget.type;
+
+
+    provider=widget.provider;
+    passenger=widget.passenger;
+    dateOfTravel = widget.dateOfTravel;
+    age=widget.age;
+    noOfTickets=widget.noOfTickets;
+    fromCity=widget.fromCity;
+    toCity=widget.toCity;
+
   }
 
   @override
@@ -72,6 +101,14 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                         expiry: card.exp,
                         cvv: card.cvv,
                         add: false,
+                        type: type,
+                        fromCity: fromCity,
+                        toCity: toCity,
+                        passenger: passenger,
+                        noOfTickets: noOfTickets,
+                        provider: provider,
+                        dateOfTravel: dateOfTravel,
+                        age: age,
                       );
                       cardNumbers.add(cardWidget);
                     }
@@ -185,21 +222,18 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                   amt = amt - 0.1 * amt;
                                                 });
                                               }
-                                            }
-                                            else if (selected == 'POB125') {
+                                            } else if (selected == 'POB125') {
                                               if (amt > 100) {
                                                 setState(() {
                                                   amt = amt - 0.25 * amt;
                                                 });
                                               }
-                                            }
-                                            else if (selected == 'PALLET75') {
+                                            } else if (selected == 'PALLET75') {
                                               if (amt > 75) {
                                                 setState(() {
                                                   amt = amt - 75;
                                                 });
-                                              }
-                                              else{
+                                              } else {
                                                 setState(() {
                                                   amt = 0;
                                                 });
@@ -233,8 +267,21 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                     RaisedButton(
                                         child: Text('Use'),
                                         onPressed: () async {
+
                                           balance = walletData.balance - amt;
                                           if (balance >= 0) {
+                                            if (type == 'bus') {
+
+                                              await DatabaseService()
+                                                  .updateBusTicketsData(
+                                                      provider,
+                                                       passenger,
+                                                      dateOfTravel,
+                                                      age,
+                                                     noOfTickets,
+                                                      fromCity,
+                                                     toCity);
+                                            }
                                             await DatabaseService(
                                                     uid: current_user_uid)
                                                 .updateUserBalance(balance);
@@ -251,8 +298,17 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                         fontSize: 20),
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.pop(context);
-                                                    Navigator.pop(context);
+                                                   if(type=='bus'){
+                                                     Navigator.pop(context);
+                                                     Navigator.pop(context);
+                                                     Navigator.pop(context);
+                                                     Navigator.pop(context);
+                                                   }
+                                                      else{
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                    }
+
                                                   },
                                                   width: 120,
                                                 )
@@ -326,6 +382,17 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                     .currentUser();
                                             /*await DatabaseService(uid: user.uid).updateUserBalance(walletID, walletData.balance);*/
                                             if (_value1 == true) {
+                                              print(passenger);
+                                              if (type == 'bus') {
+                                                await DatabaseService()
+                                                    .updateBusTicketsData(
+                                                    provider, passenger,
+                                                    dateOfTravel,
+                                                    age,
+                                                    noOfTickets,
+                                                    fromCity,
+                                                    toCity);
+                                              }
                                               _firestore
                                                   .collection('accounts')
                                                   .document(user.uid)
@@ -349,14 +416,33 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                           fontSize: 20),
                                                     ),
                                                     onPressed: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
+                                                      if(type=='bus'){
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+
+                                                      }else {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                      }
                                                     },
                                                     width: 120,
                                                   )
                                                 ],
                                               ).show();
                                             } else {
+                                              if (type == 'bus') {
+                                                await DatabaseService()
+                                                    .updateBusTicketsData(
+                                                    widget.provider,
+                                                    widget.passenger,
+                                                    widget.dateOfTravel,
+                                                    widget.age,
+                                                    widget.noOfTickets,
+                                                    widget.fromCity,
+                                                    widget.toCity);
+                                              }
                                               Alert(
                                                 context: context,
                                                 type: AlertType.success,
@@ -370,8 +456,18 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                           fontSize: 20),
                                                     ),
                                                     onPressed: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
+                                                      if(type=='bus'){
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+
+                                                      }
+                                                      else {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                      }
+
                                                     },
                                                     width: 120,
                                                   )

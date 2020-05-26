@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/Pages/BusBooking/BusTicketForm.dart';
 import 'package:palet/Pages/BusBooking/BusTicketsBLABLA.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/shared/constants.dart';
+
+import 'TicketsList.dart';
 
 class BusTicketsPage extends StatefulWidget {
   static String id = '/bus';
@@ -48,167 +50,171 @@ class _BusTicketsPageState extends State<BusTicketsPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    return Scaffold(
-
-        backgroundColor: kMainColor,
-        appBar: AppBar(
+    return Theme(
+      data: ThemeData(),
+      child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: kPinkColor,
+            child: Icon(FontAwesomeIcons.ticketAlt),
+            onPressed: () {
+              Navigator.pushNamed(context, TicketsList.id);
+            },
+          ),
           backgroundColor: kMainColor,
-          elevation: 0.0,
-        ),
-        body: Container(
-          child: SafeArea(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(height: 50.0),
-                            Text(
-                              'Book',
-                              style: TextStyle(
+          appBar: AppBar(
+            backgroundColor: kMainColor,
+            elevation: 0.0,
+          ),
+          body: Container(
+            child: SafeArea(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(height: 50.0),
+                              Text(
+                                'Book',
+                                style: TextStyle(
+                                    fontSize: 40.0,
+                                    fontFamily: 'Pacifico',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              Text(
+                                'Tickets',
+                                style: TextStyle(
                                   fontSize: 40.0,
                                   fontFamily: 'Pacifico',
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              'Tickets',
-                              style: TextStyle(
-                                fontSize: 40.0,
-                                fontFamily: 'Pacifico',
-                                color: Colors.white,
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          height: 50.0,
+                          width: 114.0,
+                          child: DropdownButtonFormField(
+                            iconEnabledColor: Colors.white,
+                            decoration: InputDecoration(
+                              labelText: fromCity,
+                              labelStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                            ),
+                            items: cities.map((String dropDownMenuItem) {
+                              return DropdownMenuItem(
+                                value: dropDownMenuItem,
+                                child: Text(dropDownMenuItem),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                fromCity = val;
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          height: 50.0,
+                          width: 114.0,
+                          child: DropdownButtonFormField(
+                            iconEnabledColor: Colors.white,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: toCity,
+                              labelStyle: TextStyle(color: Colors.white),
+                            ),
+                            items: cities.map((String dropDownMenuItem) {
+                              return DropdownMenuItem(
+                                value: dropDownMenuItem,
+                                child: Text(dropDownMenuItem),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                toCity = val;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height - 250.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.only(topLeft: Radius.circular(110.0)),
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 16.0, 5.0, 16.0),
+                        child: ListView(
+                          primary: false,
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 50.0,
+                            ),
+                            BusWidget(
+                              busProvider: "Country Line Travels and Cargo",
+                              amount: 500,
+                              seat: "NON A-C Seater - Sleeper (2+1)",
+                              fromCity: fromCity,
+                              toCity: toCity,
+                            ),
+                            BusWidget(
+                              busProvider: "Vijay Tour and Travels",
+                              amount: 650,
+                              seat: "A-C, Seater Sleeper",
+                              fromCity: fromCity,
+                              toCity: toCity,
+                            ),
+                            BusWidget(
+                              busProvider: "Shakti Travels",
+                              amount: 385,
+                              seat: "A-C, Sleeper, Volvo, Multi Axle",
+                              fromCity: fromCity,
+                              toCity: toCity,
+                            ),
+                            BusWidget(
+                              busProvider: "Country Line Travels and Cargo",
+                              amount: 500,
+                              seat: "A-C, Seater Sleeper",
+                              fromCity: fromCity,
+                              toCity: toCity,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Container(
-                        height: 50.0,
-                        width: 114.0,
-                        child: DropdownButtonFormField(
-                          iconEnabledColor: Colors.white,
-                          decoration: InputDecoration(
-
-                            labelText: fromCity,
-                            labelStyle: TextStyle(
-                              color: Colors.white
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-
-                        ),
-                          ),
-                          items: cities.map((String dropDownMenuItem) {
-                            return DropdownMenuItem(
-                              value: dropDownMenuItem,
-                              child: Text(dropDownMenuItem),
-                            );
-                          }).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              fromCity = val;
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                        height: 50.0,
-                        width: 114.0,
-                        child: DropdownButtonFormField(
-                          iconEnabledColor: Colors.white,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-
-                            ),
-                            labelText: toCity,
-                            labelStyle: TextStyle(
-                                color: Colors.white),
-                          ),
-                          items: cities.map((String dropDownMenuItem) {
-                            return DropdownMenuItem(
-                              value: dropDownMenuItem,
-                              child: Text(dropDownMenuItem),
-                            );
-                          }).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              toCity = val;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.0,),
-                  Container(
-                    height: MediaQuery.of(context).size.height - 250.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(110.0)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 5.0, 16.0),
-                      child: ListView(
-                        primary: false,
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 50.0,
-                          ),
-                          BusWidget(
-                            busProvider: "Country Line Travels and Cargo",
-                            amount: 500,
-                            seat: "NON A-C Seater - Sleeper (2+1)",
-                            fromCity: fromCity,
-                            toCity: toCity,
-                          ),
-                          BusWidget(
-                            busProvider: "Vijay Tour and Travels",
-                            amount: 650,
-                            seat: "A-C, Seater Sleeper",
-                            fromCity: fromCity,
-                            toCity: toCity,
-                          ),
-                          BusWidget(
-                            busProvider: "Shakti Travels",
-                            amount: 385,
-                            seat: "A-C, Sleeper, Volvo, Multi Axle",
-                            fromCity: fromCity,
-                            toCity: toCity,
-                          ),
-                          BusWidget(
-                            busProvider: "Country Line Travels and Cargo",
-                            amount: 500,
-                            seat: "A-C, Seater Sleeper",
-                            fromCity: fromCity,
-                            toCity: toCity,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
 
@@ -219,7 +225,8 @@ class BusWidget extends StatelessWidget {
   final String fromCity;
   final String toCity;
 
-  BusWidget({this.busProvider, this.amount, this.seat, this.fromCity, this.toCity});
+  BusWidget(
+      {this.busProvider, this.amount, this.seat, this.fromCity, this.toCity});
 
   @override
   Widget build(BuildContext context) {
@@ -289,15 +296,33 @@ class BusWidget extends StatelessWidget {
                 elevation: 1.0,
                 child: InkWell(
                   onTap: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return BusTicketForm(
-                        provider: busProvider,
-                        fromCity: fromCity ,
-                        toCity: toCity,
-                        amount: amount,
+                    if(fromCity==toCity){
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Source and destination cannot be the same'),
+                          backgroundColor: kPinkColor,
+                        ),
                       );
-                    }));
+                    }
+                  else  if (fromCity != 'From' && toCity != 'To') {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return BusTicketForm(
+                          provider: busProvider,
+                          fromCity: fromCity,
+                          toCity: toCity,
+                          amount: amount,
+                        );
+                      }));
+
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Choose locations'),
+                          backgroundColor: kPinkColor,
+                        ),
+                      );
+                    }
                   },
                   child: Center(
                     child: Text(

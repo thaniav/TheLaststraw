@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/Wallet/PaymentOptions.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new_Mobile.dart';
-import 'package:palet/components/New_products.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/Pages/shopping/New_products.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new.dart';
 
 
@@ -15,6 +15,7 @@ List<ProductModel> cart = obj.cart_send();
 
 
 class Newcart extends StatefulWidget {
+  static String id='/shopcart';
   cart_clear()
   {
     cart.clear();

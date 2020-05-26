@@ -42,8 +42,20 @@ class CardData{
 
 }
 
+class TicketData {
+  final String provider;
+  final String passenger;
+  final String tickets;
+  final Timestamp dateOfTravel;
+  final String fromCity;
+  final String toCity;
+  final String age;
+
+  TicketData(
+      {this.provider, this.passenger, this.tickets, this.dateOfTravel, this.fromCity, this.toCity, this.age});
 
 
+}
 
 
 

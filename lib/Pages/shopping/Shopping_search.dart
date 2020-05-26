@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new.dart';
-import 'package:palet/components/New_products.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/Pages/shopping/New_products.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:palet/Pages/shopping/product_details.dart';
 
 Shopping_list obj = new Shopping_list();
@@ -34,7 +34,7 @@ class DataSearch extends SearchDelegate<String>{
   Widget buildResults(BuildContext context) {
     for(int i=0;i<productDetails.length;i++)
       {
-        if(query==productDetails[i].name.substring(0,query.length)){
+        if(query.toLowerCase()==productDetails[i].name.toLowerCase().substring(0,query.length)){
           return new ProductDetails(
               product_detail_name: productDetails[i].name,
               product_detail_new_price: productDetails[i].price,
@@ -69,7 +69,7 @@ class DataSearch extends SearchDelegate<String>{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-   final List<String> suggestionlist=query.isEmpty?recent:products.where((p)=>p.startsWith(query)).toList();
+   final List<String> suggestionlist=query.isEmpty?recent:products.where((p)=>p.toLowerCase().startsWith(query.toLowerCase())).toList();
    return ListView.builder(
        itemBuilder:(context,index)=>ListTile(
          onTap:(){

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:palet/Pages/Wallet/PaymentOptions.dart';
+import 'package:palet/services/database.dart';
 
 
 class BusTicketsBLABLA extends StatefulWidget {
@@ -179,11 +180,21 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
 
                     elevation: 4.0,
                     color: Colors.black,
-                    onPressed: (){
+                    onPressed: ()async {
+                      print(passenger);
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return PaymentOptions(
+                              passenger: passenger,
+                              toCity: toCity,
+                              fromCity: fromCity,
+                              provider: provider,
+                              dateOfTravel: dateOfTravel,
+                              age: age,
+                              noOfTickets: noOfTickets,
                               amount: amount,
+                              type: 'bus',
                             );
                           }));
 

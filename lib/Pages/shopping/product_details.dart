@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:palet/components/New_products.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/Pages/shopping/New_products.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:palet/Pages/shopping/Shopping_cart_new.dart';
 import 'package:palet/Pages/shopping/Shopping_search.dart';
 Newcart obj=new Newcart();

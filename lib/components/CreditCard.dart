@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:palet/Pages/Wallet/Add_card.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
-import 'package:palet/components/loading.dart';
+import 'package:palet/shared/loading.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/models/user.dart';
 import 'package:palet/services/auth.dart';
@@ -19,10 +20,18 @@ class CardWidget extends StatefulWidget {
   final String number;
   final String cvv;
   final bool add;
+  final String type;
+  final String provider;
+  final String passenger;
+  final Timestamp dateOfTravel;
+  final String age;
+  final String noOfTickets;
+  final String fromCity;
+  final String toCity;
 
   final double update;
   CardWidget(
-      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add});
+      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity});
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -80,6 +89,7 @@ class _CardWidgetState extends State<CardWidget> {
                                     await FirebaseAuth.instance.currentUser();
 
                                 if (password == widget.cvv) {
+
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Container(
@@ -191,6 +201,17 @@ class _CardWidgetState extends State<CardWidget> {
                             DialogButton(
                               onPressed: () async {
                                 Navigator.pop(context);
+                                if (widget.type == 'bus') {
+                                  await DatabaseService()
+                                      .updateBusTicketsData(
+                                      widget.provider,
+                                      widget.passenger,
+                                      widget.dateOfTravel,
+                                      widget.age,
+                                      widget.noOfTickets,
+                                      widget.fromCity,
+                                      widget.toCity);
+                                }
 
                                 await DatabaseService(uid: current_user_uid)
                                     .updateUserBalance(balance);
@@ -211,8 +232,15 @@ class _CardWidgetState extends State<CardWidget> {
                                               fontSize: 20),
                                         ),
                                         onPressed: () async  {
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
+                                          if(widget.type=='bus'){
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }else {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }
                                           await DatabaseService(
                                               uid: current_user_uid)
                                               .updateUserBalance(

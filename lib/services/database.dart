@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/Pages/Wallet/wallet.dart';
-import 'package:palet/components/mode.dart';
 import 'package:palet/models/uid.dart';
 
 import 'package:palet/models/user.dart';
@@ -30,6 +29,20 @@ class DatabaseService{
 
   });
 }
+
+  Future updateBusTicketsData(String provider, String passenger, Timestamp dateOfTravel, String age, String tickets, String fromCity, String toCity ) async {
+    return await busTicketCollection.document(current_user_uid).collection('tickets').document().setData({
+      'provider': provider,
+      'passenger': passenger,
+      'dateOfTravel': dateOfTravel,
+      'age': age,
+      'tickets': tickets,
+      'fromCity': fromCity,
+      'toCity': toCity,
+
+
+    });
+  }
 
 Future updateUserBalance(double balance) async {
   return await accountCollection.document(uid).setData(
@@ -95,6 +108,21 @@ Future updateUserBalance(double balance) async {
   }).toList();
 }
 
+  List<TicketData> _ticketsListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return TicketData(
+        provider: doc.data["provider"] ?? '',
+        passenger: doc.data["passenger"] ?? '',
+        dateOfTravel: doc.data["dateOfTravel"] ?? '',
+        age: doc.data["cardNumber"] ?? '',
+        tickets: doc.data["tickets"] ?? '',
+        fromCity: doc.data["fromCity"]?? '',
+        toCity: doc.data["toCity"]?? '',
+
+      );
+    }).toList();
+  }
+
 
   //userData from snapshot
 
@@ -143,6 +171,11 @@ WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
     return accountCollection.document(uid).collection('cards').snapshots()
     .map(_cardsListFromSnapshot);
 
+  }
+
+  Stream<List<TicketData>> get ticketData{
+    return busTicketCollection.document(uid).collection('tickets').snapshots()
+        .map(_ticketsListFromSnapshot);
   }
 
 }

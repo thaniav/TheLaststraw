@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:palet/models/uid.dart';
 import 'package:palet/services/database.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -93,8 +94,11 @@ class _KYCState extends State<KYC> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
+        backgroundColor: kMainColor,
         title: Text('KYC'),
+        elevation: 0.0,
       ),
       body:Builder(builder: (context)=>Container(
         child: Center(
@@ -102,25 +106,52 @@ class _KYCState extends State<KYC> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _designimageview(),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: <Widget>[
-              
-                 RaisedButton(
-                   onPressed: (){
-                     _showChoiceDialog(context);
-                   },
-                   child: Text('select pic',style:TextStyle(fontWeight:FontWeight.bold)),
-                 ),
-                 SizedBox(width: 50,),
-                 RaisedButton(
-                   onPressed: (){
-                     uploadpic(context);
-                   },
-                   child: Text('upload',style:TextStyle(fontWeight:FontWeight.bold)),
-                 ),
-               ],
-             ),
+          Padding(
+            padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+            child: new Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Container(
+                        child: new RaisedButton(
+                          child: new Text("Select"),
+                          textColor: Colors.white,
+                          color: kSecondaryColor,
+                          onPressed: () async {
+
+                            _showChoiceDialog(context);
+                          },
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(20.0)),
+                        )),
+                  ),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Container(
+                        child: new RaisedButton(
+                          child: new Text("Upload"),
+                          textColor: Colors.white,
+                          color: Colors.blue,
+                          onPressed: (){
+                            uploadpic(context);
+                          },
+
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(20.0)),
+                        )),
+                  ),
+                  flex: 2,
+                ),
+              ],
+            ),
+          ),
+
              
              
             ],

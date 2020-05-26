@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/Homepage.dart';
+import 'package:palet/home/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
 import 'package:palet/Pages/Wallet/choosecards.dart';
-import 'package:palet/components/loading.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/shared/loading.dart';
+import 'package:palet/shared/constants.dart';
 import 'package:palet/services/auth.dart';
 
 
@@ -166,7 +166,7 @@ class _MyHomePageState extends State<ForgotPW> {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  'Go back to Sign In Page',
+                  'Go back',
                   style:TextStyle(
                     color: kMainColor,
                     fontFamily: 'PatuaOne',

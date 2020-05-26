@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new.dart';
-import 'package:palet/constants.dart';
+import 'package:palet/shared/constants.dart';
 import '../../components/HorizontalList.dart';
 import '../../components/products.dart';
-import '../Cart.dart';
+import 'Cart.dart';
 import 'package:palet/Pages/shopping/Shopping_cart_new.dart';
 import 'package:palet/Pages/shopping/Shopping_search.dart';
 

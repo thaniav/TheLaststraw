@@ -28,7 +28,9 @@ dependencies:
 
 
 
+  progress_state_button: ^1.0.1
 
+  flutter_progress_button: ^1.0.0
 
   flutter_credit_card: 0.1.3
 
@@ -108,6 +110,8 @@ flutter:
     - Asset/minus_100.png
     - Asset/shoppingImages/
     - Asset/busticket.jpg
+    - Asset/happy.jpeg
+
 
 
 

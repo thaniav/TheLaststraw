@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/Homepage.dart';
+import 'package:palet/home/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/Pages/authenticate/authenticate.dart';
-import 'package:palet/components/Verification.dart';
+import 'package:palet/Pages/authenticate/Verification.dart';
 import 'package:palet/models/user.dart';
 
 import 'package:provider/provider.dart';
