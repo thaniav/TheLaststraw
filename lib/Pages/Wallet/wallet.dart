@@ -33,6 +33,18 @@ class _WalletPageState extends State<WalletPage> {
             WalletData walletData = snapshot.data;
             balance = walletData.balance;
             return Scaffold(
+              floatingActionButton: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FloatingActionButton(
+                  backgroundColor: kPinkColor,
+                  child: Icon(
+                    Icons.cake
+                  ),
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/spin');
+                  },
+                ),
+              ),
               backgroundColor: kMainColor,
               appBar: AppBar(
                 centerTitle: true,

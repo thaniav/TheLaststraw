@@ -105,54 +105,70 @@ class _BusTicketsPageState extends State<BusTicketsPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Container(
-                          height: 50.0,
-                          width: 114.0,
-                          child: DropdownButtonFormField(
-                            iconEnabledColor: Colors.white,
-                            decoration: InputDecoration(
-                              labelText: fromCity,
-                              labelStyle: TextStyle(color: Colors.white),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
+                        Expanded(
+                          flex: 5,
+                          child: Padding(
+
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Container(
+                              height: 50.0,
+                              width: 114.0,
+                              child: DropdownButtonFormField(
+                                iconEnabledColor: Colors.white,
+                                decoration: InputDecoration(
+                                  labelText: fromCity,
+                                  labelStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                ),
+                                items: cities.map((String dropDownMenuItem) {
+                                  return DropdownMenuItem(
+                                    value: dropDownMenuItem,
+                                    child: Text(dropDownMenuItem),
+                                  );
+                                }).toList(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    fromCity = val;
+                                  });
+                                },
                               ),
                             ),
-                            items: cities.map((String dropDownMenuItem) {
-                              return DropdownMenuItem(
-                                value: dropDownMenuItem,
-                                child: Text(dropDownMenuItem),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                fromCity = val;
-                              });
-                            },
                           ),
                         ),
-                        Container(
-                          height: 50.0,
-                          width: 114.0,
-                          child: DropdownButtonFormField(
-                            iconEnabledColor: Colors.white,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
+                        Expanded(
+                            flex: 1,
+                            child: SizedBox()),
+                        Expanded(
+                          flex: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Container(
+                              height: 50.0,
+                              width: 114.0,
+                              child: DropdownButtonFormField(
+                                iconEnabledColor: Colors.white,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  labelText: toCity,
+                                  labelStyle: TextStyle(color: Colors.white),
+                                ),
+                                items: cities.map((String dropDownMenuItem) {
+                                  return DropdownMenuItem(
+                                    value: dropDownMenuItem,
+                                    child: Text(dropDownMenuItem),
+                                  );
+                                }).toList(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    toCity = val;
+                                  });
+                                },
                               ),
-                              labelText: toCity,
-                              labelStyle: TextStyle(color: Colors.white),
                             ),
-                            items: cities.map((String dropDownMenuItem) {
-                              return DropdownMenuItem(
-                                value: dropDownMenuItem,
-                                child: Text(dropDownMenuItem),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                toCity = val;
-                              });
-                            },
                           ),
                         ),
                       ],

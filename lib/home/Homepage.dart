@@ -40,37 +40,46 @@ class _HomeState extends State<Home> {
             ),
           ),
           content: Container(
-            height: 308.0,
+          height: 370.0,
             width: 300.0,
             child: Column(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.bus),
-                        Text('Book Buses'),
-                      ],
-                    ),
-                    VerticalDivider(),
-                    Column(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.shopify),
-                        Text('Shop for \nclothes'),
-                      ],
-                    ),
-                    VerticalDivider(),
-                    Column(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.mobile),
-                        Text('Pay Bills'),
-                      ],
-                    ),
-                  ],
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.bus),
+                          Text('Book Buses'),
+                        ],
+                      ),
+                      VerticalDivider(),
+                      Column(
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.shopify),
+                          Text('Shop for \nclothes'),
+                        ],
+                      ),
+                      VerticalDivider(),
+                      Column(
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.mobile),
+                          Text('Pay Bills'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Image(
-                  image: AssetImage('Asset/happy.jpeg'),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+
+                    child: Image(
+                      image: AssetImage('Asset/happy.jpeg'),
+                    ),
+                  ),
                 )
               ],
             ),
@@ -269,10 +278,12 @@ class _HomeState extends State<Home> {
                             ),
                             new Container(
                                 child: CardRoute(
-                              cardTitle: 'Shop',
-                              nextPage: 'shopping',
-                              icon: FontAwesomeIcons.shopify,
-                            )),
+                                  cardTitle: 'Passbook',
+                                  nextPage: 'recharge',
+                                  icon: FontAwesomeIcons.ticketAlt,
+                                )),
+
+                            /////////
                           ],
                         ),
                         Divider(color: Colors.white30),
@@ -306,7 +317,7 @@ class _HomeState extends State<Home> {
                           children: <Widget>[
                             new Container(
                                 child: CardRoute(
-                              cardTitle: 'Bus Tickets',
+                              cardTitle: 'Bus',
                               nextPage: 'bus',
                               icon: FontAwesomeIcons.bus,
                             )),
@@ -317,10 +328,11 @@ class _HomeState extends State<Home> {
                             ),
                             new Container(
                                 child: CardRoute(
-                              cardTitle: 'Movie Tickets',
-                              nextPage: 'recharge',
-                              icon: FontAwesomeIcons.film,
-                            )),
+                                  cardTitle: 'Shop',
+                                  nextPage: 'shopping',
+                                  icon: FontAwesomeIcons.shopify,
+                                )),
+
                           ],
                         ),
                         Divider(

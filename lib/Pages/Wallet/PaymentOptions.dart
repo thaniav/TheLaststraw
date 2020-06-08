@@ -51,6 +51,9 @@ class _PaymentOptionsState extends State<PaymentOptions> {
   String noOfTickets;
   String fromCity;
   String toCity;
+  bool isSelected=false;
+  bool cashback=false;
+  double amount;
 
   String selected = 'Select Promo Code';
 
@@ -68,7 +71,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
     amt = widget.amount;
     type = widget.type;
 
-
+amount=widget.amount;
     provider=widget.provider;
     passenger=widget.passenger;
     dateOfTravel = widget.dateOfTravel;
@@ -96,6 +99,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
 
                     for (var card in cardData) {
                       final cardWidget = CardWidget(
+                        cashback: cashback,
                         Name: card.name,
                         number: card.number,
                         expiry: card.exp,
@@ -116,6 +120,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                     return Scaffold(
                       appBar: AppBar(
                         backgroundColor: kMainColor,
+                        title: Text('Complete payment'),
                       ),
                       body: SingleChildScrollView(
                         child: Column(
@@ -133,11 +138,11 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                       children: <Widget>[
                                         Text(
                                           'Amount to be paid ',
-                                          style: TextStyle(fontSize: 30.0),
+                                          style: TextStyle(fontSize: 20.0, color: Colors.black),
                                         ),
                                         Text(
                                           'Rs. $amt',
-                                          style: TextStyle(fontSize: 30.0),
+                                          style: TextStyle(fontSize: 30.0, color: Colors.black),
                                         ),
                                       ],
                                     ),
@@ -219,20 +224,21 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                             if (selected == '20FAB') {
                                               if (amt > 100) {
                                                 setState(() {
-                                                  amt = amt - 0.1 * amt;
+                                                  amt = amount - 0.1 * amt;
                                                 });
                                               }
                                             } else if (selected == 'POB125') {
                                               if (amt > 100) {
                                                 setState(() {
-                                                  amt = amt - 0.25 * amt;
+                                                  amt = amount - 0.25 * amt;
                                                 });
                                               }
                                             } else if (selected == 'PALLET75') {
                                               if (amt > 75) {
-                                                setState(() {
-                                                  amt = amt - 75;
-                                                });
+                                              setState(() {
+                                                cashback=true;
+                                              });
+
                                               } else {
                                                 setState(() {
                                                   amt = 0;
@@ -270,6 +276,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
 
                                           balance = walletData.balance - amt;
                                           if (balance >= 0) {
+
                                             if (type == 'bus') {
 
                                               await DatabaseService()
@@ -282,13 +289,24 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                       fromCity,
                                                      toCity);
                                             }
-                                            await DatabaseService(
-                                                    uid: current_user_uid)
-                                                .updateUserBalance(balance);
+                                            if(cashback){
+                                              print(balance);
+                                              print(balance+75);
+                                              await DatabaseService(
+                                                  uid: current_user_uid)
+                                                  .updateUserBalance(balance+75);
+
+                                            }
+                                            else {
+                                              await DatabaseService(
+                                                  uid: current_user_uid)
+                                                  .updateUserBalance(balance);
+                                            }
                                             Alert(
                                               context: context,
                                               type: AlertType.success,
                                               title: "Payment Successful",
+
                                               buttons: [
                                                 DialogButton(
                                                   child: Text(
@@ -322,9 +340,16 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                               amt = amt - walletData.balance;
                                               print(amt);
                                             });
-                                            await DatabaseService(
-                                                    uid: current_user_uid)
-                                                .updateUserBalance(balance);
+                                            if(cashback){
+                                              await DatabaseService(
+                                                  uid: current_user_uid)
+                                                  .updateUserBalance(balance+75);
+                                            }
+                                            else {
+                                              await DatabaseService(
+                                                  uid: current_user_uid)
+                                                  .updateUserBalance(balance);
+                                            }
                                             if (amt < widget.amount) {
                                               _status = false;
                                             }
@@ -334,7 +359,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                 )
                               ],
                             ),
-                            ExpansionTile(
+                            ExpansionTile(backgroundColor: kMainColor,
                                 trailing: Icon(Icons.credit_card),
                                 title: Text(
                                   'Use Saved Cards',
@@ -343,8 +368,9 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                children: cardNumbers),
+                                children: cardNumbers.isEmpty ? [Text('No saved cards yet', )] : cardNumbers),
                             ExpansionTile(
+                              backgroundColor: kMainColor,
                               trailing: Icon(Icons.credit_card),
                               title: Text(
                                 'Pay',
@@ -433,6 +459,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                               ).show();
                                             } else {
                                               if (type == 'bus') {
+
                                                 await DatabaseService()
                                                     .updateBusTicketsData(
                                                     widget.provider,
@@ -473,10 +500,16 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                                   )
                                                 ],
                                               ).show();
-
-                                              await DatabaseService(
-                                                      uid: current_user_uid)
-                                                  .updateUserBalance(balance);
+                                              if(cashback){
+                                                await DatabaseService(
+                                                    uid: current_user_uid)
+                                                    .updateUserBalance(balance+75);
+                                              }
+else {
+                                                await DatabaseService(
+                                                    uid: current_user_uid)
+                                                    .updateUserBalance(balance);
+                                              }
                                             }
                                           },
                                           color: Colors.green,
@@ -488,6 +521,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                                 ),
                               ],
                             ),
+                            Divider(),
                           ],
                         ),
                       ),

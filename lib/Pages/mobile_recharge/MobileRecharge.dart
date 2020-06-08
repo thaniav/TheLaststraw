@@ -60,41 +60,17 @@ class _MobileRechargeState extends State<MobileRecharge> {
                         Container(
                           height: 60.0,
 
+
                           child: DropdownButtonFormField(
 
 
-                            decoration: new InputDecoration(
-                              filled: true,
-
+                            decoration: InputDecoration(
                               labelText: initial,
-                              fillColor: Colors.white30,
-                              focusColor: Colors.teal,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
+                              filled: true,
+                              labelStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                  style: BorderStyle.solid,
-                                ),
                               ),
-
-
-                              labelStyle: TextStyle(color: Colors.grey[800]),
-
-                              //fillColor: Colors.green
                             ),
                             items: [
                               DropdownMenuItem(
@@ -123,45 +99,36 @@ class _MobileRechargeState extends State<MobileRecharge> {
                         ),
                         SizedBox(height: 20.0,),
                         Expanded(
-                          flex: 1,
+                          flex: 6,
                           child: TextFormField(
                             maxLength: 10,
                             keyboardType: TextInputType.number,
                             initialValue: userData.phone,
-                            decoration: new InputDecoration(
+                            decoration: InputDecoration(
+                              labelText: 'Enter Phone number',
                               filled: true,
-                              labelText: "Enter Phone number",
-                              fillColor: Colors.white30,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.blue,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              labelStyle: TextStyle(color: Colors.grey[800]),
-
+                              labelStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.green,
-                                ),
                               ),
-
-                              //fillColor: Colors.green
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 2,
                           child: Container(
-                            height: 300.0,
+
 width: 300.0,
 child: Card(
-  child: Text('Bill amount '+billAmount.toString(),
-  style: TextStyle(
-    color: Colors.black
-  ),),
+  color: Colors.white30,
+  child: Center(
+    child: Text('Bill amount '+billAmount.toString(),
+
+    style: TextStyle(
+      fontSize: 20.0,
+      color: Colors.black
+    ),),
+  ),
 
 ),
                           ),

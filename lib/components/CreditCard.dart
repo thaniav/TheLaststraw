@@ -28,10 +28,11 @@ class CardWidget extends StatefulWidget {
   final String noOfTickets;
   final String fromCity;
   final String toCity;
+  final bool cashback;
 
   final double update;
   CardWidget(
-      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity});
+      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity, this.cashback});
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -162,7 +163,15 @@ class _CardWidgetState extends State<CardWidget> {
                     }
                   }
                   else{
+
+
                     if (password == widget.cvv) {
+                      if(widget.cashback){
+                        await DatabaseService(
+                            uid: current_user_uid)
+                            .updateUserBalance(balance+75);
+
+                      }
                       Scaffold.of(context).showSnackBar(
                         SnackBar(
                           content: Container(
@@ -213,8 +222,16 @@ class _CardWidgetState extends State<CardWidget> {
                                       widget.toCity);
                                 }
 
-                                await DatabaseService(uid: current_user_uid)
-                                    .updateUserBalance(balance);
+                                if(widget.cashback){
+                                  await DatabaseService(
+                                      uid: current_user_uid)
+                                      .updateUserBalance(balance+75);
+                                }
+                                else {
+                                  await DatabaseService(
+                                      uid: current_user_uid)
+                                      .updateUserBalance(balance);
+                                }
                                 FirebaseUser user =
                                 await FirebaseAuth.instance.currentUser();
 

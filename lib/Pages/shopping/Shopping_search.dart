@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/shopping/Shopping_list_new.dart';
 import 'package:palet/Pages/shopping/New_products.dart';
-import 'package:palet/shared/constants.dart';
 import 'package:palet/Pages/shopping/product_details.dart';
 
 Shopping_list obj = new Shopping_list();

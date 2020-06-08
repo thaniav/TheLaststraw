@@ -125,7 +125,7 @@ class ProfilePageState extends State<ProfilePage> {
 
                   backgroundColor: kMainColor,
                   floatingActionButton: FloatingActionButton(
-                    backgroundColor: kSecondaryColor,
+                    backgroundColor: kPinkColor,
                     child: Text('KYC'),
                     onPressed: (){
 Navigator.pushNamed(context, '/kyc');

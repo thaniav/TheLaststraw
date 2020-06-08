@@ -33,44 +33,47 @@ class _Shopping_list_MobileState extends State<Shopping_list_accessories> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: kMainColor,
-        centerTitle: true,
-        actions: <Widget>[
+    return Theme(
+      data: ThemeData(),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: kMainColor,
+          centerTitle: true,
+          actions: <Widget>[
 
-        ],
+          ],
 
-        title: Text('Accessories'),),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context,index){
-          return Card(
-            color: kMainColor,
-            child: ListTile(
-              onTap: (){
-                setState(() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>new ProductDetails(
-                    product_detail_name: products[index].name,
-                    product_detail_new_price: products[index].price,
-                    product_detail_old_price: products[index].oldprice,
-                    product_detail_picture: products[index].picture,
-                    product_detail_detail: products[index].details,)));
+          title: Text('Accessories'),),
+        body: ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (context,index){
+            return Card(
+              color: kMainColor,
+              child: ListTile(
+                onTap: (){
+                  setState(() {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>new ProductDetails(
+                      product_detail_name: products[index].name,
+                      product_detail_new_price: products[index].price,
+                      product_detail_old_price: products[index].oldprice,
+                      product_detail_picture: products[index].picture,
+                      product_detail_detail: products[index].details,)));
 
-                });
-              },
-              title: Text(products[index].name,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              trailing: Text("Rs${products[index].price}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              //subtitle: Text("${products[index].quantity}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  });
+                },
+                title: Text(products[index].name,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                trailing: Text("Rs${products[index].price}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                //subtitle: Text("${products[index].quantity}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
 
-            ),
-          );
+              ),
+            );
 
-        },),
+          },),
 
 
 
+      ),
     );
   }
 }
