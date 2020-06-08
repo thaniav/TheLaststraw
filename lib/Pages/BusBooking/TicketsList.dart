@@ -94,7 +94,7 @@ child: Padding(
   padding: const EdgeInsets.all(16.0),
   child:   Container(
 
-    height: 150.0,
+    height: 165.0,
 
     width: 300.0,
 

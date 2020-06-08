@@ -131,9 +131,7 @@ class _HomeState extends State<Home> {
                           if (snapshot.hasData) {
                             return InkWell(
                               splashColor: kSplashColor,
-                              onTap: () {
-                                Navigator.pushNamed(context, Newcart.id);
-                              },
+
                               child: ListTile(
                                 title: Text('Pallet Balance'),
                                 leading: Icon(
@@ -179,23 +177,13 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Divider(),
+
+
                     InkWell(
                       splashColor: kSplashColor,
                       onTap: () {
                         Navigator.pushNamed(context, Newcart.id);
                       },
-                      child: ListTile(
-                        title: Text('My orders'),
-                        leading: Icon(
-                          Icons.shopping_basket,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Divider(),
-                    InkWell(
-                      splashColor: kSplashColor,
-                      onTap: () {},
                       child: ListTile(
                         title: Text('Shopping Cart'),
                         leading: Icon(
@@ -229,11 +217,7 @@ class _HomeState extends State<Home> {
                           await _auth.signOut();
                           // After [onPressed], it will trigger animation running backwards, from end to beginning
                           return () {
-                            // Optional returns is returning a VoidCallback that will be called
-                            // after the animation is stopped at the beginning.
-                            // A best practice would be to do time-consuming task in [onPressed],
-                            // and do page navigation in the returned VoidCallback.
-                            // So that user won't missed out the reverse animation.
+
                           };
                         },
                       ),
@@ -279,7 +263,7 @@ class _HomeState extends State<Home> {
                             new Container(
                                 child: CardRoute(
                                   cardTitle: 'Passbook',
-                                  nextPage: 'recharge',
+                                  nextPage: 'passbook',
                                   icon: FontAwesomeIcons.ticketAlt,
                                 )),
 

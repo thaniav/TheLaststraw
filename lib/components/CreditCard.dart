@@ -29,10 +29,10 @@ class CardWidget extends StatefulWidget {
   final String fromCity;
   final String toCity;
   final bool cashback;
-
+final double amount;
   final double update;
   CardWidget(
-      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity, this.cashback});
+      {this.Name, this.expiry, this.number, this.update, this.cvv, this.add, this.type, this.provider, this.passenger, this.dateOfTravel, this.age, this.noOfTickets, this.fromCity, this.toCity, this.cashback, this.amount});
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -262,6 +262,8 @@ class _CardWidgetState extends State<CardWidget> {
                                               uid: current_user_uid)
                                               .updateUserBalance(
                                               walletData.balance);
+                                          await DatabaseService()
+                                              .updatePassbook(widget.type, widget.amount, Timestamp.now());
                                         },
                                         width: 120,
                                       )

@@ -12,6 +12,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:palet/Pages/BusBooking/BusTickets.dart';
 import 'package:palet/Pages/BusBooking/TicketsList.dart';
+import 'package:palet/Pages/Passbook.dart';
 import 'package:palet/Pages/Wallet/Add_card.dart';
 import 'package:palet/Pages/BusBooking/BusTicketForm.dart';
 import 'package:palet/Pages/shopping/Shopping_cart_new.dart';
@@ -54,6 +55,9 @@ class _MyAppState extends State<MyApp> {
        value: AuthService().user,
        child: MaterialApp(
          theme: ThemeData(
+           appBarTheme: AppBarTheme(
+             color: kMainColor
+           ),
           primaryTextTheme: TextTheme(
 
           ),
@@ -61,6 +65,7 @@ class _MyAppState extends State<MyApp> {
            body1: TextStyle(
              color: Colors.white
            ),
+
 //             body2: TextStyle(
 //               color: Colors.white
 //           ),
@@ -103,6 +108,7 @@ addcard.id: (context) => addcard(),
 SpinnerPage.id: (context) => SpinnerPage(),
   TicketsList.id: (context) => TicketsList(),
   Newcart.id: (context) => Newcart(),
+  Passbook.id : (context) => Passbook(),
 
 
 

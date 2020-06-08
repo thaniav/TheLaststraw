@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:palet/Pages/authenticate/forgotPassword.dart';
+import 'package:palet/Pages/profile/changepw.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:palet/Pages/profile/profile.dart';
 import 'package:palet/shared/loading.dart';
@@ -181,7 +182,10 @@ Navigator.pushNamed(context, '/kyc');
                                                         width: 140.0,
                                                         height: 140.0,
                                                         decoration: new BoxDecoration(
-
+border: Border.all(
+  color: Colors.pinkAccent,
+  width: 2.0,
+),
                                                           shape: BoxShape.circle,
                                                           image: DecorationImage(
                                                             image: userData.image != null
@@ -514,7 +518,7 @@ Navigator.pushNamed(context, '/kyc');
                                               ),
                                               onPressed: (){
                                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                  return ForgotPass(email: userData.emailID.trim(),);
+                                                  return Changepw(email: userData.emailID);
                                                 }));
                                               },
                                             ),

@@ -57,5 +57,17 @@ class TicketData {
 
 }
 
+class TransactionData {
+ final String type;
+ final double amount;
+ final Timestamp time;
+
+
+
+  TransactionData({ this.type, this.amount, this.time,   });
+
+
+}
+
 
 

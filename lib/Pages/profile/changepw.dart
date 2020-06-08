@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:palet/Pages/authenticate/forgotPassword.dart';
 import 'package:palet/Pages/authenticate/forgotPw.dart';
 import 'package:palet/models/uid.dart';
+import 'package:palet/services/auth.dart';
 import 'package:palet/services/database.dart';
 
 import '../../shared/constants.dart';
 class Changepw extends StatefulWidget {
+  final String email;
+
+  Changepw({this.email});
+
   @override
   _ChangepwState createState() => _ChangepwState();
 }
@@ -116,7 +121,7 @@ class _ChangepwState extends State<Changepw> {
                   InkWell(
                     onTap: () async{
                       Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return ForgotPass(fromProfile: true,);
+                        return ForgotPass(fromProfile: true,email: widget.email.trim(),);
                       }));
                       },
                     child: Text(

@@ -15,6 +15,8 @@ class DatabaseService{
   final CollectionReference profileCollection = Firestore.instance.collection('profiles');
   final CollectionReference accountCollection = Firestore.instance.collection('accounts');
   final CollectionReference busTicketCollection = Firestore.instance.collection('bustickets');
+  final CollectionReference passbookCollection = Firestore.instance.collection('passbook');
+
 
 
 
@@ -43,6 +45,15 @@ class DatabaseService{
 
     });
   }
+  Future updatePassbook(String type, double amount, Timestamp time) async {
+    return await passbookCollection.document(current_user_uid).collection('transactions').document().setData({
+      'type': type,
+      'amount': amount,
+      'time': time,
+
+    });
+  }
+
 
 Future updateUserBalance(double balance) async {
   return await accountCollection.document(uid).setData(
@@ -123,6 +134,18 @@ Future updateUserBalance(double balance) async {
     }).toList();
   }
 
+  List<TransactionData> _transactionsListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return TransactionData(
+        type: doc.data["type"] ?? '',
+        amount: doc.data["amount"] ?? '',
+        time: doc.data["time"] ?? '',
+
+
+      );
+    }).toList();
+  }
+
 
   //userData from snapshot
 
@@ -176,6 +199,11 @@ WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
   Stream<List<TicketData>> get ticketData{
     return busTicketCollection.document(uid).collection('tickets').snapshots()
         .map(_ticketsListFromSnapshot);
+  }
+
+  Stream<List<TransactionData>> get transactionData{
+    return passbookCollection.document(uid).collection('transactions').snapshots()
+        .map(_transactionsListFromSnapshot);
   }
 
 }

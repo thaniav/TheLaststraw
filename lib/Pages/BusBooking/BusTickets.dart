@@ -37,7 +37,6 @@ class _BusTicketsPageState extends State<BusTicketsPage> {
       images: [
         AssetImage('Asset/bus3.jpg'),
         AssetImage('Asset/bus4.jpg'),
-        AssetImage('Asset/bus1.png'),
         AssetImage('Asset/bus2.png'),
       ],
       autoplay: false,

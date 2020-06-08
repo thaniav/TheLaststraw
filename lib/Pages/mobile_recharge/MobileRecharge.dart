@@ -145,7 +145,7 @@ child: Card(
                               onPressed: (){
                                 if (billAmount != 0) {
                                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return PaymentOptions(amount: billAmount,);
+                                    return PaymentOptions(amount: billAmount,type: 'mobile recharge',);
                                   }));
                                 } else {}
                               },

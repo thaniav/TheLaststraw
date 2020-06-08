@@ -137,7 +137,7 @@ class _NewcartState extends State<Newcart> {
                 child: MaterialButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return PaymentOptions(amount: s.toDouble(),);
+                      return PaymentOptions(amount: s.toDouble(),type: 'shopping',);
                     }));
                   },
                   child: Text(

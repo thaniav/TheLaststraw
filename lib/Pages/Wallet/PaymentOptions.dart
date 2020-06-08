@@ -113,6 +113,7 @@ amount=widget.amount;
                         provider: provider,
                         dateOfTravel: dateOfTravel,
                         age: age,
+                        amount: amount,
                       );
                       cardNumbers.add(cardWidget);
                     }
@@ -288,7 +289,10 @@ amount=widget.amount;
                                                      noOfTickets,
                                                       fromCity,
                                                      toCity);
+                                              await DatabaseService()
+                                                  .updatePassbook(type, amount, Timestamp.now());
                                             }
+
                                             if(cashback){
                                               print(balance);
                                               print(balance+75);
@@ -301,6 +305,10 @@ amount=widget.amount;
                                               await DatabaseService(
                                                   uid: current_user_uid)
                                                   .updateUserBalance(balance);
+    await DatabaseService()
+        .updatePassbook(type, amount, Timestamp.now());
+
+
                                             }
                                             Alert(
                                               context: context,
@@ -344,6 +352,9 @@ amount=widget.amount;
                                               await DatabaseService(
                                                   uid: current_user_uid)
                                                   .updateUserBalance(balance+75);
+    await DatabaseService()
+        .updatePassbook(type, amount, Timestamp.now());
+
                                             }
                                             else {
                                               await DatabaseService(
@@ -406,7 +417,6 @@ amount=widget.amount;
                                             FirebaseUser user =
                                                 await FirebaseAuth.instance
                                                     .currentUser();
-                                            /*await DatabaseService(uid: user.uid).updateUserBalance(walletID, walletData.balance);*/
                                             if (_value1 == true) {
                                               print(passenger);
                                               if (type == 'bus') {
@@ -509,6 +519,8 @@ else {
                                                 await DatabaseService(
                                                     uid: current_user_uid)
                                                     .updateUserBalance(balance);
+                                                await DatabaseService()
+                                                    .updatePassbook(type, amount, Timestamp.now());
                                               }
                                             }
                                           },

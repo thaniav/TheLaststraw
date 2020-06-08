@@ -69,7 +69,7 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
       body: Center(
         child: FlutterTicketWidget(
           width: 350.0,
-          height: 500.0,
+
           isCornerRounded: true,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -175,33 +175,35 @@ class _BusTicketsBLABLAState extends State<BusTicketsBLABLA> {
                   ),
                 ),
                 SizedBox(height: 20.0,),
-                Center(
-                  child: RaisedButton(
+                Expanded(
+                  child: Center(
+                    child: RaisedButton(
 
-                    elevation: 4.0,
-                    color: Colors.black,
-                    onPressed: ()async {
-                      print(passenger);
+                      elevation: 4.0,
+                      color: Colors.black,
+                      onPressed: ()async {
+                        print(passenger);
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return PaymentOptions(
-                              passenger: passenger,
-                              toCity: toCity,
-                              fromCity: fromCity,
-                              provider: provider,
-                              dateOfTravel: dateOfTravel,
-                              age: age,
-                              noOfTickets: noOfTickets,
-                              amount: amount,
-                              type: 'bus',
-                            );
-                          }));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return PaymentOptions(
+                                passenger: passenger,
+                                toCity: toCity,
+                                fromCity: fromCity,
+                                provider: provider,
+                                dateOfTravel: dateOfTravel,
+                                age: age,
+                                noOfTickets: noOfTickets,
+                                amount: amount,
+                                type: 'bus',
+                              );
+                            }));
 
-                    },
-                    child: Text('Confirm', style: TextStyle(
-                      color: Colors.white
-                    ),),
+                      },
+                      child: Text('Confirm', style: TextStyle(
+                        color: Colors.white
+                      ),),
+                    ),
                   ),
                 )
               ],
