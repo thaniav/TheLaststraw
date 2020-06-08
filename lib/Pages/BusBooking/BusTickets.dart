@@ -119,6 +119,8 @@ class _BusTicketsPageState extends State<BusTicketsPage> {
                                   labelStyle: TextStyle(color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(color: kPinkColor),
+
                                   ),
                                 ),
                                 items: cities.map((String dropDownMenuItem) {

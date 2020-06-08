@@ -142,7 +142,7 @@ amount=widget.amount;
                                           style: TextStyle(fontSize: 20.0, color: Colors.black),
                                         ),
                                         Text(
-                                          'Rs. $amt',
+                                          'Rs. $amount',
                                           style: TextStyle(fontSize: 30.0, color: Colors.black),
                                         ),
                                       ],
@@ -223,19 +223,19 @@ amount=widget.amount;
                                               selected = val;
                                             });
                                             if (selected == '20FAB') {
-                                              if (amt > 100) {
+                                              if (amount > 100) {
                                                 setState(() {
                                                   amt = amount - 0.1 * amt;
                                                 });
                                               }
                                             } else if (selected == 'POB125') {
-                                              if (amt > 100) {
+                                              if (amount > 100) {
                                                 setState(() {
                                                   amt = amount - 0.25 * amt;
                                                 });
                                               }
                                             } else if (selected == 'PALLET75') {
-                                              if (amt > 75) {
+                                              if (amount > 75) {
                                               setState(() {
                                                 cashback=true;
                                               });
@@ -290,7 +290,7 @@ amount=widget.amount;
                                                       fromCity,
                                                      toCity);
                                               await DatabaseService()
-                                                  .updatePassbook(type, amount, Timestamp.now());
+                                                  .updatePassbook(type, amt, Timestamp.now());
                                             }
 
                                             if(cashback){

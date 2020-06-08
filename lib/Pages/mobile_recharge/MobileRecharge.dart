@@ -63,8 +63,9 @@ class _MobileRechargeState extends State<MobileRecharge> {
 
                           child: DropdownButtonFormField(
 
-
+validator: (val) => val== 'Choose provider'? 'Choose your provider!': null,
                             decoration: InputDecoration(
+
                               labelText: initial,
                               filled: true,
                               labelStyle: TextStyle(color: Colors.white),
@@ -139,16 +140,30 @@ child: Card(
                           flex: 1,
                           child: Container(
 
-                            child: PalletButton(
-                              label: 'Proceed to pay',
-                              height: 10.0,
-                              onPressed: (){
-                                if (billAmount != 0) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return PaymentOptions(amount: billAmount,type: 'mobile recharge',);
-                                  }));
-                                } else {}
-                              },
+                            child: Builder(
+                              builder: (BuildContext context) {
+                                return PalletButton(
+                                  label: 'Proceed to pay',
+                                  height: 10.0,
+                                  onPressed: () {
+                                    if (billAmount != 0) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return PaymentOptions(
+                                              amount: billAmount,
+                                              type: 'mobile recharge',);
+                                          }));
+                                    } else {
+                                      if (billAmount == 0.0) {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(content: Text(
+                                                'Choose Provider!'),
+                                            backgroundColor: kPinkColor,));
+                                      }
+                                    }
+                                  },
+                                );
+                              }
                             ),
                           ),
                         )
