@@ -132,21 +132,9 @@ amount=widget.amount;
                                 height: 200.0,
                                 width: double.infinity,
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Amount to be paid ',
-                                          style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                        ),
-                                        Text(
-                                          'Rs. $amount',
-                                          style: TextStyle(fontSize: 30.0, color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
+
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Container(
@@ -223,19 +211,20 @@ amount=widget.amount;
                                               selected = val;
                                             });
                                             if (selected == '20FAB') {
-                                              if (amount > 100) {
+                                              if (amt > 100) {
                                                 setState(() {
-                                                  amt = amount - 0.1 * amt;
+                                                  amount = amt - 0.1 * amt;
                                                 });
                                               }
                                             } else if (selected == 'POB125') {
-                                              if (amount > 100) {
+                                              if (amt > 100) {
                                                 setState(() {
-                                                  amt = amount - 0.25 * amt;
+                                                  amount = amt - 0.25 * amt;
                                                 });
                                               }
                                             } else if (selected == 'PALLET75') {
-                                              if (amount > 75) {
+                                              amount=amt;
+                                              if (amt > 75) {
                                               setState(() {
                                                 cashback=true;
                                               });
@@ -248,8 +237,24 @@ amount=widget.amount;
                                             }
                                           },
                                         ),
+
                                       ),
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Text(
+                                          'Amount to be paid ',
+                                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                        ),
+                                        Text(
+                                          'Rs. $amount',
+                                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -290,7 +295,7 @@ amount=widget.amount;
                                                       fromCity,
                                                      toCity);
                                               await DatabaseService()
-                                                  .updatePassbook(type, amt, Timestamp.now());
+                                                  .updatePassbook(type, amount, Timestamp.now());
                                             }
 
                                             if(cashback){
@@ -342,18 +347,16 @@ amount=widget.amount;
                                             ).show();
                                           } else {
                                             balance = 0;
-                                            print(amt);
                                             setState(() {
                                               print(amt);
-                                              amt = amt - walletData.balance;
-                                              print(amt);
+                                              amount = amt - walletData.balance;
                                             });
                                             if(cashback){
                                               await DatabaseService(
                                                   uid: current_user_uid)
                                                   .updateUserBalance(balance+75);
     await DatabaseService()
-        .updatePassbook(type, amount, Timestamp.now());
+        .updatePassbook(type, amt, Timestamp.now());
 
                                             }
                                             else {
