@@ -50,11 +50,6 @@ class _WrapperState extends State<Wrapper> {
 
     }
 
-    else if(verified==false){
-      print('Entered this one');
-      return Verification();
-    }
-
     else{
         return Home();
     }

@@ -172,8 +172,11 @@ Scaffold.of(context).showSnackBar(SnackBar(content: Text('Invalid Card'),));
                                           }
                                         }
                                       },
-                                      color: Colors.green,
-                                      child: new Text('Pay'),
+                                      color: kSecondaryColor,
+                                      child: new Text('Pay',
+                                        style: TextStyle(
+                                            color: Colors.white
+                                        ),),
                                     );
           }
                                   ),
@@ -210,87 +213,100 @@ Scaffold.of(context).showSnackBar(SnackBar(content: Text('Invalid Card'),));
                                     onChanged: _value1Changed,
                                     title: new Text('Remember card'),
                                     controlAffinity:
-                                        ListTileControlAffinity.leading,
+                                    ListTileControlAffinity.leading,
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(15.0),
-                                  child: new RaisedButton(
-                                    onPressed: () async {
-                                      FirebaseUser user = await FirebaseAuth
-                                          .instance
-                                          .currentUser();
-                                      if (_value1 == true) {
-                                        _firestore
-                                            .collection('accounts')
-                                            .document(user.uid)
-                                            .collection('cards')
-                                            .add({
-                                          'cardNumber': cardNumber,
-                                          'cardExpiry': expiryDate,
-                                          'cardHolderName': cardHolderName,
-                                          'cvv': cvvCode,
-                                        });
-                                        Alert(
-                                          context: context,
-                                          type: AlertType.success,
-                                          title: "New Card Added",
-                                          buttons: [
-                                            DialogButton(
-                                              child: Text(
-                                                "Okay",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                Navigator.pop(context);
-                                              },
-                                              width: 120,
-                                            )
-                                          ],
-                                        ).show();
-                                        setState(() {
-                                          balance = walletData.balance +
-                                              widget.updateValue;
-                                        });
-                                        await DatabaseService(
-                                                uid: current_user_uid)
-                                            .updateUserBalance(balance);
-                                      } else {
-                                        setState(() {
-                                          balance = walletData.balance +
-                                              widget.updateValue;
-                                        });
-                                        print(balance);
-                                        await DatabaseService(
-                                                uid: current_user_uid)
-                                            .updateUserBalance(balance);
-                                        Alert(
-                                          context: context,
-                                          type: AlertType.success,
-                                          title: "Added successfully",
-                                          buttons: [
-                                            DialogButton(
-                                              child: Text(
-                                                "Okay",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                Navigator.pop(context);
-                                              },
-                                              width: 120,
-                                            )
-                                          ],
-                                        ).show();
+                                  child: Builder(
+                                      builder: (BuildContext context) {
+
+                                        return RaisedButton(
+                                          onPressed: () async {
+                                            FirebaseUser user = await FirebaseAuth
+                                                .instance
+                                                .currentUser();
+                                            if (cardNumber.isEmpty|| cardNumber.length<16 || expiryDate.isEmpty || cvvCode.isEmpty || cvvCode.length<3
+                                                || cardHolderName.isEmpty
+                                            ) {
+                                              Scaffold.of(context).showSnackBar(SnackBar(content: Text('Invalid Card'),));
+                                            } else {
+                                              if (_value1 == true) {
+                                                _firestore
+                                                    .collection('accounts')
+                                                    .document(user.uid)
+                                                    .collection('cards')
+                                                    .add({
+                                                  'cardNumber': cardNumber,
+                                                  'cardExpiry': expiryDate,
+                                                  'cardHolderName': cardHolderName,
+                                                  'cvv': cvvCode,
+                                                });
+                                                Alert(
+                                                  context: context,
+                                                  type: AlertType.success,
+                                                  title: "New Card Added",
+                                                  buttons: [
+                                                    DialogButton(
+                                                      child: Text(
+                                                        "Okay",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 20),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      width: 120,
+                                                    )
+                                                  ],
+                                                ).show();
+                                                setState(() {
+                                                  balance = walletData.balance +
+                                                      widget.updateValue;
+                                                });
+                                                await DatabaseService(
+                                                    uid: current_user_uid)
+                                                    .updateUserBalance(balance);
+                                              } else {
+                                                setState(() {
+                                                  balance = walletData.balance +
+                                                      widget.updateValue;
+                                                });
+                                                print(balance);
+                                                await DatabaseService(
+                                                    uid: current_user_uid)
+                                                    .updateUserBalance(balance);
+                                                Alert(
+                                                  context: context,
+                                                  type: AlertType.success,
+                                                  title: "Added successfully",
+                                                  buttons: [
+                                                    DialogButton(
+                                                      child: Text(
+                                                        "Okay",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 20),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      width: 120,
+                                                    )
+                                                  ],
+                                                ).show();
+                                              }
+                                            }
+                                          },
+                                          color: kSecondaryColor,
+                                          child: new Text('Pay', style: TextStyle(
+                                            color: Colors.white
+                                          ),),
+                                        );
                                       }
-                                    },
-                                    color: Colors.green,
-                                    child: new Text('Pay'),
                                   ),
                                 )
                               ],

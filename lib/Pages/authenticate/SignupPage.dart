@@ -92,6 +92,7 @@ bool isDateSelected=false;
                     ),
                     TextFormField(
                         validator: (val) => val.length !=10 ? 'Enter a valid phone no.': null,
+                        keyboardType: TextInputType.number,
                         controller: phoneNumberController,
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
