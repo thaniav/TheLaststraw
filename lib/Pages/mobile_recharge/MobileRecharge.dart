@@ -68,7 +68,8 @@ validator: (val) => val== 'Choose provider'? 'Choose your provider!': null,
 
                               labelText: initial,
                               filled: true,
-                              labelStyle: TextStyle(color: Colors.white),
+                              fillColor: Colors.white30,
+                              labelStyle: TextStyle(color: Colors.black),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
@@ -108,7 +109,8 @@ validator: (val) => val== 'Choose provider'? 'Choose your provider!': null,
                             decoration: InputDecoration(
                               labelText: 'Enter Phone number',
                               filled: true,
-                              labelStyle: TextStyle(color: Colors.white),
+                              fillColor: Colors.white30,
+                              labelStyle: TextStyle(color: Colors.black),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),

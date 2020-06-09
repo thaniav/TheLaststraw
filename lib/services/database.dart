@@ -202,7 +202,7 @@ WalletData _walletDataFromSnapshot(DocumentSnapshot snapshot){
   }
 
   Stream<List<TransactionData>> get transactionData{
-    return passbookCollection.document(uid).collection('transactions').snapshots()
+    return passbookCollection.document(uid).collection('transactions').orderBy("time",descending: true).snapshots()
         .map(_transactionsListFromSnapshot);
   }
 

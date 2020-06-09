@@ -37,7 +37,9 @@ class _PassbookState extends State<Passbook> {
        }
 
     return Scaffold(
+      backgroundColor: Colors.white,
     appBar: AppBar(
+      elevation: 0.0,
     title: Text('Passbook'),
     ),
     body: ListView(
@@ -47,7 +49,9 @@ class _PassbookState extends State<Passbook> {
     );
     }
     else {return Scaffold(
+       backgroundColor: kMainColor,
        appBar: AppBar(
+         elevation: 0.0,
          title: Text('Passbook'),
        ),
        body: Container(
@@ -96,6 +100,7 @@ class TransactionCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:   new Container(
+
                       width: 40.0,
                       height: 40.0,
                       decoration: new BoxDecoration(
