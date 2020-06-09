@@ -97,7 +97,7 @@ class _BusTicketFormState extends State<BusTicketForm> {
                           validator: (val) =>
                               !isDateSelected || newDt.isBefore(DateTime.now())? 'Select valid Date of travel' : null,
                           decoration: InputDecoration(
-                            hintText: 'Date of travel: $day/$month/$year',
+                            hintText: 'Date: $day/$month/$year',
 
                             hintStyle: TextStyle(
                               fontFamily: 'Montserrat',
@@ -198,7 +198,10 @@ class _BusTicketFormState extends State<BusTicketForm> {
                     height: 150.0,
                   ),
                   RaisedButton(
-                      child: Text('Book'),
+                    color: kSecondaryColor,
+                      child: Text('Book', style: TextStyle(
+                        color: Colors.white
+                      ),),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
 
