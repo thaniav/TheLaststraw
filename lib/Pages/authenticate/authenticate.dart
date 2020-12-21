@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:palet/Pages/Homepage.dart';
+import 'package:palet/home/Homepage.dart';
 import 'package:palet/Pages/authenticate/SignInPage.dart';
 import 'package:palet/Pages/authenticate/SignupPage.dart';
 
